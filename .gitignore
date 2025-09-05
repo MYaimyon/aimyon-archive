@@ -1,0 +1,16 @@
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+*.temp
+
+# Future backend
+target/
+*.jar
+*.war
