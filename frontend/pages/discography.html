@@ -2,9 +2,207 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あいみょん - 디스코그래피</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Header -->
+    <div id="header">
+        <div class="container">
+            <a href="index.html" class="logo">あいみょん</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">홈</a></li>
+                    <li><a href="discography.html" class="active">디스코그래피</a></li>
+                    <li><a href="song-list.html">곡 목록</a></li>
+                    <li><a href="profile.html">프로필</a></li>
+                    <li><a href="news.html">소식</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="테마 변경">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </div>
 
+    <!-- Main Content -->
+    <main class="discography-page">
+        <div class="container">
+            <h1 class="page-title">디스코그래피</h1>
+            <p class="page-subtitle">あいみょん의 음반을 연도별로 확인해보세요</p>
+            
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">전체</button>
+                <button class="filter-tab" data-filter="album">정규 앨범</button>
+                <button class="filter-tab" data-filter="single">싱글</button>
+                <button class="filter-tab" data-filter="ep">EP</button>
+            </div>
+
+            <!-- Album Grid -->
+            <div class="album-grid">
+                <!-- Album 1 -->
+                <div class="album-card" data-category="album">
+                    <div class="album-cover">
+                        <img src="https://via.placeholder.com/300x300/ff6b6b/ffffff?text=青春のエキサイト" alt="青春のエキサイト">
+                        <div class="album-hover">
+                            <a href="album-detail.html" class="btn-play"><i class="fas fa-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h3>青春のエキサイト</h3>
+                        <p class="album-type">정규 1집</p>
+                        <p class="album-year">2016.11.23</p>
+                        <div class="album-tags">
+                            <span class="tag">#J-POP</span>
+                            <span class="tag">#록</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Album 2 -->
+                <div class="album-card" data-category="single">
+                    <div class="album-cover">
+                        <img src="https://via.placeholder.com/300x300/4ecdc4/ffffff?text=生きていたんだよな" alt="生きていたんだよな">
+                        <div class="album-hover">
+                            <a href="#" class="btn-play"><i class="fas fa-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h3>生きていたんだよな</h3>
+                        <p class="album-type">싱글</p>
+                        <p class="album-year">2017.05.10</p>
+                        <div class="album-tags">
+                            <span class="tag">#발라드</span>
+                            <span class="tag">#OST</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Album 3 -->
+                <div class="album-card" data-category="album">
+                    <div class="album-cover">
+                        <img src="https://via.placeholder.com/300x300/45b7d1/ffffff?text=瞬間的シーゼン体" alt="瞬間的シーゼン体">
+                        <div class="album-hover">
+                            <a href="#" class="btn-play"><i class="fas fa-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h3>瞬間的シーゼン体</h3>
+                        <p class="album-type">정규 2집</p>
+                        <p class="album-year">2018.10.03</p>
+                        <div class="album-tags">
+                            <span class="tag">#록</span>
+                            <span class="tag">#J-POP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Album 4 -->
+                <div class="album-card" data-category="single">
+                    <div class="album-cover">
+                        <img src="https://via.placeholder.com/300x300/96ceb4/ffffff?text=マリーゴールド" alt="マリーゴールド">
+                        <div class="album-hover">
+                            <a href="#" class="btn-play"><i class="fas fa-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h3>マリーゴールド</h3>
+                        <p class="album-type">싱글</p>
+                        <p class="album-year">2018.09.20</p>
+                        <div class="album-tags">
+                            <span class="tag">#대히트</span>
+                            <span class="tag">#OST</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Album 5 -->
+                <div class="album-card" data-category="album">
+                    <div class="album-cover">
+                        <img src="https://via.placeholder.com/300x300/ffeead/333333?text=おいしいパスタがあると聞いて" alt="おいしいパスタがあると聞いて">
+                        <div class="album-hover">
+                            <a href="#" class="btn-play"><i class="fas fa-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h3>おいしいパスタがあると聞いて</h3>
+                        <p class="album-type">정규 3집</p>
+                        <p class="album-year">2021.03.24</p>
+                        <div class="album-tags">
+                            <span class="tag">#록</span>
+                            <span class="tag">#팝</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Album 6 -->
+                <div class="album-card" data-category="ep">
+                    <div class="album-cover">
+                        <img src="https://via.placeholder.com/300x300/ffcc5c/333333?text=プレイボタン" alt="プレイボタン">
+                        <div class="album-hover">
+                            <a href="#" class="btn-play"><i class="fas fa-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h3>プレイボタン</h3>
+                        <p class="album-type">EP</p>
+                        <p class="album-year">2022.09.21</p>
+                        <div class="album-tags">
+                            <span class="tag">#록</span>
+                            <span class="tag">#실험적</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">あいみょん</div>
+                <p> 2025 Aimyon Archive. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" target="_blank" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/common.js"></script>
+    <script>
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const albumCards = document.querySelectorAll('.album-card');
+
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Update active tab
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const filter = tab.getAttribute('data-filter');
+                    
+                    // Filter albums
+                    albumCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
