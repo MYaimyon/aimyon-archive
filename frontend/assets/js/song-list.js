@@ -19,11 +19,12 @@ function initSongListFeatures() {
     const resetBtn = document.getElementById('resetBtn');
     
     let currentFilter = 'all';
+    let searchTerm = '';
     
     // 검색 기능 (엔터 키로만 검색)
     if (searchInput) {
         const handleSearch = () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
+            searchTerm = searchInput.value.toLowerCase().trim();
             filterSongs(searchTerm, currentFilter);
         };
 
@@ -87,7 +88,7 @@ function initSongListFeatures() {
             currentFilter = e.target.dataset.filter;
             
             // 검색어와 함께 필터링
-            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+            searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
             filterSongs(searchTerm, currentFilter);
         });
     });
