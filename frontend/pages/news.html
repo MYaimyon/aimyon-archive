@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뉴스 - aimyon-archive</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/pages.css">
+</head>
+<body>
+    <!-- Header (component) -->
+    <div id="header-placeholder"></div>
+
+    <main class="news-page container">
+        <h1 class="page-title">뉴스</h1>
+        <p class="page-subtitle">최신 소식과 이벤트를 확인하세요</p>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">전체</button>
+            <button class="filter-tab" data-filter="news">소식</button>
+            <button class="filter-tab" data-filter="event">이벤트</button>
+        </div>
+
+        <section class="news-list">
+            <a href="#" class="news-card" data-category="news">
+                <span class="badge">소식</span>
+                <h3 class="news-title">새 싱글 발표 예정(가제)</h3>
+                <p class="news-excerpt">상세 정보는 추후 공개됩니다. 티저 이미지/영상 공개 일정 포함.</p>
+                <time class="news-date">2025-09-10</time>
+            </a>
+            <a href="#" class="news-card" data-category="event">
+                <span class="badge">이벤트</span>
+                <h3 class="news-title">팬미팅/라이브 이벤트(예정)</h3>
+                <p class="news-excerpt">장소/일정/예매 링크는 확정 이후 업데이트됩니다.</p>
+                <time class="news-date">2025-09-12</time>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer (component) -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/news.js"></script>
+</body>
+</html>
+
