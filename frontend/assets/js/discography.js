@@ -49,5 +49,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
 
+  // 4) Fix image paths and sizing for images referenced as "images/..."
+  document.querySelectorAll('.album-cover img').forEach(img => {
+    const src = img.getAttribute('src') || '';
+    if (src.startsWith('images/')) {
+      const file = src.split('/').pop();
+      img.setAttribute('src', `../assets/images/${file}`);
+    }
+    // ensure good fit inside square cover
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'cover';
+    img.style.display = 'block';
+    img.setAttribute('loading', 'lazy');
+    // graceful fallback when file is missing
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = 'https://via.placeholder.com/300x300/555/ffffff?text=No+Image';
+    };
+  });
+});
