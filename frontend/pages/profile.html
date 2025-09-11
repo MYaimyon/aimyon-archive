@@ -12,8 +12,13 @@
     <div id="header-placeholder"></div>
 
     <main class="profile-page container">
+        <!-- Top cover using the same profile image -->
+        <section class="profile-cover" style="background-image: url('../assets/images/profile.png');"></section>
+
         <section class="profile-hero">
-            <div class="profile-avatar">A</div>
+            <div class="profile-avatar">
+                <img src="../assets/images/profile.png" alt="AIMYON 프로필" loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent='A';">
+            </div>
             <div class="profile-summary">
                 <h1 class="profile-name">あいみょん (AIMYON)</h1>
                 <p class="profile-tagline">싱어송라이터 · J-POP · Folk/Pop</p>
