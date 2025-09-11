@@ -3,19 +3,20 @@
 ======================================== */
 
 /* (index hero placeholder only; no image decoration) */
-/* Index hero: render profile.png inside the placeholder as a circle */
+/* Index hero: large banner-style profile image */
 .hero-section .artist-placeholder {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin: 12px auto 8px;
+    width: 100%;
+    max-width: 1040px;
+    height: 320px;
+    margin: 0 auto 24px;
+    border-radius: 16px;
     background: url('../images/profile.png') center / cover no-repeat;
-    border: 2px solid rgba(255,255,255,0.85);
-    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 36px rgba(0,0,0,.35);
 }
 
 @media (max-width: 768px) {
-    .hero-section .artist-placeholder { width: 96px; height: 96px; }
+    .hero-section .artist-placeholder { height: 220px; }
 }
 
 /* Page Header */
