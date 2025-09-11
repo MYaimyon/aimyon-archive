@@ -357,11 +357,34 @@
 /* News page */
 .news-page .filter-tabs { display:flex; gap:8px; margin: 8px 0 16px; flex-wrap: wrap; }
 .news-list { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-.news-card { background: var(--bg-card); border:1px solid var(--border-color); border-radius: 12px; padding: 16px; text-decoration: none; color: inherit; display: grid; gap: 6px; }
-.news-card .badge { display:inline-block; font-size: .75rem; padding: 2px 8px; border-radius: 999px; background: rgba(255,107,107,.12); color: var(--primary-color); width: fit-content; }
+.news-card { background: var(--bg-card); border:1px solid var(--border-color); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; display: grid; gap: 8px; outline: none; }
+.news-card:focus { box-shadow: 0 0 0 2px var(--primary-color) inset; }
+.news-card .badge { display:inline-block; font-size: .75rem; padding: 2px 8px; border-radius: 999px; width: fit-content; }
+.badge-news { background: rgba(69,183,209,.16); color: #9be1f1; }
+.badge-event { background: rgba(78,205,196,.16); color: #9ef0e5; }
+.news-thumb { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 16/9; border:1px solid var(--border-color); }
+.news-thumb img { width:100%; height:100%; object-fit: cover; display:block; }
+.news-thumb .badge { position:absolute; left:10px; top:10px; }
 .news-card .news-title { margin: 0; font-size: 1.05rem; }
 .news-card .news-excerpt { margin: 0; color: var(--text-secondary); }
 .news-card .news-date { color: var(--text-secondary); font-size: .9rem; }
+
+/* News skeleton & empty */
+.skeleton { background: rgba(255,255,255,.04); border:1px solid var(--border-color); border-radius:12px; padding:12px; }
+.skeleton .thumb { height: 140px; border-radius:8px; background: rgba(255,255,255,.06); margin-bottom:8px; }
+.skeleton .line { height: 10px; border-radius:6px; background: rgba(255,255,255,.06); margin:6px 0; }
+.skeleton .w60 { width:60%; }
+.skeleton .w90 { width:90%; }
+.skeleton .w40 { width:40%; }
+.empty-state { text-align:center; opacity:.8; padding: 40px 10px; }
+.empty-state .emoji { font-size: 2rem; margin-bottom: 8px; }
+
+/* News detail */
+.news-detail .back-link { display:inline-block; margin: 10px 0; color: var(--text-secondary); text-decoration: none; }
+.news-detail .news-detail-header { display:grid; gap: 6px; margin: 10px 0 14px; }
+.news-detail .news-detail-thumb { border-radius: 12px; overflow: hidden; border:1px solid var(--border-color); margin-bottom: 16px; }
+.news-detail .news-detail-thumb img { width:100%; height:auto; display:block; }
+.news-detail .news-detail-content p { line-height: 1.8; margin: 10px 0; }
 
 /* Remove profile cover variant and reset hero spacing */
 .profile-cover { display: none; }

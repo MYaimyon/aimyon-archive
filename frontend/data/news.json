@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "id": "new-single-teaser",
+      "title": "새 싱글 티저 공개 예정",
+      "excerpt": "다음 싱글의 티저 이미지 및 영상 공개 일정",
+      "category": "news",
+      "date": "2025-09-12",
+      "thumbnail": "https://via.placeholder.com/640x360/ff6b6b/ffffff?text=New+Single",
+      "contentHtml": "<p>새로운 싱글의 티저 콘텐츠가 공개될 예정입니다. 구체적인 발매일과 상세 정보는 추후 공지됩니다.</p><p>공식 채널을 통해 업데이트가 제공될 예정입니다.</p>",
+      "externalUrl": "#"
+    },
+    {
+      "id": "fan-event-fall",
+      "title": "가을 팬 이벤트 안내",
+      "excerpt": "오프라인 팬미팅 및 소규모 라이브",
+      "category": "event",
+      "date": "2025-09-20",
+      "thumbnail": "https://via.placeholder.com/640x360/4ecdc4/ffffff?text=Fan+Event",
+      "contentHtml": "<p>가을 시즌 팬 이벤트가 예정되어 있습니다. 일정과 장소는 확정 후 공지됩니다.</p>",
+      "externalUrl": "#"
+    },
+    {
+      "id": "media-appearance",
+      "title": "미디어 출연 소식",
+      "excerpt": "라디오/TV 출연 관련 간단 브리핑",
+      "category": "news",
+      "date": "2025-09-09",
+      "thumbnail": "https://via.placeholder.com/640x360/45b7d1/ffffff?text=Media",
+      "contentHtml": "<p>인기 프로그램에 출연 예정입니다. 정확한 타임테이블은 공식 안내를 확인해 주세요.</p>",
+      "externalUrl": "#"
+    }
+  ]
+}
+
