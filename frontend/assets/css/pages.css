@@ -2,6 +2,23 @@
    SONG DETAIL PAGE STYLES
 ======================================== */
 
+/* Index hero mic decoration */
+.hero-image { position: relative; min-height: 140px; display:flex; align-items:center; justify-content:center; }
+.hero-image::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    width: 120px;
+    height: 120px;
+    background: url('../images/mic.svg') no-repeat center / contain;
+    opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+    .hero-image::after { width: 96px; height: 96px; right: 6px; }
+}
+
 /* Page Header */
 .page-header {
     text-align: center;
