@@ -22,17 +22,20 @@
 
         <div class="main-content"></div>
             <div class="youtube-section">
-                <iframe
-                        class="youtube-embed"
-                        src="https://www.youtube-nocookie.com/embed/hNmbaWDJO0E"
-                        title="[夜行バス] - OFFICIAL MUSIC"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen>
-                </iframe>
-                <p style="text-align:center; margin-top:8px;">
-                    재생이 막히면
-                    <a href="https://www.youtube.com/watch?v=hNmbaWDJO0E" target="_blank" rel="noopener">YouTube에서 보기</a>
+                <a href="https://www.youtube.com/watch?v=hNmbaWDJO0E" target="_blank" rel="noopener"
+                   class="youtube-card"
+                   style="display:block; position:relative; border:1px solid var(--border-color); border-radius:12px; overflow:hidden; background:#000;">
+                    <img src="https://img.youtube.com/vi/hNmbaWDJO0E/hqdefault.jpg"
+                         alt="[夜行バス] - YouTube 썸네일"
+                         style="display:block; width:100%; height:auto; opacity:0.9;">
+                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                        <div style="width:72px; height:72px; border-radius:50%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.2);">
+                            <div style="margin-left:6px; width:0; height:0; border-left:18px solid #fff; border-top:12px solid transparent; border-bottom:12px solid transparent;"></div>
+                        </div>
+                    </div>
+                </a>
+                <p style="text-align:center; margin-top:8px; color: var(--text-secondary);">
+                    임베드가 막혀 새 탭으로 유튜브에서 재생합니다.
                 </p>
             </div>
 
