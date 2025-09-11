@@ -363,6 +363,10 @@
 .news-card .news-excerpt { margin: 0; color: var(--text-secondary); }
 .news-card .news-date { color: var(--text-secondary); font-size: .9rem; }
 
+/* Remove profile cover variant and reset hero spacing */
+.profile-cover { display: none; }
+.profile-hero { margin-top: 10px; position: static; z-index: auto; }
+
 /* ========================================
    RESPONSIVE DESIGN
 ======================================== */
