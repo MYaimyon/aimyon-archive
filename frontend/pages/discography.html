@@ -180,33 +180,7 @@
         </div>
     </footer>
 
-    <script src="../assets/js/common.js"></script>
-    <script>
-        // Filter functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterTabs = document.querySelectorAll('.filter-tab');
-            const albumCards = document.querySelectorAll('.album-card');
-
-            filterTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Update active tab
-                    filterTabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-
-                    const filter = tab.getAttribute('data-filter');
-                    
-                    // Filter albums
-                    albumCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        });
-    </script>
+    <script src="../assets/js/discography.js"></script>
     <!-- Footer (component) -->
     <div id="footer-placeholder"></div>
 
