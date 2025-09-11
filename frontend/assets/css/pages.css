@@ -1,31 +1,8 @@
-/* ========================================
+﻿/* ========================================
    SONG DETAIL PAGE STYLES
 ======================================== */
 
-/* Index hero: banner image via hero-image background */
-.hero-image {
-    min-height: 340px;
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    background: url('../images/profile.png') center / cover no-repeat;
-    box-shadow: 0 12px 36px rgba(0,0,0,.35);
-}
-.hero-image > * { display: none; }
-/* Index hero: large banner-style profile image */
-.hero-section .artist-placeholder {
-    width: 100%;
-    max-width: 1040px;
-    height: 320px;
-    margin: 0 auto 24px;
-    border-radius: 16px;
-    background: url('../images/profile.png') center / cover no-repeat;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 12px 36px rgba(0,0,0,.35);
-}
-
-@media (max-width: 768px) {
-    .hero-section .artist-placeholder { height: 220px; }
-}
+/* Index hero: (reverted) use plain placeholder; no banner decorations */
 
 /* Page Header */
 .page-header {
@@ -826,11 +803,6 @@
     width: 100%;
 }
 
-.hero-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .artist-placeholder {
     width: 300px;
