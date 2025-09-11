@@ -2,7 +2,15 @@
    SONG DETAIL PAGE STYLES
 ======================================== */
 
-/* (index hero placeholder only; no image decoration) */
+/* Index hero: banner image via hero-image background */
+.hero-image {
+    min-height: 340px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    background: url('../images/profile.png') center / cover no-repeat;
+    box-shadow: 0 12px 36px rgba(0,0,0,.35);
+}
+.hero-image > * { display: none; }
 /* Index hero: large banner-style profile image */
 .hero-section .artist-placeholder {
     width: 100%;
