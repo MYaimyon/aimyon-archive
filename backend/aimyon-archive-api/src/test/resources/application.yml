@@ -1,0 +1,1 @@
+﻿spring:\n  autoconfigure:\n    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration\n

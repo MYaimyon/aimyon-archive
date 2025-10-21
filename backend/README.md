@@ -1,15 +1,1 @@
-﻿# backend
-
-Spring Boot 3 (Java 21) 애플리케이션을 구성할 디렉터리입니다.
-
-## 구성 계획
-- imyon-archive-api/: 메인 애플리케이션 모듈 (Gradle 기반 예정)
-- scripts/: 로컬 개발용 스크립트 (PostgreSQL 초기화, 마이그레이션 등)
-
-## 초기화 TODO
-1. Gradle 기반 Spring Boot 프로젝트 생성 (groupId: com.aimyon.archive 제안)
-2. pplication-local.yml에 PostgreSQL 접속 정보 정의
-3. Flyway 또는 Liquibase 마이그레이션 설정 추가
-4. /api/albums, /api/tracks 기본 엔드포인트 구현
-
-> Java 21 및 Gradle 8.x 환경을 요구합니다. 프로젝트 생성 후 README.md와 docs 문서를 업데이트하세요.
+﻿# backend\n\nSpring Boot API 서버 관련 리소스를 정리하는 디렉터리입니다.\n\n## 구조\n- \imyon-archive-api/\ : Spring Boot 3 (Java 17+) Gradle 프로젝트\n- \scripts/\            : PostgreSQL 초기화, 마이그레이션 등 스크립트 자리\n\n## 로컬 개발 준비 절차\n1. \imyon-archive-api\ 진입 후 \gradlew.bat build\ (Windows) 또는 \./gradlew build\ (macOS/Linux)로 기본 빌드 확인\n2. Java 17 이상, Gradle Wrapper(프로젝트 포함) 사용\n3. \src/main/resources/application.yml\은 기본 프로필을 \local\로 지정\n4. 실제 접속 정보는 \src/main/resources/application-local.yml\에 작성\n   `yaml\n   spring:\n     datasource:\n       url: jdbc:postgresql://localhost:5432/aimyon_archive\n       username: your_username\n       password: your_password\n       driver-class-name: org.postgresql.Driver\n     jpa:\n       hibernate:\n         ddl-auto: none\n       properties:\n         hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect\n   server:\n     port: 8080\n   `\n   (실제 계정 정보로 수정 필요)\n5. 테스트 실행 시 DB 연결이 없어도 통과하도록 \AimyonArhciveApiApplicationTests\ 에서 JDBC 자동 구성을 제외\n\n## 다음 단계\n- PostgreSQL 개발 DB 환경 구성 (예: docker-compose)\n- Flyway/Liquibase 기반 마이그레이션 스크립트 도입\n- /api/albums, /api/tracks 등 도메인 API 설계 및 구현\n- Spring Security를 통한 인증/권한 구조 설계\n\n변경 사항이나 설정 추가 시 README.md와 docs/ 문서를 함께 업데이트해 주세요.\n
