@@ -1,1 +1,3 @@
-﻿spring:\n  profiles:\n    active: local\n
+﻿spring:
+  profiles:
+    active: local

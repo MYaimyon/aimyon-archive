@@ -1,1 +1,13 @@
-﻿spring:\n  datasource:\n    url: jdbc:postgresql://localhost:5432/aimyon_archive\n    username: your_username\n    password: your_password\n    driver-class-name: org.postgresql.Driver\n  jpa:\n    hibernate:\n      ddl-auto: none\n    properties:\n      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect\nserver:\n  port: 8080\n
+﻿spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aim_archive
+    username: aim
+    password: "1234"
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8080
