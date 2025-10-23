@@ -1,4 +1,4 @@
-async function loadComponent(selector, path) {
+﻿async function loadComponent(selector, path) {
     try {
         const response = await fetch(path);
         if (!response.ok) {
@@ -11,27 +11,22 @@ async function loadComponent(selector, path) {
     }
 }
 
-//페이지 로드 완료 후 헤더/푸터 로드
+// 페이지 로드 후 헤더/푸터 로드
+
 document.addEventListener('DOMContentLoaded', () => {
-                        //DOMContentLoaded = "HTML 다 읽혔을 때" 이벤트
     loadComponent('#header-placeholder', '../components/header.html');
     loadComponent('#footer-placeholder', '../components/footer.html');
-    //HTML이 준비되면 자동으로 헤더/푸터 로드
 });
 
-//탭 전환 함수 (song-detail 페이지용)
-function showTab(tabName) {
-    //모든 탭 비활성화
-    document.querySelectorAll('.tab-pane').forEach(pane => {
-        pane.classList.remove('active');
-    });
+// (legacy) 전역 탭 함수 - event 인자를 명시적으로 받도록 보정
+function showTab(tabName, evt) {
+    const panes = document.querySelectorAll('.tab-pane');
+    const buttons = document.querySelectorAll('.tab-btn');
 
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    panes.forEach(pane => pane.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
 
-    //선택된 탭 활성화
-    document.getElementById(tabName).classList.add('active');
-    event.target.classList.add('active');
+    const target = document.getElementById(tabName);
+    if (target) target.classList.add('active');
+    if (evt && evt.target) evt.target.classList.add('active');
 }
-
