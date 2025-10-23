@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,6 +56,8 @@ public class TrackService {
                 ))
                 .toList();
 
+        List<TrackDetailResponse.Story> stories = buildStories(track, album.getReleaseDate());
+
         return new TrackDetailResponse(
                 track.getId(),
                 album.getId(),
@@ -64,8 +67,31 @@ public class TrackService {
                 track.getDuration(),
                 track.getLyricsSummary(),
                 track.getMvUrl(),
-                new TrackDetailResponse.AlbumInfo(album.getId(), album.getTitleJa(), album.getTitleKo()),
-                relatedTracks
+                new TrackDetailResponse.AlbumInfo(
+                        album.getId(),
+                        album.getTitleJa(),
+                        album.getTitleKo(),
+                        album.getType(),
+                        album.getReleaseDate()
+                ),
+                relatedTracks,
+                stories
+        );
+    }
+
+    private List<TrackDetailResponse.Story> buildStories(Track track, LocalDate albumReleaseDate) {
+        String summary = track.getLyricsSummary();
+        if (!StringUtils.hasText(summary)) {
+            summary = "이 곡에 대한 스토리가 준비 중입니다.";
+        }
+        return List.of(
+                new TrackDetailResponse.Story(
+                        null,
+                        "LYRICS",
+                        summary,
+                        "요약 수집본",
+                        albumReleaseDate
+                )
         );
     }
 }
