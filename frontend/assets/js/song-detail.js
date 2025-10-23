@@ -109,16 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
     storyPaneEl.innerHTML = stories.map(story => {
       const category = escapeHtml(story.category || 'STORY');
       const content = escapeHtml(story.content || '');
-      const source = story.source ? `출처 · ${escapeHtml(story.source)}` : '';
-      const published = story.publishedAt ? formatDate(story.publishedAt) : '';
-      const meta = [source, published].filter(Boolean).join(' · ');
-      return `
-        <article class="story-card">
-          <h3>${category}</h3>
-          <p>${content}</p>
-          ${meta ? `<div class="story-meta">${meta}</div>` : ''}
-        </article>
-      `;
+      const metaParts = [];
+      if (story.source) metaParts.push(`출처 · ${escapeHtml(story.source)}`);
+      if (story.publishedAt) metaParts.push(`발행일 · ${formatDate(story.publishedAt)}`);
+      const meta = metaParts.length ? `<div class="story-meta">${metaParts.join(' · ')}</div>` : '';
+      return `<article class="story-card"><h3>${category}</h3><p>${content}</p>${meta}</article>`;
     }).join('');
   }
 
