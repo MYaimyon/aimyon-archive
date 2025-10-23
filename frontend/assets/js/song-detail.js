@@ -103,11 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderStories(stories) {
     if (!storyPaneEl) return;
     if (!stories.length) {
-      storyPaneEl.innerHTML = '<p class="placeholder">제작 비하인드가 준비 중입니다.</p>';
+      storyPaneEl.innerHTML = '<p class="placeholder">제작 배경/비하인드 스토리가 준비 중입니다.</p>';
       return;
     }
     storyPaneEl.innerHTML = stories.map(story => {
-      const category = escapeHtml(story.category || "제작 비하인드");
+      const category = escapeHtml(story.category || "제작 배경/비하인드 스토리");
       const content = escapeHtml(story.content || "");
       const metaParts = [];
       if (story.source) metaParts.push(`출처 · ${escapeHtml(story.source)}`);
