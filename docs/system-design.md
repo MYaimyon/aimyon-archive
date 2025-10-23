@@ -67,11 +67,6 @@
 | `description` | 한 줄 코멘트 (선택) |
 | `created_at` | 업로드 시각 |
 
-### 2.3 (선택) 방문 로그 / 리뷰
-- `place_visit_log`: `user_id`, `place_id`, `visited_at`, `memo`
-- `place_review`: `rating`(별점), `comment`
-> MVP에서는 생략 가능. 나중에 커뮤니티와 묶고 싶을 때 참고.
-
 ### 2.4 API 초안
 - `GET /api/places` – 기본 목록. 필터: `?city=`, `?tag=`, `?keyword=`
 - `GET /api/places/{id}` – 상세 정보 + 사진/팁 + 관련 곡 등
