@@ -1,37 +1,37 @@
 const API_BASE_TRACK = (() => {
-  if (window.location.protocol === ''file:'') {
-    return ''http://localhost:8080/api/tracks'';
+  if (window.location.protocol === 'file:') {
+    return 'http://localhost:8080/api/tracks';
   }
   const { protocol, hostname, port } = window.location;
-  if (port && port !== '' && port !== ''8080'') {
+  if (port && port !== '' && port !== '8080') {
     return `${protocol}//${hostname}:8080/api/tracks`;
   }
-  return ''/api/tracks'';
+  return '/api/tracks';
 })();
 
-document.addEventListener(''DOMContentLoaded'', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
-  const trackId = params.get(''id'');
+  const trackId = params.get('id');
 
-  const detailContainer = document.querySelector(''.song-detail'');
-  const statusEl = document.querySelector(''.song-detail-status'');
-  const titleJaEl = document.getElementById(''track-title-ja'');
-  const titleKoEl = document.getElementById(''track-title-ko'');
-  const metaAlbumEl = document.getElementById(''track-album'');
-  const metaDurationEl = document.getElementById(''track-duration'');
-  const lyricsSummaryEl = document.getElementById(''lyrics-summary'');
-  const storyPaneEl = document.getElementById(''story'');
-  const mvLinkEl = document.getElementById(''mv-link'');
-  const infoAlbumEl = document.getElementById(''info-album'');
-  const infoTrackNoEl = document.getElementById(''info-trackno'');
-  const infoDurationEl = document.getElementById(''info-duration'');
-  const infoTypeEl = document.getElementById(''info-type'');
-  const infoReleaseEl = document.getElementById(''info-release'');
-  const relatedGridEl = document.getElementById(''related-grid'');
-  const relatedSectionEl = document.getElementById(''related-section'');
+  const detailContainer = document.querySelector('.song-detail');
+  const statusEl = document.querySelector('.song-detail-status');
+  const titleJaEl = document.getElementById('track-title-ja');
+  const titleKoEl = document.getElementById('track-title-ko');
+  const metaAlbumEl = document.getElementById('track-album');
+  const metaDurationEl = document.getElementById('track-duration');
+  const lyricsSummaryEl = document.getElementById('lyrics-summary');
+  const storyPaneEl = document.getElementById('story');
+  const mvLinkEl = document.getElementById('mv-link');
+  const infoAlbumEl = document.getElementById('info-album');
+  const infoTrackNoEl = document.getElementById('info-trackno');
+  const infoDurationEl = document.getElementById('info-duration');
+  const infoTypeEl = document.getElementById('info-type');
+  const infoReleaseEl = document.getElementById('info-release');
+  const relatedGridEl = document.getElementById('related-grid');
+  const relatedSectionEl = document.getElementById('related-section');
 
   if (!trackId) {
-    setStatus(''곡 식별자가 없습니다.'', true);
+    setStatus('곡 식별자가 없습니다.', true);
     return;
   }
 
@@ -39,10 +39,10 @@ document.addEventListener(''DOMContentLoaded'', () => {
   fetchTrack(trackId);
 
   async function fetchTrack(id) {
-    setStatus(''곡 정보를 불러오는 중입니다...'');
+    setStatus('곡 정보를 불러오는 중입니다...');
     try {
       const response = await fetch(`${API_BASE_TRACK}/${encodeURIComponent(id)}`, {
-        headers: { Accept: ''application/json'' }
+        headers: { Accept: 'application/json' }
       });
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
@@ -50,54 +50,54 @@ document.addEventListener(''DOMContentLoaded'', () => {
       const track = await response.json();
       render(track);
     } catch (error) {
-      console.error(''곡 상세 불러오기 실패'', error);
-      setStatus(''곡 정보를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'', true);
+      console.error('곡 상세 불러오기 실패', error);
+      setStatus('곡 정보를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.', true);
     }
   }
 
   function render(track) {
-    const titleJa = track.titleJa || ''곡 제목 미정'';
+    const titleJa = track.titleJa || '곡 제목 미정';
     titleJaEl.textContent = titleJa;
 
     if (track.titleKo) {
       titleKoEl.textContent = track.titleKo;
-      titleKoEl.style.display = '''';
+      titleKoEl.style.display = '';
     } else {
-      titleKoEl.textContent = '''';
-      titleKoEl.style.display = ''none'';
+      titleKoEl.textContent = '';
+      titleKoEl.style.display = 'none';
     }
 
     if (track.album) {
       const albumLink = `album-detail.html?id=${track.album.id}`;
-      metaAlbumEl.innerHTML = `<a href="${albumLink}">${escapeHtml(track.album.titleJa || ''앨범'')}</a>`;
-      infoAlbumEl.innerHTML = `<a href="${albumLink}">${escapeHtml(track.album.titleJa || ''앨범'')}</a>`;
+      metaAlbumEl.innerHTML = `<a href="${albumLink}">${escapeHtml(track.album.titleJa || '앨범')}</a>`;
+      infoAlbumEl.innerHTML = `<a href="${albumLink}">${escapeHtml(track.album.titleJa || '앨범')}</a>`;
       infoTypeEl.textContent = mapAlbumType(track.album.type);
-      infoReleaseEl.textContent = track.album.releaseDate ? formatDate(track.album.releaseDate) : ''-'';
+      infoReleaseEl.textContent = track.album.releaseDate ? formatDate(track.album.releaseDate) : '-';
     } else {
-      metaAlbumEl.textContent = '''';
-      infoAlbumEl.textContent = '''';
-      infoTypeEl.textContent = ''-'';
-      infoReleaseEl.textContent = ''-'';
+      metaAlbumEl.textContent = '';
+      infoAlbumEl.textContent = '';
+      infoTypeEl.textContent = '-';
+      infoReleaseEl.textContent = '-';
     }
 
-    metaDurationEl.textContent = track.duration ? `재생 시간 · ${track.duration}` : '''';
-    infoDurationEl.textContent = track.duration || ''-'';
-    infoTrackNoEl.textContent = track.trackNo != null ? String(track.trackNo) : ''-'';
+    metaDurationEl.textContent = track.duration ? `재생 시간 · ${track.duration}` : '';
+    infoDurationEl.textContent = track.duration || '-';
+    infoTrackNoEl.textContent = track.trackNo != null ? String(track.trackNo) : '-';
 
-    lyricsSummaryEl.textContent = track.lyricsSummary || ''가사 요약이 준비 중입니다.'';
+    lyricsSummaryEl.textContent = track.lyricsSummary || '가사 요약이 준비 중입니다.';
 
     if (track.mvUrl) {
       mvLinkEl.href = track.mvUrl;
-      mvLinkEl.style.display = ''inline-flex'';
+      mvLinkEl.style.display = 'inline-flex';
     } else {
-      mvLinkEl.style.display = ''none'';
+      mvLinkEl.style.display = 'none';
     }
 
     renderStories(Array.isArray(track.stories) ? track.stories : []);
     renderRelated(Array.isArray(track.relatedTracks) ? track.relatedTracks : []);
 
-    detailContainer.dataset.state = ''loaded'';
-    setStatus('''');
+    detailContainer.dataset.state = 'loaded';
+    setStatus('');
   }
 
   function renderStories(stories) {
@@ -107,11 +107,11 @@ document.addEventListener(''DOMContentLoaded'', () => {
       return;
     }
     storyPaneEl.innerHTML = stories.map(story => {
-      const category = escapeHtml(story.category || ''STORY'');
-      const content = escapeHtml(story.content || '''');
-      const source = story.source ? `출처 · ${escapeHtml(story.source)}` : '''';
-      const published = story.publishedAt ? formatDate(story.publishedAt) : '''';
-      const meta = [source, published].filter(Boolean).join('' · '');
+      const category = escapeHtml(story.category || 'STORY');
+      const content = escapeHtml(story.content || '');
+      const source = story.source ? `출처 · ${escapeHtml(story.source)}` : '';
+      const published = story.publishedAt ? formatDate(story.publishedAt) : '';
+      const meta = [source, published].filter(Boolean).join(' · ');
       return `
         <article class="story-card">
           <h3>${category}</h3>
@@ -126,26 +126,26 @@ document.addEventListener(''DOMContentLoaded'', () => {
     if (!relatedGridEl || !relatedSectionEl) return;
     if (!related.length) {
       relatedGridEl.innerHTML = '<p class="placeholder">관련 곡 정보가 없습니다.</p>';
-      relatedSectionEl.style.display = '''';
+      relatedSectionEl.style.display = '';
       return;
     }
     relatedGridEl.innerHTML = related.map(item => {
-      const titleJa = escapeHtml(item.titleJa || ''Untitled'');
+      const titleJa = escapeHtml(item.titleJa || 'Untitled');
       const titleKo = item.titleKo ? `<p>${escapeHtml(item.titleKo)}</p>` : '';
       return `<a class="related-card" href="song-detail.html?id=${item.id}"><h3>${titleJa}</h3>${titleKo}</a>`;
     }).join('');
-    relatedSectionEl.style.display = '''';
+    relatedSectionEl.style.display = '';
   }
 
   function setStatus(message, isError = false) {
     if (!statusEl) return;
     if (!message) {
-      statusEl.textContent = '''';
-      statusEl.className = ''song-detail-status'';
+      statusEl.textContent = '';
+      statusEl.className = 'song-detail-status';
       return;
     }
     statusEl.textContent = message;
-    statusEl.className = isError ? ''song-detail-status error'' : ''song-detail-status'';
+    statusEl.className = isError ? 'song-detail-status error' : 'song-detail-status';
   }
 });
 
