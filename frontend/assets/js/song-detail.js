@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     infoDurationEl.textContent = track.duration || '-';
     infoTrackNoEl.textContent = track.trackNo != null ? String(track.trackNo) : '-';
 
-    lyricsSummaryEl.textContent = track.lyricsSummary || '가사 요약이 준비 중입니다.';
+    lyricsSummaryEl.textContent = track.lyricsSummary || '가사가 준비 중입니다.';
 
     if (track.mvUrl) {
       mvLinkEl.href = track.mvUrl;
