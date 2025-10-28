@@ -3,6 +3,9 @@ package com.aimyon.archive.aimyon_arhcive_api.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tracks")
 @Getter
@@ -37,7 +40,16 @@ public class Track {
     @Column(name = "mv_url")
     private String mvUrl;
 
+    @OneToMany(mappedBy = "track", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<TrackStory> stories = new ArrayList<>();
+
     public void assignAlbum(Album album) {
         this.album = album;
+    }
+
+    public void addStory(TrackStory story) {
+        stories.add(story);
+        story.assignTrack(this);
     }
 }
