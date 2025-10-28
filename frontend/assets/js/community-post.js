@@ -1,4 +1,5 @@
 const COMMUNITY_POST_BASE = "http://localhost:8080/api/community/posts";
+const COMMUNITY_COMMENT_BASE = "http://localhost:8080/api/community/comments";
 const USER_ID_STORAGE_KEY = "aimyonCommunityUserId";
 const LIKE_STORAGE_PREFIX = "aimyonCommunityLike_";
 
@@ -146,12 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmed = confirm("댓글을 삭제할까요?");
     if (!confirmed) return;
     buttonEl.disabled = true;
-    fetch(
-      `${COMMUNITY_POST_BASE}/${encodeURIComponent(id)}/comments/${encodeURIComponent(
-        commentId
-      )}?userId=${USER_ID}&admin=false`,
-      { method: "DELETE" }
-    )
+    fetch(`${COMMUNITY_COMMENT_BASE}/${encodeURIComponent(commentId)}?userId=${USER_ID}&admin=false`, {
+      method: "DELETE"
+    })
       .then((res) => {
         if (!res.ok) throw new Error("delete failed");
       })
