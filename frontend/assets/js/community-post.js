@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (!id) {
-    elements.content.innerHTML = "<p>Post id is required.</p>";
+    elements.content.innerHTML = "<p>잘못된 접근입니다. 글 ID가 필요합니다.</p>";
     return;
   }
 
@@ -57,9 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateLikeButton = () => {
     const count = currentPost?.likeCount ?? 0;
-    elements.likeCount.textContent = count;
+    if (elements.likeCount) {
+      elements.likeCount.textContent = count;
+    }
     if (elements.likeLabel) {
-      elements.likeLabel.textContent = isLiked ? "❤️ Unlike" : "🤍 Like";
+      elements.likeLabel.textContent = isLiked ? "❤️ 좋아요 취소" : "🤍 좋아요";
     }
     elements.likeButton.classList.toggle("liked", isLiked);
     elements.likeButton.setAttribute("aria-pressed", String(isLiked));
@@ -76,9 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPost = post;
     elements.board.textContent = `#${post.boardSlug ?? ""}`;
     elements.date.textContent = fmtDate(post.createdAt);
-    elements.title.textContent = post.title || "Untitled";
-    elements.author.textContent = `User #${post.userId ?? "-"}`;
-    elements.content.innerHTML = (post.content || "No content yet.").replace(/\n/g, "<br>");
+    elements.title.textContent = post.title || "제목 없음";
+    elements.author.textContent = `작성자 #${post.userId ?? "-"}`;
+    elements.content.innerHTML = (post.content || "내용 없음").replace(/\n/g, "<br>");
     updateLikeButton();
   };
 
@@ -90,32 +92,43 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(renderPost)
       .catch(() => {
-        elements.content.innerHTML = "<p>Failed to load the post.</p>";
+        elements.content.innerHTML = "<p>게시글을 불러오지 못했어요.</p>";
       });
 
   const renderComments = (items) => {
     if (!items.length) {
       elements.comments.innerHTML =
-        '<div class="community-empty" style="margin:0;"><p>No comments yet.</p></div>';
+        '<div class="community-empty" style="margin:0;"><p>아직 댓글이 없어요.</p></div>';
       return;
     }
     elements.comments.innerHTML = items
-      .map(
-        (comment) => `
+      .map((comment) => {
+        const canDelete = Number(comment.userId) === USER_ID;
+        const deleteButton = canDelete
+          ? `<button class="comment-delete" data-id="${comment.id}" type="button">삭제</button>`
+          : "";
+        return `
           <div class="comment-card">
             <div class="comment-meta">
-              <span>User #${comment.userId ?? "-"}</span>
+              <span>작성자 #${comment.userId ?? "-"}</span>
               <span>${fmtDate(comment.createdAt)}</span>
+              ${deleteButton}
             </div>
             <div class="comment-body">${(comment.content || "").replace(/\n/g, "<br>")}</div>
           </div>
-        `
-      )
+        `;
+      })
       .join("");
+
+    elements.comments
+      .querySelectorAll(".comment-delete")
+      .forEach((btn) =>
+        btn.addEventListener("click", () => deleteComment(btn.getAttribute("data-id"), btn))
+      );
   };
 
   const loadComments = () => {
-    elements.comments.innerHTML = '<p style="opacity:.7">Loading comments...</p>';
+    elements.comments.innerHTML = '<p style="opacity:.7">댓글을 불러오는 중...</p>';
     fetch(`${COMMUNITY_POST_BASE}/${encodeURIComponent(id)}/comments`)
       .then((res) => {
         if (!res.ok) throw new Error("comments fetch failed");
@@ -124,7 +137,35 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(renderComments)
       .catch(() => {
         elements.comments.innerHTML =
-          '<div class="community-empty" style="margin:0;"><p>Failed to load comments.</p></div>';
+          '<div class="community-empty" style="margin:0;"><p>댓글을 불러오지 못했어요.</p></div>';
+      });
+  };
+
+  const deleteComment = (commentId, buttonEl) => {
+    if (!commentId) return;
+    const confirmed = confirm("댓글을 삭제할까요?");
+    if (!confirmed) return;
+    buttonEl.disabled = true;
+    fetch(
+      `${COMMUNITY_POST_BASE}/${encodeURIComponent(id)}/comments/${encodeURIComponent(
+        commentId
+      )}?userId=${USER_ID}&admin=false`,
+      { method: "DELETE" }
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error("delete failed");
+      })
+      .then(() => {
+        setCommentStatus("삭제가 완료되었습니다.", "success");
+        loadComments();
+        loadPost();
+        setTimeout(() => setCommentStatus(""), 1200);
+      })
+      .catch(() => {
+        setCommentStatus("댓글 삭제에 실패했습니다.", "error");
+      })
+      .finally(() => {
+        buttonEl.disabled = false;
       });
   };
 
@@ -144,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateLikeButton();
       })
       .catch(() => {
-        alert("Failed to update like.");
+        alert("좋아요 처리에 실패했습니다.");
       })
       .finally(() => {
         elements.likeButton.disabled = false;
@@ -155,11 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
     const content = elements.commentInput.value.trim();
     if (!content) {
-      setCommentStatus("Please enter a comment.", "error");
+      setCommentStatus("댓글 내용을 입력해 주세요.", "error");
       return;
     }
 
-    setCommentStatus("Submitting comment...");
+    setCommentStatus("댓글을 등록하는 중입니다...");
     elements.commentForm.querySelector("button").disabled = true;
 
     fetch(`${COMMUNITY_POST_BASE}/${encodeURIComponent(id)}/comments`, {
@@ -173,13 +214,13 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(() => {
         elements.commentInput.value = "";
-        setCommentStatus("Comment added!", "success");
+        setCommentStatus("등록되었습니다!", "success");
         loadComments();
         loadPost();
         setTimeout(() => setCommentStatus(""), 1500);
       })
       .catch(() => {
-        setCommentStatus("Failed to add comment.", "error");
+        setCommentStatus("댓글 등록에 실패했습니다.", "error");
       })
       .finally(() => {
         elements.commentForm.querySelector("button").disabled = false;
