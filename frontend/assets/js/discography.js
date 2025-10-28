@@ -1,29 +1,30 @@
-﻿const API_ENDPOINT = (() => {
-  if (window.location.protocol === 'file:') {
-    return 'http://localhost:8080/api/albums';
+﻿const ALBUMS_API_BASE = (() => {
+  if (window.location.protocol === "file:") {
+    return "http://localhost:8080/api/albums";
   }
   const { protocol, hostname, port } = window.location;
-  if (port && port !== '' && port !== '8080') {
+  if (port && port !== "" && port !== "8080") {
     return `${protocol}//${hostname}:8080/api/albums`;
   }
-  return '/api/albums';
+  return "/api/albums";
 })();
 
-document.addEventListener('DOMContentLoaded', () => {
-  const filterTabs = Array.from(document.querySelectorAll('.filter-tab'));
-  const grid = document.querySelector('.album-grid');
+document.addEventListener("DOMContentLoaded", () => {
+  const filterTabs = Array.from(document.querySelectorAll(".filter-tab"));
+  const grid = document.querySelector(".album-grid");
+  const status = document.getElementById("albumCount");
   if (!grid) return;
 
   let albums = [];
-  let currentFilter = 'all';
+  let currentFilter = "all";
 
-  grid.innerHTML = createStatusMarkup('앨범 데이터를 불러오는 중입니다...');
+  grid.innerHTML = createStatusMarkup("앨범 목록을 불러오는 중입니다...");
 
-  filterTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      filterTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentFilter = tab.getAttribute('data-filter') || 'all';
+  filterTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      filterTabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      currentFilter = tab.getAttribute("data-filter") || "all";
       render();
     });
   });
@@ -32,115 +33,106 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchAlbums() {
     try {
-      const response = await fetch(API_ENDPOINT, { headers: { Accept: 'application/json' } });
+      const response = await fetch(`${ALBUMS_API_BASE}?size=200`, {
+        headers: { Accept: "application/json" }
+      });
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
       const data = await response.json();
-      albums = Array.isArray(data.content) ? data.content : [];
+      if (Array.isArray(data)) {
+        albums = data;
+      } else if (Array.isArray(data.content)) {
+        albums = data.content;
+      } else {
+        albums = [];
+      }
       render();
     } catch (error) {
-      console.error('디스코그래피 불러오기 실패', error);
-      grid.innerHTML = createStatusMarkup('앨범 정보를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.', true);
+      console.error("Failed to load albums", error);
+      grid.innerHTML = createStatusMarkup("앨범 정보를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.", true);
     }
   }
 
   function render() {
     if (!albums.length) {
-      grid.innerHTML = createStatusMarkup('등록된 앨범이 아직 없습니다.');
+      grid.innerHTML = createStatusMarkup("등록된 앨범이 아직 없어요.");
+      updateCount(0);
       return;
     }
 
-    const target = currentFilter === 'all'
+    const filtered = currentFilter === "all"
       ? albums
-      : albums.filter(album => (album.type || '').toLowerCase() === currentFilter);
+      : albums.filter((album) => (album.type || "").toLowerCase() === currentFilter);
 
-    if (!target.length) {
-      grid.innerHTML = createStatusMarkup('선택한 조건에 맞는 앨범이 없습니다.');
+    if (!filtered.length) {
+      grid.innerHTML = createStatusMarkup("선택한 조건에 해당하는 앨범이 없어요.");
+      updateCount(0);
       return;
     }
 
-    const fragment = document.createDocumentFragment();
+    updateCount(filtered.length);
 
-    target.forEach(album => {
-      const card = document.createElement('article');
-      card.className = 'album-card';
-      card.dataset.category = (album.type || '').toLowerCase() || 'album';
-      card.innerHTML = createCardMarkup(album);
-      const detailId = album.id ?? '';
+    grid.innerHTML = filtered
+      .map((album) => {
+        const cover = album.coverUrl && album.coverUrl.trim() !== ""
+          ? album.coverUrl
+          : "https://via.placeholder.com/320x320/555/ffffff?text=No+Image";
+        const released = album.releaseDate ? formatDate(album.releaseDate) : "발매일 미정";
+        const tags = Array.isArray(album.tags) ? album.tags : [];
+        return `
+          <a class="album-card" href="album-detail.html?id=${album.id}">
+            <div class="album-cover">
+              <img src="${cover}" alt="${escapeHtml(album.titleJa || album.titleKo || "album")}" loading="lazy">
+            </div>
+            <div class="album-info">
+              <h3>${escapeHtml(album.titleJa || "제목 미정")}</h3>
+              ${album.titleKo ? `<p class="album-subtitle">${escapeHtml(album.titleKo)}</p>` : ""}
+              <p class="album-meta">${mapAlbumType(album.type)} · ${released}</p>
+              ${tags.length ? `<div class="album-tags">${tags.map((tag) => `<span class="tag">#${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+            </div>
+          </a>
+        `;
+      })
+      .join("");
+  }
 
-      if (detailId !== '') {
-        card.addEventListener('click', (event) => {
-          const anchor = event.target.closest('.btn-play');
-          if (anchor) {
-            return;
-          }
-          window.location.href = `album-detail.html?id=${encodeURIComponent(detailId)}`;
-        });
-      }
-
-      fragment.appendChild(card);
-    });
-
-    grid.innerHTML = '';
-    grid.appendChild(fragment);
+  function updateCount(count) {
+    if (status) {
+      status.textContent = `${count}개 앨범`;
+    }
   }
 });
 
-function createCardMarkup(album) {
-  const typeLabels = {
-    ALBUM: '정규 앨범',
-    SINGLE: '싱글',
-    EP: 'EP'
-  };
-
-  const cover = album.coverUrl || 'https://via.placeholder.com/300x300/555/ffffff?text=No+Image';
-  const titleJa = album.titleJa || 'Untitled';
-  const titleKo = album.titleKo || '';
-  const typeLabel = typeLabels[(album.type || '').toUpperCase()] || album.type || '';
-  const releaseDate = formatDate(album.releaseDate);
-  const tags = Array.isArray(album.tags) && album.tags.length > 0
-    ? album.tags.map(tag => `<span class="tag">#${escapeHtml(tag)}</span>`).join('')
-    : '';
-  const detailLink = `album-detail.html?id=${album.id ?? ''}`;
-
-  return `
-    <div class="album-cover">
-      <img src="${cover}" alt="${escapeHtml(titleJa)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x300/555/ffffff?text=No+Image';">
-      <div class="album-hover">
-        <a href="${detailLink}" class="btn-play" aria-label="${escapeHtml(titleJa)} 상세"><i class="fas fa-play"></i></a>
-      </div>
-    </div>
-    <div class="album-info">
-      <h3>${escapeHtml(titleJa)}</h3>
-      ${titleKo ? `<p class="album-subtitle">${escapeHtml(titleKo)}</p>` : ''}
-      <p class="album-type">${escapeHtml(typeLabel)}</p>
-      ${releaseDate ? `<p class="album-year">${releaseDate}</p>` : ''}
-      <div class="album-tags">${tags}</div>
-    </div>
-  `;
-}
-
 function createStatusMarkup(message, isError = false) {
-  const className = isError ? 'album-grid-status error' : 'album-grid-status';
-  return `<div class="${className}">${escapeHtml(message)}</div>`;
+  return `<div class="album-status${isError ? " error" : ""}">${message}</div>`;
 }
 
 function formatDate(value) {
-  if (!value) return '';
+  if (!value) return "";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
   return `${y}.${m}.${d}`;
+}
+
+function mapAlbumType(type) {
+  const mapping = {
+    ALBUM: "정규 앨범",
+    SINGLE: "싱글",
+    EP: "EP"
+  };
+  if (!type) return "형식 미정";
+  return mapping[type.toUpperCase()] || type;
 }
 
 function escapeHtml(text) {
   return String(text)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }

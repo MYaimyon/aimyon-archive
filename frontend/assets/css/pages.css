@@ -220,6 +220,104 @@
     border: 1px solid var(--border-color);
 }
 
+.community-post-form {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    display: grid;
+    gap: 18px;
+}
+
+.community-post-form .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.community-post-form .form-header h2 {
+    font-size: 1.3rem;
+}
+
+.community-post-form .user-id {
+    font-size: 0.9rem;
+    color: var(--text-tertiary);
+}
+
+.post-form {
+    display: grid;
+    gap: 16px;
+}
+
+.post-form .form-field {
+    display: grid;
+    gap: 8px;
+}
+
+.post-form .form-field span {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.post-form input,
+.post-form textarea {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 12px 14px;
+    color: var(--text-primary);
+}
+
+.post-form input:focus,
+.post-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+.post-form textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.post-form .form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-status {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+}
+
+.form-status.success {
+    color: #69db7c;
+}
+
+.form-status.error {
+    color: #ff6b6b;
+}
+
+.form-submit {
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(255, 107, 107, 0.3);
+}
+
 .community-tab {
     border: none;
     background: none;
@@ -287,10 +385,50 @@
     color: var(--text-tertiary);
     display: flex;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
 .community-card .meta span {
     white-space: nowrap;
+}
+
+.community-card .card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.community-card .card-link,
+.community-card .card-delete {
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.community-card .card-link {
+    display: inline-flex;
+    align-items: center;
+}
+
+.community-card .card-link:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.community-card .card-delete {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.community-card .card-delete:hover {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
 }
 
 .community-empty {
@@ -1713,3 +1851,55 @@
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
+.discography-meta {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+}
+
+.album-status {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+}
+
+.album-status.error {
+    color: #ff6b6b;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.card-actions .card-link,
+.card-actions .card-delete {
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.card-actions .card-link:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.card-actions .card-delete {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.card-actions .card-delete:hover {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+}
+

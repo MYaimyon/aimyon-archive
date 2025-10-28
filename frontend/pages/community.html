@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -21,6 +21,28 @@
     <section class="community-section">
         <div class="container">
             <div class="community-tabs" id="communityBoards" role="tablist" aria-label="커뮤니티 게시판"></div>
+
+            <section class="community-post-form" aria-labelledby="communityPostFormTitle">
+                <div class="form-header">
+                    <h2 id="communityPostFormTitle">새 글 작성</h2>
+                    <span class="user-id">내 임시 사용자 ID: <strong id="communityUserId">-</strong></span>
+                </div>
+                <form id="communityPostForm" class="post-form">
+                    <label class="form-field">
+                        <span>제목</span>
+                        <input type="text" id="postTitle" placeholder="제목을 입력하세요" required>
+                    </label>
+                    <label class="form-field">
+                        <span>내용</span>
+                        <textarea id="postContent" placeholder="내용을 입력하세요" required rows="5"></textarea>
+                    </label>
+                    <div class="form-actions">
+                        <p id="communityPostStatus" class="form-status"></p>
+                        <button type="submit" class="form-submit">게시글 등록</button>
+                    </div>
+                </form>
+            </section>
+
             <div id="communityPosts" class="community-list"></div>
         </div>
     </section>

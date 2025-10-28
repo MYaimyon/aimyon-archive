@@ -1,172 +1,42 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song List - aimyon archive</title>
+    <title>곡 목록 - aimyon archive</title>
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/pages.css">
 </head>
 <body>
-<!-- 공통 헤더 -->
 <div id="header-placeholder"></div>
 
-<!-- 메인 컨텐츠 -->
-<div class="container">
-    <!-- 페이지 헤더 -->
+<div class="container song-list-page">
     <header class="page-header">
         <h1 class="song-title">Song List</h1>
-        <p class="song-subtitle">あいみょん 곡 목록</p>
-        <div class="album-info">전체 곡을 한눈에 확인하고 원하는 곡을 찾아보세요</div>
+        <p class="song-subtitle">아이묭의 곡들을 쉽게 찾아보세요.</p>
+        <div class="album-info">필터와 검색을 활용해 원하는 곡을 빠르게 찾을 수 있어요.</div>
     </header>
 
-    <!-- 검색 & 필터 섹션 -->
-    <div class="search-filter-section">
+    <section class="search-filter-section">
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="곡 제목이나 앨범명으로 검색...">
-            <button class="search-btn">🔍</button>
+            <input type="text" id="searchInput" placeholder="곡명 또는 앨범명으로 검색" autocomplete="off">
+            <button class="search-btn" type="button" disabled>검색</button>
             <button class="reset-btn" id="resetBtn" style="display: none;">전체 보기</button>
         </div>
-
         <div class="filter-tabs">
             <button class="filter-tab active" data-filter="all">전체</button>
-            <button class="filter-tab" data-filter="early">초기곡 (2015-2016)</button>
+            <button class="filter-tab" data-filter="early">초기곡 (2016년까지)</button>
             <button class="filter-tab" data-filter="major">메이저 (2017-2019)</button>
             <button class="filter-tab" data-filter="recent">최신곡 (2020-)</button>
         </div>
-    </div>
+        <div class="discography-meta">
+            <span id="songCount">0곡</span>
+        </div>
+    </section>
 
-    <!-- 곡 카드 그리드 -->
-    <div class="songs-grid">
-        <!-- 夜行バス (초기곡) -->
-        <a href="song-detail.html" class="song-card" data-category="early" data-year="2015" data-album="tamago">
-            <div class="song-thumbnail">
-                <div class="thumbnail-placeholder">🚌</div>
-            </div>
-            <div class="song-info">
-                <h3 class="song-title-jp">夜行バス</h3>
-                <p class="song-title-kr">야행버스</p>
-                <div class="song-meta">
-                    <span class="album-name">tamago</span>
-                    <span class="release-year">2015</span>
-                </div>
-                <div class="song-tags">
-                    <span class="tag tag-genre">Folk</span>
-                    <span class="tag tag-theme">자전적</span>
-                    <span class="tag tag-mood">감성</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- 君はロックを聴かない (메이저) -->
-        <a href="#" class="song-card" data-category="major" data-year="2017" data-album="青春のエキサイトメント">
-            <div class="song-thumbnail">
-                <div class="thumbnail-placeholder">🎵</div>
-            </div>
-            <div class="song-info">
-                <h3 class="song-title-jp">君はロックを聴かない</h3>
-                <p class="song-title-kr">너는 록을 듣지 않아</p>
-                <div class="song-meta">
-                    <span class="album-name">青春のエキサイトメント</span>
-                    <span class="release-year">2017</span>
-                </div>
-                <div class="song-tags">
-                    <span class="tag tag-genre">Pop Rock</span>
-                    <span class="tag tag-theme">연애</span>
-                    <span class="tag tag-mood">밝음</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- マリーゴールド (메이저) -->
-        <a href="#" class="song-card" data-category="major" data-year="2018" data-album="瞬間的シックスセンス">
-            <div class="song-thumbnail">
-                <div class="thumbnail-placeholder">🌼</div>
-            </div>
-            <div class="song-info">
-                <h3 class="song-title-jp">マリーゴールド</h3>
-                <p class="song-title-kr">마리골드</p>
-                <div class="song-meta">
-                    <span class="album-name">瞬間的シックスセンス</span>
-                    <span class="release-year">2018</span>
-                </div>
-                <div class="song-tags">
-                    <span class="tag tag-genre">Pop</span>
-                    <span class="tag tag-theme">사랑</span>
-                    <span class="tag tag-mood">따뜻함</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- 愛を伝えたいだとか (메이저) -->
-        <a href="#" class="song-card" data-category="major" data-year="2019" data-album="瞬間的シックスセンス">
-            <div class="song-thumbnail">
-                <div class="thumbnail-placeholder">💕</div>
-            </div>
-            <div class="song-info">
-                <h3 class="song-title-jp">愛を伝えたいだとか</h3>
-                <p class="song-title-kr">사랑을 전하고 싶다던가</p>
-                <div class="song-meta">
-                    <span class="album-name">瞬間的シックスセンス</span>
-                    <span class="release-year">2019</span>
-                </div>
-                <div class="song-tags">
-                    <span class="tag tag-genre">Ballad</span>
-                    <span class="tag tag-theme">고백</span>
-                    <span class="tag tag-mood">진솔함</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- ハート (최신곡) -->
-        <a href="#" class="song-card" data-category="recent" data-year="2021" data-album="おいしいパスタがあると聞いて">
-            <div class="song-thumbnail">
-                <div class="thumbnail-placeholder">❤️</div>
-            </div>
-            <div class="song-info">
-                <h3 class="song-title-jp">ハート</h3>
-                <p class="song-title-kr">하트</p>
-                <div class="song-meta">
-                    <span class="album-name">おいしいパスタがあると聞いて</span>
-                    <span class="release-year">2021</span>
-                </div>
-                <div class="song-tags">
-                    <span class="tag tag-genre">Pop</span>
-                    <span class="tag tag-theme">그리움</span>
-                    <span class="tag tag-mood">애절함</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- 愛の花 (최신곡) -->
-        <a href="#" class="song-card" data-category="recent" data-year="2023" data-album="Single">
-            <div class="song-thumbnail">
-                <div class="thumbnail-placeholder">🌸</div>
-            </div>
-            <div class="song-info">
-                <h3 class="song-title-jp">愛の花</h3>
-                <p class="song-title-kr">사랑의 꽃</p>
-                <div class="song-meta">
-                    <span class="album-name">Single</span>
-                    <span class="release-year">2023</span>
-                </div>
-                <div class="song-tags">
-                    <span class="tag tag-genre">Folk Pop</span>
-                    <span class="tag tag-theme">성숙한 사랑</span>
-                    <span class="tag tag-mood">평온함</span>
-                </div>
-            </div>
-        </a>
-    </div>
-
-    <!-- 로딩 더 버튼 -->
-    <div class="load-more-section">
-        <button class="load-more-btn">더 많은 곡 보기</button>
-        <p class="total-count">총 <span id="songCount">6</span>곡</p>
-    </div>
+    <div class="songs-grid"></div>
 </div>
 
-<!-- 공통 푸터 -->
 <div id="footer-placeholder"></div>
 
 <script src="../assets/js/common.js"></script>
