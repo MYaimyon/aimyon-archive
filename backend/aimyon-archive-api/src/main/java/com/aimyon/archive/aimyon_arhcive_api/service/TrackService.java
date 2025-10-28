@@ -1,10 +1,12 @@
 package com.aimyon.archive.aimyon_arhcive_api.service;
 
 import com.aimyon.archive.aimyon_arhcive_api.domain.Track;
+import com.aimyon.archive.aimyon_arhcive_api.domain.TrackStory;
 import com.aimyon.archive.aimyon_arhcive_api.dto.PagedResponse;
 import com.aimyon.archive.aimyon_arhcive_api.dto.TrackDetailResponse;
 import com.aimyon.archive.aimyon_arhcive_api.dto.TrackSummaryResponse;
 import com.aimyon.archive.aimyon_arhcive_api.repository.TrackRepository;
+import com.aimyon.archive.aimyon_arhcive_api.repository.TrackStoryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,9 +25,12 @@ import java.util.Locale;
 public class TrackService {
 
     private final TrackRepository trackRepository;
+    private final TrackStoryRepository trackStoryRepository;
 
-    public TrackService(TrackRepository trackRepository) {
+    public TrackService(TrackRepository trackRepository,
+                        TrackStoryRepository trackStoryRepository) {
         this.trackRepository = trackRepository;
+        this.trackStoryRepository = trackStoryRepository;
     }
 
     public PagedResponse<TrackSummaryResponse> searchTracks(String keyword, Long albumId, Pageable pageable) {
@@ -80,18 +86,33 @@ public class TrackService {
     }
 
     private List<TrackDetailResponse.Story> buildStories(Track track, LocalDate albumReleaseDate) {
-        String summary = track.getLyricsSummary();
-        if (!StringUtils.hasText(summary)) {
-            summary = "이 곡에 대한 스토리가 준비 중입니다.";
+        List<TrackDetailResponse.Story> result = new ArrayList<>();
+
+        if (StringUtils.hasText(track.getLyricsSummary())) {
+            result.add(new TrackDetailResponse.Story(
+                    null,
+                    "LYRICS",
+                    track.getLyricsSummary(),
+                    "Lyrics summary",
+                    null,
+                    null,
+                    albumReleaseDate
+            ));
         }
-        return List.of(
-                new TrackDetailResponse.Story(
-                        null,
-                        "LYRICS",
-                        summary,
-                        "요약 수집본",
-                        albumReleaseDate
-                )
-        );
+
+        List<TrackStory> storyEntities = trackStoryRepository.findByTrackOrderByCreatedAtAsc(track);
+        storyEntities.stream()
+                .map(story -> new TrackDetailResponse.Story(
+                        story.getId(),
+                        story.getCategory(),
+                        story.getContent(),
+                        story.getSourceName(),
+                        story.getSourceUrl(),
+                        story.getLanguage(),
+                        story.getCreatedAt() != null ? story.getCreatedAt().toLocalDate() : null
+                ))
+                .forEach(result::add);
+
+        return result;
     }
 }

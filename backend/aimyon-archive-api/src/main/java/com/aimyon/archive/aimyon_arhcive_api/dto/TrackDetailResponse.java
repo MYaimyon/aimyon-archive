@@ -20,5 +20,13 @@ public record TrackDetailResponse(
 
     public record RelatedTrack(Long id, String titleJa, String titleKo) {}
 
-    public record Story(Long id, String category, String content, String source, LocalDate publishedAt) {}
+    public record Story(
+            Long id,
+            String category,
+            String content,
+            String sourceName,
+            String sourceUrl,
+            String language,
+            LocalDate publishedAt
+    ) {}
 }
