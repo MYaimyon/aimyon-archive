@@ -507,6 +507,150 @@
     color: var(--primary-color);
 }
 
+/* ========================================
+   PLACES PAGE
+======================================== */
+.places-hero {
+    padding: 40px 0 16px;
+    text-align: center;
+}
+
+.places-controls {
+    padding: 12px 0 24px;
+}
+
+.places-filter {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 220px)) auto;
+    gap: 12px;
+    align-items: end;
+}
+
+.filter-field {
+    display: grid;
+    gap: 6px;
+}
+
+.filter-field.stretch {
+    grid-column: span 2;
+}
+
+.filter-label {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+}
+
+.filter-field input {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 10px 14px;
+    color: var(--text-primary);
+}
+
+.filter-field input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+.filter-submit {
+    align-self: stretch;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.filter-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(255, 107, 107, 0.3);
+}
+
+.places-list-section {
+    padding-bottom: 60px;
+}
+
+.places-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.place-card {
+    background: var(--bg-card);
+    border-radius: 18px;
+    border: 1px solid var(--border-color);
+    padding: 22px 24px;
+    display: grid;
+    gap: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.place-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+}
+
+.place-card.skeleton {
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+.place-card h3 {
+    font-size: 1.3rem;
+}
+
+.place-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+}
+
+.place-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.place-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.place-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.place-empty {
+    text-align: center;
+    padding: 60px 20px;
+    border-radius: 18px;
+    border: 1px dashed var(--border-color);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 768px) {
+    .places-filter {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .filter-field.stretch {
+        grid-column: span 1;
+    }
+}
+
 .related-songs h3 {
     color: var(--primary-color);
     margin-bottom: 20px;

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>묭지순례 - aimyon archive</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/pages.css">
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<main class="main-content">
+    <section class="places-hero">
+        <div class="container">
+            <h1 class="section-title">묭지순례</h1>
+            <p class="section-subtitle">아이묭의 발자취가 남아 있는 장소들을 따라가 봐요.</p>
+        </div>
+    </section>
+
+    <section class="places-controls">
+        <div class="container">
+            <form id="placeFilters" class="places-filter">
+                <label class="filter-field">
+                    <span class="filter-label">도시</span>
+                    <input type="text" id="filterCity" placeholder="예: 도쿄" autocomplete="off">
+                </label>
+                <label class="filter-field">
+                    <span class="filter-label">태그</span>
+                    <input type="text" id="filterTag" placeholder="예: cafe" autocomplete="off">
+                </label>
+                <label class="filter-field stretch">
+                    <span class="filter-label">검색</span>
+                    <input type="text" id="filterKeyword" placeholder="장소명/설명 검색" autocomplete="off">
+                </label>
+                <button type="submit" class="filter-submit">필터 적용</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="places-list-section">
+        <div class="container">
+            <div id="placesList" class="places-grid"></div>
+        </div>
+    </section>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/places.js"></script>
+</body>
+</html>
