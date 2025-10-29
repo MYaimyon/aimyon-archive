@@ -61,12 +61,33 @@
             </div>
         </div>
     </section>
+
+    <section class="home-search">
+        <div class="container">
+            <h2 class="section-title">검색으로 바로 찾기</h2>
+            <p class="section-subtitle">궁금한 앨범·곡·장소·아이템·라이브를 검색해 보세요.</p>
+            <form id="homeSearchForm" class="home-search-form">
+                <input
+                    type="text"
+                    id="homeSearchInput"
+                    name="q"
+                    placeholder="예: 사랑을 전하고 싶다거나"
+                    aria-label="검색어"
+                    autocomplete="off"
+                    required
+                >
+                <button type="submit">검색</button>
+            </form>
+            <p class="home-search-helper">검색 버튼을 누르면 검색 전용 페이지로 이동해요.</p>
+        </div>
+    </section>
 </main>
 
 <!-- 공통 푸터 -->
 <div id="footer-placeholder"></div>
 
 <script src="../assets/js/common.js"></script>
+<script src="../assets/js/home-search.js"></script>
 </body>
 </html>
 
