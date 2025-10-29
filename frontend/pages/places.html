@@ -40,7 +40,10 @@
 
     <section class="places-list-section">
         <div class="container">
-            <div id="placesList" class="places-grid"></div>
+            <div class="places-layout">
+                <div id="placesMap" class="places-map" role="presentation" aria-label="지도"></div>
+                <div id="placesList" class="places-grid"></div>
+            </div>
         </div>
     </section>
 </main>
@@ -48,6 +51,7 @@
 <div id="footer-placeholder"></div>
 
 <script src="../assets/js/common.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbg5C2PT3f7fBEQIkojwqYL6ClSNP5Ve4&language=ja"></script>
 <script src="../assets/js/places.js"></script>
 </body>
 </html>

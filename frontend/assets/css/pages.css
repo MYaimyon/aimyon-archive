@@ -713,6 +713,20 @@
     padding-bottom: 60px;
 }
 
+.places-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+}
+
+.places-map {
+    min-height: 520px;
+    border-radius: 18px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+}
+
 .places-grid {
     display: grid;
     gap: 16px;
@@ -786,6 +800,14 @@
 
     .filter-field.stretch {
         grid-column: span 1;
+    }
+
+    .places-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .places-map {
+        min-height: 360px;
     }
 }
 
