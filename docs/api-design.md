@@ -1,4 +1,4 @@
-﻿# Aimyon Archive API 설계 (초안)
+# Aimyon Archive API 설계 (초안)
 
 ## 공통 사항
 - Base URL: /api
@@ -138,6 +138,235 @@
 세부 구조는 MVP 후반에 별도로 정리 예정.
 
 ---
+
+## 4. Timeline (Artist Activity)
+
+### 4.1 GET /api/timeline-events
+List timeline events sorted by `eventDate` desc (default) with optional filters.
+
+#### Query Parameters
+| Name | Type | Default | Notes |
+|------|------|---------|-------|
+| page | int | 0 | Page index |
+| size | int | 20 | Page size |
+| year | int | - | Filter by year (`eventDate` year) |
+| type | string | - | `RELEASE`, `MEDIA`, `AWARD`, `LIVE`, `OTHER` |
+| keyword | string | - | Searches title & summary (ILIKE) |
+
+#### Response
+```json
+{
+  "content": [
+    {
+      "id": 101,
+      "title": "First Budokan Concert",
+      "summary": "AIMYON''s first headline show at Budokan.",
+      "eventDate": "2024-05-12",
+      "eventType": "LIVE",
+      "coverImageUrl": "https://...",
+      "relatedAlbumId": 12,
+      "relatedTrackId": null
+    }
+  ],
+  "page": 0,
+  "size": 20,
+  "totalElements": 45,
+  "totalPages": 3
+}
+```
+
+### 4.2 GET /api/timeline-events/{id}
+Returns full detail including related ids and external links.
+
+```json
+{
+  "id": 101,
+  "title": "First Budokan Concert",
+  "summary": "AIMYON''s first headline show at Budokan.",
+  "eventDate": "2024-05-12",
+  "eventType": "LIVE",
+  "externalUrl": "https://example.com/article",
+  "coverImageUrl": "https://...",
+  "relatedAlbumId": 12,
+  "relatedTrackId": null,
+  "relatedLiveEventId": 88
+}
+```
+
+### 4.3 Admin (future)
+- POST /api/timeline-events (ADMIN)
+- PUT /api/timeline-events/{id} (ADMIN)
+- DELETE /api/timeline-events/{id} (ADMIN)
+
+---
+
+## 5. Live Events
+
+### 5.1 GET /api/live-events
+List concerts/festivals with basic info. Setlist is excluded to keep payload small.
+
+#### Query Parameters
+| Name | Type | Default | Notes |
+|------|------|---------|-------|
+| page | int | 0 | Page index |
+| size | int | 20 | Page size |
+| year | int | - | Filter by event year |
+| tour | string | - | Exact match on `tourName` |
+| city | string | - | City keyword (ILIKE) |
+| upcoming | boolean | false | When true, return only future dates |
+
+#### Response
+```json
+{
+  "content": [
+    {
+      "id": 88,
+      "title": "AIMYON TOUR 2025 - Love Letters",
+      "eventDate": "2025-03-18",
+      "city": "Tokyo",
+      "country": "JP",
+      "venue": "Nippon Budokan",
+      "tourName": "Love Letters",
+      "isFestival": false
+    }
+  ],
+  "page": 0,
+  "size": 20,
+  "totalElements": 12,
+  "totalPages": 1
+}
+```
+
+### 5.2 GET /api/live-events/{id}
+Returns concert detail including setlist in order.
+
+```json
+{
+  "id": 88,
+  "title": "AIMYON TOUR 2025 - Love Letters",
+  "eventDate": "2025-03-18",
+  "venue": "Nippon Budokan",
+  "city": "Tokyo",
+  "country": "JP",
+  "tourName": "Love Letters",
+  "notes": "Encore featured acoustic version of ""Marigold"".",
+  "posterImageUrl": "https://...",
+  "setlist": [
+    { "order": 1, "trackId": 3, "title": "愛を伝えたいだとか", "section": "MAIN" },
+    { "order": 2, "title": "Marigold (Acoustic)", "section": "MAIN" },
+    { "order": 15, "trackId": 21, "section": "ENCORE" }
+  ]
+}
+```
+
+### 5.3 Admin (future)
+- POST /api/live-events (ADMIN)
+- PUT /api/live-events/{id} (ADMIN)
+- POST /api/live-events/{id}/setlist (ADMIN) - bulk replace setlist items
+- DELETE /api/live-events/{id} (ADMIN)
+
+---
+
+## 6. Items
+
+### 6.1 GET /api/items
+Returns fan-facing catalogue of items AIMYON wore or recommended.
+
+#### Query Parameters
+| Name | Type | Default | Notes |
+|------|------|---------|-------|
+| page | int | 0 | Page index |
+| size | int | 20 | Page size |
+| category | string | - | `FASHION`, `BOOK`, `ACCESSORY`, ... |
+| tag | string | - | Filter by tag (exact match) |
+| keyword | string | - | Searches title & description |
+
+#### Response
+```json
+{
+  "content": [
+    {
+      "id": 501,
+      "title": "Vintage Denim Jacket",
+      "categoryCode": "FASHION",
+      "description": "Worn during 2023 TV appearance",
+      "sourceType": "MEDIA",
+      "sourceDetail": "Music Station",
+      "tags": ["casual", "tv"]
+    }
+  ],
+  "page": 0,
+  "size": 20,
+  "totalElements": 30,
+  "totalPages": 2
+}
+```
+
+### 6.2 GET /api/items/{id}
+Detailed view with media assets.
+
+```json
+{
+  "id": 501,
+  "title": "Vintage Denim Jacket",
+  "category": { "code": "FASHION", "name": "패션" },
+  "description": "Worn during 2023 TV appearance",
+  "sourceType": "MEDIA",
+  "sourceDetail": "Music Station",
+  "sourceUrl": "https://...",
+  "priceNote": "Sold out",
+  "tags": ["casual", "tv"],
+  "media": [
+    { "url": "https://.../jacket.jpg", "altText": "On-stage photo" }
+  ]
+}
+```
+
+### 6.3 Reference Endpoints
+- GET /api/item-categories - return code/name list for filters.
+- Admin CRUD mirror timeline/live (POST/PUT/DELETE protected by ADMIN).
+
+---
+
+## 7. Search
+
+### 7.1 GET /api/search
+Aggregated search across supported domains.
+
+#### Query Parameters
+| Name | Type | Default | Notes |
+|------|------|---------|-------|
+| q | string | (required) | Keyword |
+| targets | string | all | Comma list (`albums,tracks,places,items,liveEvents`) |
+| size | int | 5 | Per-domain result size (cap) |
+
+#### Response
+```json
+{
+  "albums": [
+    { "id": 1, "title": "青春のエキサイトメント", "releaseDate": "2017-09-13" }
+  ],
+  "tracks": [
+    { "id": 3, "title": "愛を伝えたいだとか", "albumId": 1 }
+  ],
+  "places": [
+    { "id": 11, "name": "Osaka pilgrimage cafe" }
+  ],
+  "items": [
+    { "id": 501, "title": "Vintage Denim Jacket" }
+  ],
+  "liveEvents": [
+    { "id": 88, "title": "AIMYON TOUR 2025 - Love Letters", "eventDate": "2025-03-18" }
+  ]
+}
+```
+
+### 7.2 Notes
+- Limit each domain to `size` results to keep payload manageable.
+- For MVP perform sequential queries; later we can parallelise or use a search index.
+- Include `total` counts per domain once we add materialized view/full-text search.
+
+------
 
 ## 다음 작업 메모
 - DTO/엔티티 설계 시 위 필드에 맞춰 클래스 작성 (예: AlbumResponse)

@@ -1,98 +1,140 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>aimyon archive - あいみょん 팬사이트</title>
+    <title>Aimyon Archive - Home</title>
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/pages.css">
 </head>
 <body>
-<!-- 공통 헤더 -->
 <div id="header-placeholder"></div>
 
-<!-- 메인 컨텐츠 -->
-<main class="main-content">
-    <!-- 히어로 섹션 -->
-        <section class="hero-section">
+<main class="home-main">
+    <section class="home-hero">
+        <div class="home-hero__overlay"></div>
+        <div class="home-hero__content container">
+            <h1 class="home-hero__title">Aimyon Archive</h1>
+            <p class="home-hero__subtitle">
+                あいみょん의 음악, 이야기, 무대를 한곳에서.<br>
+                입문자를 위한 가장 빠르고 감성적인 가이드입니다.
+            </p>
+            <div class="home-hero__actions">
+                <a href="discography.html" class="btn btn-primary">디스코그래피 보기</a>
+                <a href="song-list.html" class="btn btn-secondary">대표곡 살펴보기</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-section home-events">
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-image">
-                    <div class="artist-placeholder">🎤</div>
+            <header class="section-header">
+                <div>
+                    <h2 class="section-title">최신 소식 &amp; 이벤트</h2>
+                    <p class="section-subtitle">최근 공개된 뉴스, 방송, 라이브 일정을 빠르게 확인하세요.</p>
                 </div>
+                <a href="news.html" class="section-link">전체 보기 →</a>
+            </header>
+
+            <div class="events-board" aria-live="polite">
+                <div class="events-board__head">
+                    <span>DATE</span>
+                    <span>EVENT</span>
+                    <span>LOCATION</span>
+                </div>
+                <ul class="events-board__list" id="homeEventsList">
+                    <li class="events-board__item skeleton">
+                        <span class="events-board__date shimmer"></span>
+                        <span class="events-board__title shimmer"></span>
+                        <span class="events-board__location shimmer"></span>
+                    </li>
+                    <li class="events-board__item skeleton">
+                        <span class="events-board__date shimmer"></span>
+                        <span class="events-board__title shimmer"></span>
+                        <span class="events-board__location shimmer"></span>
+                    </li>
+                    <li class="events-board__item skeleton">
+                        <span class="events-board__date shimmer"></span>
+                        <span class="events-board__title shimmer"></span>
+                        <span class="events-board__location shimmer"></span>
+                    </li>
+                    <li class="events-board__item skeleton">
+                        <span class="events-board__date shimmer"></span>
+                        <span class="events-board__title shimmer"></span>
+                        <span class="events-board__location shimmer"></span>
+                    </li>
+                </ul>
+                <p id="homeEventsStatus" class="events-board__status visually-hidden"></p>
             </div>
         </div>
     </section>
 
-    <!-- 빠른 링크 섹션 -->
-    <section class="quick-links">
+    <section class="home-section home-videos">
         <div class="container">
-            <h2 class="section-title">더 많은 콘텐츠</h2>
-            <p class="section-subtitle">あいみょん의 세계를 더 깊이 탐험해보세요</p>
+            <header class="section-header">
+                <div>
+                    <h2 class="section-title">MUSIC VIDEOS</h2>
+                    <p class="section-subtitle">あいみょん의 대표 뮤직비디오를 감상해보세요.</p>
+                </div>
+                <a href="song-list.html" class="section-link">곡 목록으로 이동 →</a>
+            </header>
 
-            <div class="links-grid">
-                <a href="song-list.html" class="link-card">
-                    <div class="link-icon">🎵</div>
-                    <h3>곡 목록</h3>
-                    <p>あいみょん의 모든 곡을<br>한눈에 확인하고 검색해보세요</p>
-                    <span class="link-arrow">→</span>
-                </a>
+            <div class="video-grid">
+                <article class="video-card">
+                    <div class="video-card__frame">
+                        <iframe src="https://www.youtube.com/embed/0xSiBpUdW4E"
+                                title="Aimyon - マリーゴールド (Marigold)"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                    </div>
+                    <h3 class="video-card__title">マリーゴールド (Marigold)</h3>
+                    <p class="video-card__meta">Official Music Video · 2018</p>
+                </article>
 
-                <a href="discography.html" class="link-card">
-                    <div class="link-icon">💿</div>
-                    <h3>디스코그래피</h3>
-                    <p>앨범별로 정리된<br>완전한 음반 목록</p>
-                    <span class="link-arrow">→</span>
-                </a>
+                <article class="video-card">
+                    <div class="video-card__frame">
+                        <iframe src="https://www.youtube.com/embed/SZzJ78UWt1o"
+                                title="Aimyon - 君はロックを聴かない"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                    </div>
+                    <h3 class="video-card__title">君はロックを聴かない</h3>
+                    <p class="video-card__meta">Official Music Video · 2017</p>
+                </article>
 
-                <a href="profile.html" class="link-card">
-                    <div class="link-icon">👤</div>
-                    <h3>프로필</h3>
-                    <p>あいみょん의 프로필과<br>음악 여정을 만나보세요</p>
-                    <span class="link-arrow">→</span>
-                </a>
+                <article class="video-card">
+                    <div class="video-card__frame">
+                        <iframe src="https://www.youtube.com/embed/UaqYDrTti8w"
+                                title="Aimyon - ハルノヒ"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                    </div>
+                    <h3 class="video-card__title">ハルノヒ</h3>
+                    <p class="video-card__meta">Official Music Video · 2019</p>
+                </article>
 
-                <a href="news.html" class="link-card">
-                    <div class="link-icon">📰</div>
-                    <h3>소식</h3>
-                    <p>최신 뉴스와 콘서트<br>정보를 확인하세요</p>
-                    <span class="link-arrow">→</span>
-                </a>
+                <article class="video-card">
+                    <div class="video-card__frame">
+                        <iframe src="https://www.youtube.com/embed/fWNBbNM6ZcE"
+                                title="Aimyon - 愛を伝えたいだとか"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                    </div>
+                    <h3 class="video-card__title">愛を伝えたいだとか</h3>
+                    <p class="video-card__meta">Official Music Video · 2016</p>
+                </article>
             </div>
-        </div>
-    </section>
-
-    <section class="home-search">
-        <div class="container">
-            <h2 class="section-title">검색으로 바로 찾기</h2>
-            <p class="section-subtitle">궁금한 앨범·곡·장소·아이템·라이브를 검색해 보세요.</p>
-            <form id="homeSearchForm" class="home-search-form">
-                <input
-                    type="text"
-                    id="homeSearchInput"
-                    name="q"
-                    placeholder="예: 사랑을 전하고 싶다거나"
-                    aria-label="검색어"
-                    autocomplete="off"
-                    required
-                >
-                <button type="submit">검색</button>
-            </form>
-            <p class="home-search-helper">검색 버튼을 누르면 검색 전용 페이지로 이동해요.</p>
         </div>
     </section>
 </main>
 
-<!-- 공통 푸터 -->
 <div id="footer-placeholder"></div>
 
 <script src="../assets/js/common.js"></script>
-<script src="../assets/js/home-search.js"></script>
+<script src="../assets/js/home.js"></script>
 </body>
 </html>
-
-
-
-
-
-

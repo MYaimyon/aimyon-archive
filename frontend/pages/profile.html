@@ -3,61 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로필 - aimyon-archive</title>
+    <title>프로필 - Aimyon Archive</title>
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/pages.css">
- </head>
+</head>
 <body>
-    <!-- Header (component) -->
-    <div id="header-placeholder"></div>
+<div id="header-placeholder"></div>
 
-    <main class="profile-page container">
-        <section class="profile-hero">
-            <div class="profile-avatar">
-                <img src="../assets/images/profile.png" alt="AIMYON 프로필" loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent='A';">
-            </div>
-            <div class="profile-summary">
-                <h1 class="profile-name">あいみょん (AIMYON)</h1>
-                <p class="profile-tagline">싱어송라이터 · J-POP · Folk/Pop</p>
-                <div class="profile-stats">
-                    <div class="stat"><strong>2015</strong><span>데뷔</span></div>
-                    <div class="stat"><strong>3</strong><span>정규 앨범</span></div>
-                    <div class="stat"><strong>20+</strong><span>싱글/EP</span></div>
+<main class="profile-main">
+    <section class="profile-hero">
+        <div class="profile-hero__glow"></div>
+        <div class="container profile-hero__inner">
+            <div class="profile-hero__text">
+                <span class="profile-hero__label">Singer Songwriter</span>
+                <h1 class="profile-hero__title">あいみょん</h1>
+                <p class="profile-hero__subtitle">
+                    솔직한 가사와 담담한 목소리로 세대를 아우르는 J-POP 싱어송라이터.
+                    일상 속 감정을 포착해 노래로 풀어내며 ‘マリーゴールド’와 ‘君はロックを聴かない’로 폭넓은 사랑을 받고 있습니다.
+                </p>
+                <div class="profile-hero__actions">
+                    <a href="discography.html" class="btn btn-primary">앨범 살펴보기</a>
                 </div>
-                <div class="profile-links">
-                    <a href="#" target="_blank" rel="noopener" class="btn-link">공식 사이트</a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-link">YouTube</a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-link">Twitter</a>
+                <ul class="profile-hero__meta">
+                    <li><strong>2015</strong><span>데뷔</span></li>
+                    <li><strong>3</strong><span>정규 앨범</span></li>
+                    <li><strong>20+</strong><span>싱글 &amp; EP</span></li>
+                </ul>
+            </div>
+            <div class="profile-hero__visual">
+                <div class="profile-hero__sphere">
+                    <img src="../assets/images/profile-aimyon.jpg" alt="무대에서 노래하는 Aimyon" loading="lazy">
+                    <div class="profile-hero__ring"></div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="profile-grid">
-            <article class="profile-card">
-                <h2>소개</h2>
-                <p>감성적인 가사와 멜로디로 사랑받는 싱어송라이터. 일상의 감정과 이야기를 솔직하게 노래합니다.</p>
+    <section class="profile-section profile-highlight">
+        <div class="container profile-highlight__grid">
+            <article class="profile-highlight__card">
+                <h2>음악 스타일</h2>
+                <p>포크를 기반으로 한 담백한 멜로디와 솔직한 감성 가사가 특징. 일상의 디테일을 노래하며 공감을 이끌어냅니다.</p>
             </article>
-            <article class="profile-card">
-                <h2>하이라이트</h2>
-                <ul class="bullets">
-                    <li>대표곡: 君はロックを聴かない, マリーゴールド</li>
-                    <li>수상/차트 기록 등(추가 예정)</li>
+            <article class="profile-highlight__card">
+                <h2>대표곡</h2>
+                <ul>
+                    <li>マリーゴールド (Marigold)</li>
+                    <li>君はロックを聴かない</li>
+                    <li>ハルノヒ</li>
                 </ul>
             </article>
-            <article class="profile-card">
-                <h2>기본 정보</h2>
-                <table class="info-table">
-                    <tr><td>활동</td><td>싱어송라이터</td></tr>
-                    <tr><td>장르</td><td>J-POP, Folk/Pop</td></tr>
-                    <tr><td>데뷔</td><td>2015</td></tr>
-                </table>
+            <article class="profile-highlight__card">
+                <h2>최근 활동</h2>
+                <p>2024 Aimyon Road Show 전국 투어 진행, 영화·드라마 OST 참여 등 꾸준한 창작 활동을 이어가고 있습니다.</p>
             </article>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <!-- Footer (component) -->
-    <div id="footer-placeholder"></div>
+    <section id="profile-story" class="profile-section profile-story">
+        <div class="container profile-story__inner">
+            <div class="profile-story__text">
+                <h2>감정을 노래하는 목소리</h2>
+                <p>
+                    효고 현 니시노미야에서 태어난 Aimyon은 사춘기 시절부터 직접 가사를 쓰고 기타를 치며 음악을 만들어 왔습니다.
+                    필터 없는 솔직한 언어와 담담한 목소리는 듣는 이의 마음을 곧바로 건드리며, 일본 뿐 아니라 국내외 팬들에게도 큰 공감을 얻고 있습니다.
+                </p>
+                <p>
+                    그녀의 노래는 일상 속 ‘사소하지만 중요한 감정’을 포착해 담아냅니다.
+                    연인과의 작은 다툼, 가족과의 추억, 홀로 느끼는 외로움까지. 감정을 숨기지 않는 가사는 Aimyon만의 가장 큰 매력입니다.
+                </p>
+            </div>
+            <div class="profile-story__panel">
+                <h3>키워드로 보는 Aimyon</h3>
+                <ul>
+                    <li><strong>Folk &amp; Pop</strong> — 따뜻한 어쿠스틱 기반의 멜로디</li>
+                    <li><strong>Honest Lyrics</strong> — 솔직하고 직설적인 표현</li>
+                    <li><strong>Live Performance</strong> — 담백하면서도 힘 있는 무대</li>
+                    <li><strong>Storytelling</strong> — 일상 속 감정을 섬세하게 묘사</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-    <script src="../assets/js/common.js"></script>
+    <section class="profile-section profile-more">
+        <div class="container profile-more__grid">
+            <article class="profile-more__card">
+                <h3>영향 받은 아티스트</h3>
+                <p>YUI, Spitz, Sakanaction 등 한국에서도 사랑받는 일본 아티스트들에게서 큰 영감을 받았다고 밝혔습니다.</p>
+            </article>
+            <article class="profile-more__card">
+                <h3>팬이 사랑한 순간</h3>
+                <p>무대에서 담담하게 나누는 토크와 ‘마리골드’를 함께 부르는 공연 장면은 Aimyon의 시그니처가 되었습니다.</p>
+            </article>
+            <article class="profile-more__card">
+                <h3>추천 영상</h3>
+                <p>무대와 인터뷰 영상은 <a href="https://www.youtube.com/c/aimyon" target="_blank" rel="noopener">공식 YouTube 채널</a>에서 볼 수 있습니다.</p>
+            </article>
+        </div>
+    </section>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="../assets/js/common.js"></script>
 </body>
 </html>

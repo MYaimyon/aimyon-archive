@@ -1,4 +1,4 @@
-﻿# System Design Notes (Aimyon Archive)
+# System Design Notes (Aimyon Archive)
 
 이 문서는 앞으로 구현할 핵심 기능(음악 스토리, 묭지순례, 라이브/타임라인, 커뮤니티/관리자, 검색)에 대한 데이터 구조와 API 초안을 정리하기 위한 메모다. 개발을 진행하면서 언제든 자유롭게 수정/추가할 수 있다.
 
@@ -154,26 +154,135 @@ Both boards share the same post/comment model but we track which board each post
 - 이미지 업로드(S3 등) 연결
 - 태그 검색 또는 Full-Text Search
 - 활동 알림, 즐겨찾기, 대댓글(쓰레드) 등은 추후 단계
-## 6. 검색
+## 6. Timeline (Artist Activity Timeline)
 
-앨범/곡/장소/라이브 등 주요 도메인 데이터를 한 번에 찾아볼 수 있는 통합 검색.
+Artist milestones (debut anniversaries, award wins, major releases, media appearances) appear in chronological order so newcomers can understand AIMYON''s journey quickly.
 
-### 6.1 범위
-- 기본: Album, Track, Place, LiveEvent
-- 확장: CommunityPost, Story 등(추후 필요 시)
+### 6.1 Table: `timeline_event`
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | BIGSERIAL PK | Unique timeline event id |
+| `title` | VARCHAR(255) | Headline used on cards |
+| `summary` | TEXT | Short description (200~400 chars) |
+| `event_date` | DATE | Primary sorting key |
+| `event_type` | VARCHAR(40) | `RELEASE`, `MEDIA`, `AWARD`, `LIVE`, `OTHER` |
+| `related_album_id` | BIGINT FK nullable | Link to `album` when applicable |
+| `related_track_id` | BIGINT FK nullable | Link to `track` when applicable |
+| `related_live_event_id` | BIGINT FK nullable | Bridge to detailed live event |
+| `external_url` | VARCHAR(1024) | Optional reference article/interview |
+| `cover_image_url` | VARCHAR(1024) nullable | Thumbnail or key visual |
+| `created_at` / `updated_at` | TIMESTAMP | Audit columns |
 
-### 6.2 API 초안
-- `GET /api/search?q=keyword&target=tracks`
-  - `target` 파라미터로 검색 대상을 한정
-  - 기본 응답
+> MVP keeps everything in a single table. If we later need multiple media per event we can introduce a `timeline_event_media` table (`event_id`, `media_url`, `caption`, `sort_order`).
+
+### 6.2 UI / Filtering Notes
+- Default view: grouped by year, highlight most recent 3 years.
+- Filter by `event_type` (dropdown chips) and keyword search (title/summary).
+- Optional "related content" chips linking to album, track, or live event detail pages.
+
+## 7. Live Events (Concerts & Tours)
+
+Store concerts, tour dates, festivals, plus setlists and related metadata.
+
+### 7.1 Table: `live_event`
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | BIGSERIAL PK | Live event id |
+| `title` | VARCHAR(255) | Tour or concert name |
+| `subtitle` | VARCHAR(255) nullable | City-specific subtitle |
+| `event_date` | DATE | Performance date |
+| `open_time` | TIME nullable | Doors open |
+| `start_time` | TIME nullable | Show start |
+| `venue` | VARCHAR(255) | Venue name |
+| `city` / `country` | VARCHAR(120) | Location info |
+| `tour_name` | VARCHAR(255) nullable | Group multiple dates under a tour |
+| `is_festival` | BOOLEAN default false | Tag festival appearances |
+| `notes` | TEXT | Guest performers, cancellations, etc. |
+| `poster_image_url` | VARCHAR(1024) nullable | Key visual |
+| `created_at` / `updated_at` | TIMESTAMP | Audit columns |
+
+### 7.2 Table: `live_setlist_item`
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | BIGSERIAL PK | Row id |
+| `live_event_id` | BIGINT FK | Parent live event |
+| `order_index` | SMALLINT | Running order for display |
+| `track_id` | BIGINT FK nullable | Link to existing track (if original song) |
+| `title_override` | VARCHAR(255) | Manual title for covers/medleys |
+| `section` | VARCHAR(50) nullable | Distinguish `MAIN`, `ENCORE`, `MC`, `VTR` |
+| `notes` | TEXT | Special remarks (acoustic ver., guest duet) |
+
+### 7.3 Optional Tables
+- `live_event_tag` (`live_event_id`, `tag`) for quick filters (`tour`, `fanmeeting`, `festival`).
+- `live_event_media` to attach gallery photos or video links.
+- `live_event_review` for fan reports (reserved until authentication is ready).
+
+## 8. Items (Recommended / Used)
+
+Collect products AIMYON mentioned, wore, or recommended (fashion, accessories, books, food).
+
+### 8.1 Table: `item_category`
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | SMALLSERIAL PK | Category id |
+| `code` | VARCHAR(50) UNIQUE | Machine friendly key (`FASHION`, `BOOK`, etc.) |
+| `name` | VARCHAR(120) | Display name |
+| `description` | TEXT nullable | Optional explanation |
+| `sort_order` | SMALLINT | UI ordering |
+
+### 8.2 Table: `item`
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | BIGSERIAL PK | Item id |
+| `category_id` | SMALLINT FK | Link to `item_category` |
+| `title` | VARCHAR(255) | Item name |
+| `description` | TEXT | Summary, how/when AIMYON introduced it |
+| `source_type` | VARCHAR(40) | `INTERVIEW`, `SNS`, `LIVE`, `FAN_REPORT` |
+| `source_detail` | VARCHAR(255) | Magazine/program/SNS handle |
+| `source_url` | VARCHAR(1024) nullable | Original reference |
+| `price_note` | VARCHAR(120) nullable | Price or availability note |
+| `tags` | TEXT (JSON array) | For quick filters (`casual`, `gift`, `merch`) |
+| `created_at` / `updated_at` | TIMESTAMP | Audit columns |
+
+### 8.3 Table: `item_media`
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | BIGSERIAL PK | Media id |
+| `item_id` | BIGINT FK | Parent item |
+| `media_url` | VARCHAR(1024) | Image or video URL |
+| `alt_text` | VARCHAR(255) | Accessibility text |
+| `sort_order` | SMALLINT | Display order |
+| `created_at` | TIMESTAMP | Upload time |
+
+> When we introduce S3 uploads the same table can store generated object keys instead of external URLs.
+
+## 9. Search
+
+Search aggregates existing domains instead of introducing a brand-new table for MVP.
+
+### 9.1 Scope
+- Primary: `album`, `track`, `place`, `item`, `live_event`.
+- Optional additions after MVP: `timeline_event`, `community_post` (title + tags).
+
+### 9.2 Implementation Strategy
+- Phase 1: run per-entity `LIKE` queries (title, tags) and merge results in the service layer.
+- Phase 2: create materialized view `search_index` with columns (`entity_type`, `entity_id`, `title`, `subtitle`, `tags`, `published_at`, `thumbnail_url`) for faster lookup.
+- Phase 3: enable PostgreSQL full-text search (`tsvector`) or introduce OpenSearch if dataset grows significantly.
+
+### 9.3 Supporting Tables (optional)
+- `search_query_log` (`id`, `keyword`, `user_id` nullable, `created_at`) to understand demand.
+- `search_result_rank` table if we want manual pinning later.
+
+### 9.4 API Notes
+- `GET /api/search?q={keyword}&targets=albums,tracks,places`
+  - `targets` optional comma-separated list (defaults to all supported domains).
+  - Response grouped by domain for predictable rendering:
     ```json
     {
       "albums": [...],
       "tracks": [...],
       "places": [...],
+      "items": [...],
       "liveEvents": [...]
     }
     ```
-
----
-추가 설계가 필요하면 해당 섹션을 계속 보강해 나간다.
