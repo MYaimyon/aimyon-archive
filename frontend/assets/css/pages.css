@@ -2275,7 +2275,9 @@
 
 .profile-hero {
     position: relative;
-    padding: 140px 0 100px;
+    display: block;
+    margin: 0;
+    padding: 140px 24px 100px;
     background: radial-gradient(circle at 18% 20%, rgba(255, 107, 107, 0.22), transparent 55%), linear-gradient(165deg, rgba(21, 21, 33, 0.2), rgba(255, 255, 255, 0.02));
     overflow: hidden;
     isolation: isolate;
@@ -2292,10 +2294,11 @@
 .profile-hero__inner {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
-    gap: 72px;
+    grid-template-columns: minmax(0, 540px) minmax(260px, 360px);
+    gap: 56px;
     align-items: center;
-    max-width: 1100px;
+    justify-content: space-between;
+    width: min(100%, 1120px);
     margin: 0 auto;
 }
 
@@ -2303,8 +2306,9 @@
     display: grid;
     gap: 24px;
     align-content: start;
-    max-width: 560px;
+    max-width: 540px;
     justify-items: start;
+    text-align: left;
 }
 
 .profile-hero__label {
@@ -2364,12 +2368,12 @@
 
 .profile-hero__visual {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .profile-hero__sphere {
     position: relative;
-    width: min(320px, 60vw);
+    width: min(380px, 70vw);
     aspect-ratio: 1;
     border-radius: 50%;
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(21, 21, 33, 0.65));
