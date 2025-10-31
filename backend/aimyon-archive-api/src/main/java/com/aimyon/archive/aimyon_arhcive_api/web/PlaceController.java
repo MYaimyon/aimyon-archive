@@ -1,6 +1,6 @@
 package com.aimyon.archive.aimyon_arhcive_api.web;
 
-import com.aimyon.archive.aimyon_arhcive_api.dto.PlaceResponse;
+import com.aimyon.archive.aimyon_arhcive_api.dto.PlacePageResponse;
 import com.aimyon.archive.aimyon_arhcive_api.service.PlaceService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +17,12 @@ public class PlaceController {
     }
 
     @GetMapping
-    public List<PlaceResponse> getPlaces(@RequestParam(required = false) String city,
-                                         @RequestParam(required = false) String keyword,
-                                         @RequestParam(required = false) String tag) {
-        return placeService.getPlaces(city, keyword, tag);
+    public PlacePageResponse getPlaces(@RequestParam(required = false) String city,
+                                       @RequestParam(required = false) String keyword,
+                                       @RequestParam(required = false) String tag,
+                                       @RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "6") int size) {
+        return placeService.getPlaces(city, keyword, tag, page, size);
     }
 
     @GetMapping("/{id}")

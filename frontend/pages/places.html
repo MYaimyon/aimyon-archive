@@ -3,46 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>묭지순례 - aimyon archive</title>
+    <title>묭지순례 - Aimyon Archive</title>
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/pages.css">
 </head>
 <body>
 <div id="header-placeholder"></div>
 
-<main class="main-content">
+<main class="places-main">
     <section class="places-hero">
-        <div class="container">
-            <h1 class="section-title">묭지순례</h1>
-            <p class="section-subtitle">아이묭의 발자취가 남아 있는 장소들을 따라가 봐요.</p>
+        <div class="places-hero__glow"></div>
+        <div class="container places-hero__inner">
+            <div class="places-hero__text">
+                <span class="places-hero__label">Pilgrimage Finder</span>
+                <h1 class="places-hero__title">묭지 순례 지도</h1>
+                <p class="places-hero__description">
+                    Aimyon의 음악과 추억이 머물렀던 장소들을 한곳에 모았어요. 공연장, 카페, MV 촬영지까지 지도로 확인하고 나만의 순례 루트를 계획해 보세요.
+                </p>
+                <ul class="places-hero__stats">
+                    <li class="places-hero__stat"><strong>32</strong><span>등록된 장소</span></li>
+                    <li class="places-hero__stat"><strong>8</strong><span>지역 필터</span></li>
+                    <li class="places-hero__stat"><strong>12</strong><span>팬 추천 후기</span></li>
+                </ul>
+            </div>
+            <div class="places-hero__visual">
+                <img src="../assets/images/hero-aimyon.jpg" alt="Aimyon 공연장의 무대 조명" loading="lazy">
+            </div>
         </div>
     </section>
 
-    <section class="places-controls">
+    <section class="places-filters">
         <div class="container">
-            <form id="placeFilters" class="places-filter">
-                <label class="filter-field">
-                    <span class="filter-label">도시</span>
-                    <input type="text" id="filterCity" placeholder="예: 도쿄" autocomplete="off">
-                </label>
-                <label class="filter-field">
-                    <span class="filter-label">태그</span>
-                    <input type="text" id="filterTag" placeholder="예: cafe" autocomplete="off">
-                </label>
-                <label class="filter-field stretch">
-                    <span class="filter-label">검색</span>
-                    <input type="text" id="filterKeyword" placeholder="장소명/설명 검색" autocomplete="off">
-                </label>
-                <button type="submit" class="filter-submit">필터 적용</button>
+            <form id="placeFilters" class="places-filters__form">
+                <div class="places-filters__field">
+                    <label for="filterCity">지역</label>
+                    <select id="filterCity">
+                        <option value="">전체</option>
+                        <option value="도쿄">도쿄</option>
+                        <option value="오사카">오사카</option>
+                        <option value="효고">효고</option>
+                        <option value="교토">교토</option>
+                    </select>
+                </div>
+                <div class="places-filters__field">
+                    <label for="filterTag">장소 유형</label>
+                    <select id="filterTag">
+                        <option value="">전체</option>
+                        <option value="cafe">카페</option>
+                        <option value="live">라이브 하우스</option>
+                        <option value="mv">MV 촬영지</option>
+                        <option value="landmark">랜드마크</option>
+                    </select>
+                </div>
+                <div class="places-filters__field places-filters__field--stretch">
+                    <label for="filterKeyword">키워드 검색</label>
+                    <input type="text" id="filterKeyword" placeholder="장소명, 곡명, 주소 등" autocomplete="off">
+                </div>
+                <button type="submit" class="places-filters__submit">필터 적용</button>
             </form>
         </div>
     </section>
 
-    <section class="places-list-section">
+    <section class="places-body">
         <div class="container">
             <div class="places-layout">
-                <div id="placesMap" class="places-map" role="presentation" aria-label="지도"></div>
-                <div id="placesList" class="places-grid"></div>
+                <div class="places-map__panel">
+                    <div id="placesMap" class="places-map" role="presentation" aria-label="묭지 지도"></div>
+                    <p id="placesMapStatus" class="places-map__status">지도를 드래그하거나 확대해서 주변 묭지를 찾아보세요.</p>
+                </div>
+                <div class="places-list__panel">
+                    <header class="places-list__header">
+                        <h2>묭지 리스트</h2>
+                        <p class="places-list__helper">실제 방문한 팬들의 후기를 참고하면서 나만의 순례 노트를 채워 보세요.</p>
+                    </header>
+                    <div id="placesList" class="places-list"></div>
+                    <div class="places-pagination" aria-live="polite">
+                        <button type="button" id="placesPrev" class="places-pagination__btn" disabled>이전</button>
+                        <span id="placesPageStatus" class="places-pagination__status">1 / 1</span>
+                        <button type="button" id="placesNext" class="places-pagination__btn" disabled>다음</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
