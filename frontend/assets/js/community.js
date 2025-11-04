@@ -10,6 +10,7 @@
 })();
 
 const USER_ID_KEY = "aimyonCommunityUserId";
+const PAGE_SIZE = 15;
 
 const getOrCreateUserId = () => {
   const stored = localStorage.getItem(USER_ID_KEY);
@@ -23,39 +24,154 @@ const getOrCreateUserId = () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const boardsEl = document.getElementById("communityBoards");
-  const postsEl = document.getElementById("communityPosts");
-  const formEl = document.getElementById("communityPostForm");
-  const statusEl = document.getElementById("communityPostStatus");
-  const titleEl = document.getElementById("postTitle");
-  const contentEl = document.getElementById("postContent");
-  const userIdTextEl = document.getElementById("communityUserId");
+  const postsBody = document.getElementById("communityPosts");
+  const searchInput = document.getElementById("communitySearchInput");
+  const paginationEl = document.getElementById("communityPagination");
+  const prevPageBtn = document.getElementById("communityPrevPage");
+  const nextPageBtn = document.getElementById("communityNextPage");
+  const pageInfoEl = document.getElementById("communityPageInfo");
 
   const userId = getOrCreateUserId();
-  if (userIdTextEl) {
-    userIdTextEl.textContent = userId;
-  }
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestedBoard = urlParams.get("board");
 
   let boards = [];
   let activeSlug = null;
+  let allPosts = [];
+  let filteredPosts = [];
+  let currentPage = 1;
 
-  const skeleton = (count = 3) =>
-    Array.from({ length: count })
-      .map(
-        () => `
-        <div class="community-card skeleton">
-          <div class="skeleton-line"></div>
-          <div class="skeleton-line short"></div>
-        </div>
-      `
-      )
+  const skeleton = (rowCount = 8) =>
+    Array.from({ length: rowCount })
+      .map(() => '<tr class="skeleton-row"><td colspan="7"><div class="skeleton-line"></div></td></tr>')
       .join("");
 
-  const setFormStatus = (message, type = "info") => {
-    if (!statusEl) return;
-    statusEl.textContent = message || "";
-    statusEl.className = "form-status";
-    if (type === "success") statusEl.classList.add("success");
-    if (type === "error") statusEl.classList.add("error");
+  const updatePagination = (page, totalPages) => {
+    if (!paginationEl || !pageInfoEl || !prevPageBtn || !nextPageBtn) return;
+    const safeTotal = Math.max(totalPages, 1);
+    const safePage = Math.min(Math.max(page, 1), safeTotal);
+    pageInfoEl.textContent = `${safePage} / ${safeTotal}`;
+
+    if (safeTotal <= 1) {
+      paginationEl.setAttribute("hidden", "");
+    } else {
+      paginationEl.removeAttribute("hidden");
+    }
+
+    prevPageBtn.disabled = safePage <= 1;
+    nextPageBtn.disabled = safePage >= safeTotal;
+  };
+
+  const renderEmptyState = () => {
+    if (!postsBody) return;
+    postsBody.innerHTML = '<tr class="community-empty-row"><td colspan="7">등록된 게시글이 없습니다.</td></tr>';
+    updatePagination(1, 1);
+  };
+
+  const renderRows = (items) => {
+    if (!postsBody) return;
+    if (!items.length) {
+      renderEmptyState();
+      return;
+    }
+
+    const totalItems = filteredPosts.length;
+    const activeBoard = boards.find((board) => board.slug === activeSlug);
+
+    const rows = items
+      .map((post, index) => {
+        const absoluteIndex = (currentPage - 1) * PAGE_SIZE + index;
+        const descendingNumber = totalItems ? totalItems - absoluteIndex : null;
+        const displayNumber = post.notice || post.isNotice || (post.type && String(post.type).toUpperCase().includes("NOTICE"))
+          ? "공지"
+          : descendingNumber && descendingNumber > 0
+            ? descendingNumber
+            : absoluteIndex + 1;
+
+        const isNotice = String(post.type || "").toUpperCase().includes("NOTICE") || Boolean(post.notice || post.isNotice || post.pinned);
+        const categoryRaw = post.category || post.topic || post.badge || (post.tags && post.tags[0]);
+        const categoryDisplay = isNotice
+          ? "공지"
+          : categoryRaw
+            ? normalizeText(categoryRaw)
+            : activeBoard?.name || "-";
+
+        const titleText = normalizeText(post.title || "제목 없음");
+        const commentCount = Number(post.commentCount ?? (Array.isArray(post.comments) ? post.comments.length : 0));
+        const commentHtml = commentCount > 0 ? `<span class="comment-count">[${commentCount}]</span>` : "";
+        const authorText = normalizeText(
+          post.author ||
+            post.writer ||
+            post.nickname ||
+            post.userName ||
+            (post.userId ? `사용자 #${post.userId}` : "-")
+        );
+        const createdAt = formatDate(post.createdAt);
+        const viewCount = Number(post.viewCount ?? post.views ?? post.hit ?? 0);
+        const recommendCount = Number(post.likeCount ?? post.recommendCount ?? 0);
+        const canDelete = Number(post.userId) === userId;
+        const deleteButton = canDelete
+          ? `<button class="row-delete" data-id="${post.id}" type="button">삭제</button>`
+          : "";
+
+        const titleLink = `community-post.html?id=${encodeURIComponent(post.id)}`;
+
+        return `
+          <tr class="${isNotice ? "row-notice" : ""}">
+            <td class="col-title">
+              <div class="title-cell">
+                <div class="title-main">
+                  <span class="title-badge">${escapeHtml(categoryDisplay)}</span>
+                  <a class="title-link" href="${titleLink}">${escapeHtml(titleText)}</a>
+                  ${commentHtml}
+                </div>
+                ${deleteButton}
+              </div>
+            </td>
+            <td class="col-author">${escapeHtml(authorText)}</td>
+            <td class="col-date">${createdAt}</td>
+            <td class="col-views">${Number.isFinite(viewCount) ? viewCount.toLocaleString("ko-KR") : "-"}</td>
+            <td class="col-recommends">${Number.isFinite(recommendCount) ? recommendCount.toLocaleString("ko-KR") : "-"}</td>
+          </tr>
+        `;
+      })
+      .join("");
+
+    postsBody.innerHTML = rows;
+    postsBody.querySelectorAll(".row-delete").forEach((btn) => {
+      btn.addEventListener("click", () => deletePost(btn.dataset.id, btn));
+    });
+  };
+
+  const renderCurrentPage = () => {
+    if (!postsBody) return;
+    if (!filteredPosts.length) {
+      renderEmptyState();
+      return;
+    }
+    const totalPages = Math.max(1, Math.ceil(filteredPosts.length / PAGE_SIZE));
+    if (currentPage > totalPages) {
+      currentPage = totalPages;
+    }
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const items = filteredPosts.slice(start, start + PAGE_SIZE);
+    renderRows(items);
+    updatePagination(currentPage, totalPages);
+  };
+
+  const applyFilters = () => {
+    const term = (searchInput?.value || "").trim().toLowerCase();
+    if (!term) {
+      filteredPosts = [...allPosts];
+    } else {
+      filteredPosts = allPosts.filter((post) => {
+        const title = normalizeText(post.title || "").toLowerCase();
+        const content = normalizeText(post.content || "").toLowerCase();
+        return title.includes(term) || content.includes(term);
+      });
+    }
+    currentPage = 1;
+    renderCurrentPage();
   };
 
   const renderBoards = () => {
@@ -78,103 +194,60 @@ document.addEventListener("DOMContentLoaded", () => {
     boardsEl.querySelectorAll(".community-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
         const slug = btn.dataset.slug;
-        if (slug !== activeSlug) {
-          loadPosts(slug);
-        }
+        if (!slug || slug === activeSlug) return;
+        currentPage = 1;
+        const params = new URLSearchParams(window.location.search);
+        params.set("board", slug);
+        window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
+        loadPosts(slug);
       });
     });
-  };
-
-  const renderPosts = (items) => {
-    if (!postsEl) return;
-    if (!items.length) {
-      postsEl.innerHTML = `
-        <div class="community-empty">
-          <div class="emoji" style="font-size: 2.5rem; margin-bottom: 12px;">📭</div>
-          <p>아직 등록된 글이 없어요.</p>
-        </div>
-      `;
-      return;
-    }
-
-    postsEl.innerHTML = items
-      .map((post) => {
-        const snippet = (post.content || "").length > 140
-          ? `${post.content.slice(0, 140)}…`
-          : post.content || "내용 없음";
-        const canDelete = Number(post.userId) === userId;
-        return `
-          <div class="community-card">
-            <h3>${escapeHtml(post.title || "제목 없음")}</h3>
-            <p>${escapeHtml(snippet).replace(/\n/g, "<br>")}</p>
-            <div class="meta">
-              <span>작성자 #${post.userId ?? "-"}</span>
-              <span>좋아요 ${post.likeCount ?? 0}</span>
-              <span>댓글 ${post.commentCount ?? 0}</span>
-              <span>${formatDate(post.createdAt)}</span>
-            </div>
-            <div class="card-actions">
-              <a class="card-link" href="community-post.html?id=${encodeURIComponent(post.id)}">상세보기</a>
-              ${canDelete ? `<button class="card-delete" data-id="${post.id}" type="button">삭제</button>` : ""}
-            </div>
-          </div>
-        `;
-      })
-      .join("");
-
-    postsEl.querySelectorAll(".card-delete").forEach((btn) => {
-      btn.addEventListener("click", () => deletePost(btn.dataset.id, btn));
-    });
-  };
-
-  const formatDate = (iso) => {
-    if (!iso) return "";
-    try {
-      const d = new Date(iso);
-      return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(
-        d.getDate()
-      ).padStart(2, "0")}`;
-    } catch {
-      return iso;
-    }
   };
 
   const loadPosts = (boardSlug) => {
     activeSlug = boardSlug;
     renderBoards();
-    if (!postsEl) return;
-    postsEl.innerHTML = skeleton();
+    if (!postsBody) return;
+    postsBody.innerHTML = skeleton();
+    paginationEl?.setAttribute("hidden", "");
 
     fetch(`${COMMUNITY_API_BASE}/posts?board=${encodeURIComponent(boardSlug)}`)
       .then((res) => res.json())
       .then((data) => {
-        renderPosts(data.content || []);
+        allPosts = Array.isArray(data?.content) ? data.content : [];
+        applyFilters();
       })
       .catch(() => {
-        postsEl.innerHTML =
-          '<div class="community-empty"><p>게시글을 불러오지 못했어요.</p></div>';
+        renderEmptyState();
       });
   };
 
   const loadBoards = () => {
     if (!boardsEl) return;
-    boardsEl.innerHTML = skeleton(2);
+    boardsEl.textContent = "게시판 불러오는 중...";
     fetch(`${COMMUNITY_API_BASE}/boards`)
       .then((res) => res.json())
       .then((data) => {
         boards = Array.isArray(data) ? data : [];
-        activeSlug = boards[0]?.slug || null;
-        renderBoards();
-        if (activeSlug) {
-          loadPosts(activeSlug);
-        } else if (postsEl) {
-          postsEl.innerHTML =
-            '<div class="community-empty"><p>생성된 게시판이 없어요.</p></div>';
+        boards.sort((a, b) => {
+          if (a.slug === "free") return b.slug === "free" ? 0 : -1;
+          if (b.slug === "free") return 1;
+          return 0;
+        });
+        if (!boards.length) {
+          boardsEl.innerHTML = '<span class="community-tabs__loading-error">게시판이 없습니다.</span>';
+          renderEmptyState();
+          return;
         }
+        const requestedExists = boards.some((board) => board.slug === requestedBoard);
+        const defaultBoard = boards.find((board) => board.slug === "free") || boards[0];
+        activeSlug = requestedExists ? requestedBoard : defaultBoard.slug;
+        renderBoards();
+        loadPosts(activeSlug);
       })
       .catch(() => {
-        boardsEl.innerHTML =
-          '<div class="community-empty" style="width:100%;"><p>게시판 목록을 불러오지 못했어요.</p></div>';
+        boardsEl.innerHTML = '<span class="community-tabs__loading-error">게시판을 불러오지 못했어요.</span>';
+        renderEmptyState();
       });
   };
 
@@ -198,50 +271,26 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
-  formEl?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (!activeSlug) {
-      setFormStatus("먼저 게시판을 선택해 주세요.", "error");
-      return;
-    }
-    const title = titleEl.value.trim();
-    const content = contentEl.value.trim();
-    if (!title || !content) {
-      setFormStatus("제목과 내용을 입력해 주세요.", "error");
-      return;
-    }
-
-    setFormStatus("등록 중입니다...");
-    formEl.querySelector("button").disabled = true;
-
-    fetch(`${COMMUNITY_API_BASE}/posts`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId,
-        boardSlug: activeSlug,
-        title,
-        content
-      })
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("create failed");
-        return res.json();
-      })
-      .then(() => {
-        titleEl.value = "";
-        contentEl.value = "";
-        setFormStatus("등록되었습니다!", "success");
-        loadPosts(activeSlug);
-      })
-      .catch(() => {
-        setFormStatus("글 등록에 실패했습니다.", "error");
-      })
-      .finally(() => {
-        formEl.querySelector("button").disabled = false;
-      });
+  searchInput?.addEventListener("input", () => {
+    applyFilters();
   });
 
+  prevPageBtn?.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage -= 1;
+      renderCurrentPage();
+    }
+  });
+
+  nextPageBtn?.addEventListener("click", () => {
+    const totalPages = Math.max(1, Math.ceil(filteredPosts.length / PAGE_SIZE));
+    if (currentPage < totalPages) {
+      currentPage += 1;
+      renderCurrentPage();
+    }
+  });
+
+  paginationEl?.setAttribute("hidden", "");
   loadBoards();
 });
 
@@ -252,4 +301,33 @@ function escapeHtml(text) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  const suspiciousPattern = /Ã|Â|Æ|ð|Ê|ì|í|î|ï/;
+  if (!suspiciousPattern.test(text)) {
+    return text;
+  }
+  try {
+    const decoded = decodeURIComponent(escape(text));
+    return decoded;
+  } catch {
+    return text;
+  }
+}
+
+function formatDate(iso) {
+  if (!iso) return "-";
+  try {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return iso;
+    return date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    });
+  } catch {
+    return iso;
+  }
 }

@@ -1,6 +1,7 @@
 package com.aimyon.archive.aimyon_arhcive_api.web;
 
 import com.aimyon.archive.aimyon_arhcive_api.dto.PlacePageResponse;
+import com.aimyon.archive.aimyon_arhcive_api.dto.PlaceResponse;
 import com.aimyon.archive.aimyon_arhcive_api.service.PlaceService;
 import org.springframework.web.bind.annotation.*;
 

@@ -10,25 +10,33 @@
 <body>
 <div id="header-placeholder"></div>
 
-<main class="main-content">
+<main class="community-post-page">
     <section class="community-post">
         <div class="container">
             <div class="community-post-card">
-                <div class="post-meta">
-                    <span id="cpBoard" class="meta-badge">게시판</span>
-                    <span id="cpDate" class="meta-text"></span>
-                </div>
-                <h1 id="cpTitle" class="post-title">로딩 중...</h1>
-                <div id="cpAuthor" class="post-author">작성자</div>
-                <div class="post-actions">
-                    <button id="likeButton" class="like-button" type="button">
-                        <span class="like-label">🤍 좋아요</span>
-                        <span id="likeCount">0</span>
-                    </button>
-                    <span class="user-hint">
-                        나의 임시 작성자 ID: <strong id="selfUserId">-</strong>
-                    </span>
-                </div>
+                <header class="post-header">
+                    <div class="post-header__meta">
+                        <span id="cpBoard" class="meta-badge">게시판</span>
+                        <span id="cpDate" class="meta-date"></span>
+                    </div>
+                    <h1 id="cpTitle" class="post-title">로딩 중...</h1>
+                    <div class="post-header__info">
+                        <div class="post-info-group">
+                            <span class="post-info-label">작성자</span>
+                            <span id="cpAuthor" class="post-info-value">-</span>
+                        </div>
+                        <button id="likeButton" class="like-button" type="button">
+                            <span class="like-label">
+                                <span class="like-icon">🤍</span>
+                                <span class="like-text">좋아요</span>
+                            </span>
+                            <span id="likeCount">0</span>
+                        </button>
+                    </div>
+                    <div class="user-hint post-viewer-hint">
+                        나의 임시 사용자 ID: <strong id="selfUserId">-</strong>
+                    </div>
+                </header>
                 <article id="cpContent" class="post-body"></article>
             </div>
 

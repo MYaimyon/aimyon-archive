@@ -10,40 +10,52 @@
 <body>
 <div id="header-placeholder"></div>
 
-<main class="main-content">
+<main class="community-page">
     <section class="community-hero">
         <div class="container">
-            <h1 class="section-title">커뮤니티</h1>
-            <p class="section-subtitle">팬들과 묭지 인증, 자유로운 이야기를 나눠보세요.</p>
+            <h1 class="community-hero__title">커뮤니티</h1>
+            <p class="community-hero__subtitle">팬들과 묭지 인증, 자유로운 이야기를 나누고 Aimyon의 순간을 함께 기록해요.</p>
         </div>
     </section>
 
-    <section class="community-section">
-        <div class="container">
-            <div class="community-tabs" id="communityBoards" role="tablist" aria-label="커뮤니티 게시판"></div>
-
-            <section class="community-post-form" aria-labelledby="communityPostFormTitle">
-                <div class="form-header">
-                    <h2 id="communityPostFormTitle">새 글 작성</h2>
-                    <span class="user-id">내 임시 사용자 ID: <strong id="communityUserId">-</strong></span>
-                </div>
-                <form id="communityPostForm" class="post-form">
-                    <label class="form-field">
-                        <span>제목</span>
-                        <input type="text" id="postTitle" placeholder="제목을 입력하세요" required>
-                    </label>
-                    <label class="form-field">
-                        <span>내용</span>
-                        <textarea id="postContent" placeholder="내용을 입력하세요" required rows="5"></textarea>
-                    </label>
-                    <div class="form-actions">
-                        <p id="communityPostStatus" class="form-status"></p>
-                        <button type="submit" class="form-submit">게시글 등록</button>
+    <section class="community-content">
+        <div class="container community-layout">
+            <div class="community-main">
+                <header class="community-header">
+                    <nav class="community-tabs" id="communityBoards" role="tablist" aria-label="커뮤니티 게시판"></nav>
+                    <div class="community-actions">
+                        <a href="community-write.html" class="btn btn-primary btn-compact">글쓰기</a>
                     </div>
-                </form>
-            </section>
+                </header>
 
-            <div id="communityPosts" class="community-list"></div>
+                <div class="community-search">
+                    <label class="visually-hidden" for="communitySearchInput">게시글 검색</label>
+                    <input type="search" id="communitySearchInput" placeholder="제목이나 내용을 입력해 검색하세요.">
+                    <span class="community-search-icon" aria-hidden="true">🔍</span>
+                </div>
+
+                <div class="community-table-wrapper" aria-live="polite">
+                    <table class="community-table">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="col-title">제목</th>
+                            <th scope="col" class="col-author">글쓴이</th>
+                            <th scope="col" class="col-date">작성일</th>
+                            <th scope="col" class="col-views">조회</th>
+                            <th scope="col" class="col-recommends">추천</th>
+                        </tr>
+                        </thead>
+                        <tbody id="communityPosts"></tbody>
+                    </table>
+                </div>
+
+                <nav class="community-pagination" id="communityPagination" aria-label="게시글 페이지">
+                    <button type="button" id="communityPrevPage" class="btn btn-secondary btn-compact" disabled>이전</button>
+                    <span id="communityPageInfo" aria-live="polite">1 / 1</span>
+                    <button type="button" id="communityNextPage" class="btn btn-secondary btn-compact" disabled>다음</button>
+                </nav>
+            </div>
+
         </div>
     </section>
 </main>

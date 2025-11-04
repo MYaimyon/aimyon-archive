@@ -1,7 +1,30 @@
-const COMMUNITY_POST_BASE = "http://localhost:8080/api/community/posts";
+﻿const COMMUNITY_POST_BASE = "http://localhost:8080/api/community/posts";
 const COMMUNITY_COMMENT_BASE = "http://localhost:8080/api/community/comments";
 const USER_ID_STORAGE_KEY = "aimyonCommunityUserId";
 const LIKE_STORAGE_PREFIX = "aimyonCommunityLike_";
+
+const BOARD_LABELS = {
+  free: "자유게시판",
+  pilgrimage: "묭지순례 인증",
+  gallery: "팬아트",
+  story: "이야기",
+  media: "미디어"
+};
+
+const getBoardLabel = (slug) => BOARD_LABELS[slug] || slug || "게시판";
+
+const fmtDate = (iso) => {
+  if (!iso) return "";
+  try {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return iso;
+    return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}.${String(
+      date.getDate()
+    ).padStart(2, "0")}`;
+  } catch {
+    return iso;
+  }
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   const qs = new URLSearchParams(location.search);
@@ -16,6 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
     comments: document.getElementById("commentList"),
     likeButton: document.getElementById("likeButton"),
     likeLabel: document.querySelector("#likeButton .like-label"),
+    likeIcon: document.querySelector("#likeButton .like-icon"),
+    likeText: document.querySelector("#likeButton .like-text"),
     likeCount: document.getElementById("likeCount"),
     selfUserId: document.getElementById("selfUserId"),
     commentForm: document.getElementById("commentForm"),
@@ -24,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (!id) {
-    elements.content.innerHTML = "<p>잘못된 접근입니다. 글 ID가 필요합니다.</p>";
+    elements.content.innerHTML = "<p>필요한 게시글 ID가 없습니다.</p>";
     return;
   }
 
@@ -44,28 +69,23 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentPost = null;
   let isLiked = localStorage.getItem(likeStorageKey) === "true";
 
-  const fmtDate = (iso) => {
-    if (!iso) return "";
-    try {
-      const d = new Date(iso);
-      return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(
-        d.getDate()
-      ).padStart(2, "0")}`;
-    } catch {
-      return iso;
-    }
-  };
-
   const updateLikeButton = () => {
     const count = currentPost?.likeCount ?? 0;
     if (elements.likeCount) {
       elements.likeCount.textContent = count;
     }
-    if (elements.likeLabel) {
-      elements.likeLabel.textContent = isLiked ? "❤️ 좋아요 취소" : "🤍 좋아요";
+    const icon = isLiked ? "♥" : "🤍";
+    const labelText = isLiked ? "좋아요 취소" : "좋아요";
+    if (elements.likeIcon) {
+      elements.likeIcon.textContent = icon;
     }
-    elements.likeButton.classList.toggle("liked", isLiked);
-    elements.likeButton.setAttribute("aria-pressed", String(isLiked));
+    if (elements.likeText) {
+      elements.likeText.textContent = labelText;
+    } else if (elements.likeLabel) {
+      elements.likeLabel.textContent = `${icon} ${labelText}`;
+    }
+    elements.likeButton?.classList.toggle("liked", isLiked);
+    elements.likeButton?.setAttribute("aria-pressed", String(isLiked));
   };
 
   const setCommentStatus = (message, type = "info") => {
@@ -77,11 +97,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderPost = (post) => {
     currentPost = post;
-    elements.board.textContent = `#${post.boardSlug ?? ""}`;
+    const boardLabel = getBoardLabel(post.boardSlug);
+    elements.board.textContent = boardLabel ? `#${boardLabel}` : "#게시판";
     elements.date.textContent = fmtDate(post.createdAt);
     elements.title.textContent = post.title || "제목 없음";
-    elements.author.textContent = `작성자 #${post.userId ?? "-"}`;
-    elements.content.innerHTML = (post.content || "내용 없음").replace(/\n/g, "<br>");
+    const authorName = post.authorName || post.author || post.writer || post.nickname;
+    const authorValue =
+      authorName || (post.userId !== undefined && post.userId !== null ? `#${post.userId}` : "-");
+    elements.author.textContent = authorValue;
+    const body = post.content ? post.content.replace(/\n/g, "<br>") : "내용이 없습니다.";
+    elements.content.innerHTML = body;
     updateLikeButton();
   };
 
@@ -93,21 +118,23 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(renderPost)
       .catch(() => {
-        elements.content.innerHTML = "<p>게시글을 불러오지 못했어요.</p>";
+        elements.content.innerHTML = "<p>게시글을 불러오지 못했습니다.</p>";
       });
 
   const renderComments = (items) => {
     if (!items.length) {
       elements.comments.innerHTML =
-        '<div class="community-empty" style="margin:0;"><p>아직 댓글이 없어요.</p></div>';
+        '<div class="community-empty" style="margin:0;"><p>아직 댓글이 없습니다.</p></div>';
       return;
     }
+
     elements.comments.innerHTML = items
       .map((comment) => {
         const canDelete = Number(comment.userId) === USER_ID;
         const deleteButton = canDelete
           ? `<button class="comment-delete" data-id="${comment.id}" type="button">삭제</button>`
           : "";
+        const content = (comment.content || "").replace(/\n/g, "<br>");
         return `
           <div class="comment-card">
             <div class="comment-meta">
@@ -115,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <span>${fmtDate(comment.createdAt)}</span>
               ${deleteButton}
             </div>
-            <div class="comment-body">${(comment.content || "").replace(/\n/g, "<br>")}</div>
+            <div class="comment-body">${content}</div>
           </div>
         `;
       })
@@ -138,14 +165,14 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(renderComments)
       .catch(() => {
         elements.comments.innerHTML =
-          '<div class="community-empty" style="margin:0;"><p>댓글을 불러오지 못했어요.</p></div>';
+          '<div class="community-empty" style="margin:0;"><p>댓글을 불러오지 못했습니다.</p></div>';
       });
   };
 
   const deleteComment = (commentId, buttonEl) => {
     if (!commentId) return;
-    const confirmed = confirm("댓글을 삭제할까요?");
-    if (!confirmed) return;
+    if (!confirm("댓글을 삭제할까요?")) return;
+
     buttonEl.disabled = true;
     fetch(`${COMMUNITY_COMMENT_BASE}/${encodeURIComponent(commentId)}?userId=${USER_ID}&admin=false`, {
       method: "DELETE"
@@ -212,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(() => {
         elements.commentInput.value = "";
-        setCommentStatus("등록되었습니다!", "success");
+        setCommentStatus("댓글이 등록되었습니다.", "success");
         loadComments();
         loadPost();
         setTimeout(() => setCommentStatus(""), 1500);
@@ -228,6 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
   elements.likeButton?.addEventListener("click", toggleLike);
   elements.commentForm?.addEventListener("submit", submitComment);
 
-  loadPost().then(() => updateLikeButton()).catch(() => {});
+  loadPost().then(updateLikeButton).catch(() => {});
   loadComments();
 });
