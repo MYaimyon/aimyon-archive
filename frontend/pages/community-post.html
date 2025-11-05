@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>커뮤니티 글 상세 - aimyon archive</title>
+    <title>&#xCEE4;&#xBBF8;&#xB2C8;&#xD2F0; &#xAE00; &#xC0C1;&#xC138; - aimyon archive</title>
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/pages.css">
 </head>
@@ -13,44 +13,76 @@
 <main class="community-post-page">
     <section class="community-post">
         <div class="container">
-            <div class="community-post-card">
-                <header class="post-header">
-                    <div class="post-header__meta">
-                        <span id="cpBoard" class="meta-badge">게시판</span>
-                        <span id="cpDate" class="meta-date"></span>
-                    </div>
-                    <h1 id="cpTitle" class="post-title">로딩 중...</h1>
-                    <div class="post-header__info">
-                        <div class="post-info-group">
-                            <span class="post-info-label">작성자</span>
-                            <span id="cpAuthor" class="post-info-value">-</span>
+            <div class="post-layout">
+                <article class="post-main">
+                    <header class="post-header">
+                        <div class="post-headline">
+                            <h1 id="cpTitle" class="post-title">&#xB85C;&#xB529; &#xC911;...</h1>
                         </div>
-                        <button id="likeButton" class="like-button" type="button">
-                            <span class="like-label">
-                                <span class="like-icon">🤍</span>
-                                <span class="like-text">좋아요</span>
-                            </span>
-                            <span id="likeCount">0</span>
-                        </button>
-                    </div>
-                    <div class="user-hint post-viewer-hint">
-                        나의 임시 사용자 ID: <strong id="selfUserId">-</strong>
-                    </div>
-                </header>
-                <article id="cpContent" class="post-body"></article>
-            </div>
+                        <div class="post-meta-row">
+                            <div class="post-author-meta">
+                                <span class="post-meta-label">&#xC791;&#xC131;&#xC790;</span>
+                                <span id="cpAuthor" class="post-author">-</span>
+                                <span class="meta-separator">&middot;</span>
+                                <span id="cpDate" class="post-date"></span>
+                            </div>
+                            <div class="post-stats-group">
+                                <span class="post-stat"><span class="label">&#xC870;&#xD68C;</span><span id="cpViewCount">0</span></span>
+                                <span class="post-stat"><span class="label">&#xCD94;&#xCC9C;</span><span id="cpLikeCountMeta">0</span></span>
+                                <span class="post-stat"><span class="label">&#xB313;&#xAE00;</span><span id="cpCommentCountMeta">0</span></span>
+                            </div>
+                        </div>
+                    </header>
 
-            <section class="community-comments">
-                <h2>댓글</h2>
-                <form id="commentForm" class="comment-form">
-                    <textarea id="commentInput" placeholder="따뜻한 댓글을 남겨 주세요." required></textarea>
-                    <div class="comment-form-footer">
-                        <span id="commentStatus" class="comment-status"></span>
-                        <button type="submit" class="comment-submit">댓글 등록</button>
-                    </div>
-                </form>
-                <div id="commentList" class="comment-list"></div>
-            </section>
+                    <article id="cpContent" class="post-body"></article>
+
+                    <section class="post-reactions">
+                        <div class="reaction-grid">
+                            <button id="likeButton" class="reaction-tile reaction-tile--like" type="button">
+                                <span class="tile-icon" aria-hidden="true">&#x2605;</span>
+                                <span class="tile-title">&#xCD94;&#xCC9C;</span>
+                                <span id="likeCount" class="tile-value">0</span>
+                            </button>
+                            <button id="shareButton" class="reaction-tile reaction-tile--share" type="button">
+                                <span class="tile-icon" aria-hidden="true">&#x2197;</span>
+                                <span class="tile-title">&#xACF5;&#xC720;</span>
+                                <span class="tile-helper">URL &#xBCF5;&#xC0AC;</span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="post-comments">
+                        <header class="comments-header">
+                            <h2 class="comments-title">&#xB313;&#xAE00;</h2>
+                            <div class="comments-controls">
+                                <span class="comments-total" id="commentTotalLabel">&#xC804;&#xCCB4; &#xB313;&#xAE00; <strong>0</strong>&#xAC1C;</span>
+                                <div class="comments-sort">
+                                    <button class="sort-button sort-button--active" type="button" data-sort="recent">&#xCD5C;&#xC2E0;&#xC21C;</button>
+                                    <button class="sort-button" type="button" data-sort="oldest">&#xB4F1;&#xB85D;&#xC21C;</button>
+                                    <button class="sort-button" type="button" data-sort="reply">&#xB2F5;&#xAE00;&#xC21C;</button>
+                                </div>
+                            </div>
+                        </header>
+
+                        <div id="commentList" class="comment-list"></div>
+
+                        <form id="commentForm" class="comment-form">
+                            <div class="comment-form-header">
+                                <span class="comment-writer-label">&#xC791;&#xC131;&#xC790;</span>
+                                <span class="comment-writer-name" id="commentWriterLabel">-</span>
+                            </div>
+                            <textarea id="commentInput" placeholder="&#xD0C0;&#xC778;&#xC744; &#xC885;&#xC911;&#xD558;&#xB294; &#xB313;&#xAE00;&#xC774; &#xC544;&#xB984;&#xB2E4;&#xC6B4; &#xC544;&#xCE74;&#xC774;&#xBE0C;&#xB97C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;." required></textarea>
+                            <div class="comment-form-footer">
+                                <span id="commentStatus" class="comment-status"></span>
+                                <div class="comment-form-actions">
+                                    <button type="button" class="comment-extra-btn">&#xC774;&#xBAA8;&#xC9C0;</button>
+                                    <button type="submit" class="comment-submit">&#xB4F1;&#xB85D;</button>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </article>
+            </div>
         </div>
     </section>
 </main>
@@ -61,3 +93,4 @@
 <script src="../assets/js/community-post.js"></script>
 </body>
 </html>
+

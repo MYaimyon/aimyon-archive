@@ -3236,3 +3236,429 @@
 .community-post-page .community-post {
     width: min(1200px, 100%);
 }
+/* ========================================
+   COMMUNITY POST DETAIL OVERRIDES (custom)
+======================================== */
+.community-post {
+    padding: 72px 0 120px;
+}
+
+.community-post .container {
+    max-width: none;
+    margin: 0;
+    padding: 0 clamp(16px, 5vw, 72px);
+}
+
+.post-layout {
+    display: block;
+}
+
+.post-main {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    padding: clamp(36px, 5vw, 56px);
+    display: grid;
+    gap: clamp(28px, 4.5vw, 44px);
+}
+
+.post-header {
+    display: grid;
+    gap: 16px;
+}
+
+.post-headline {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.post-title {
+    margin: 0;
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+    letter-spacing: -0.015em;
+}
+
+.post-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.94rem;
+    color: var(--text-secondary);
+}
+
+.post-author-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.post-meta-label {
+    font-size: 0.84rem;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+}
+
+.meta-separator {
+    opacity: 0.4;
+}
+
+.post-stats-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-tertiary);
+}
+
+.post-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.post-body {
+    min-height: 320px;
+    font-size: 1.02rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+}
+
+.post-body p + p {
+    margin-top: 1.1em;
+}
+
+.post-reactions {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: clamp(20px, 3vw, 32px) 0;
+    display: grid;
+    gap: 20px;
+}
+
+.reaction-grid {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    align-items: stretch;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.reaction-tile {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+    flex: 1 1 180px;
+    max-width: 220px;
+}
+
+button.reaction-tile {
+    cursor: pointer;
+    font: inherit;
+    background: none;
+}
+
+.reaction-tile--like {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.42), rgba(255, 107, 107, 0.18));
+    border-color: rgba(255, 107, 107, 0.4);
+}
+
+.reaction-tile--like.liked {
+    box-shadow: 0 16px 34px rgba(255, 107, 107, 0.4);
+    border-color: rgba(255, 107, 107, 0.65);
+}
+
+.reaction-tile--share {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.reaction-tile:hover {
+    border-color: rgba(255, 255, 255, 0.24);
+    transform: translateY(-2px);
+}
+
+.tile-icon {
+    font-size: 1.4rem;
+}
+
+.tile-title {
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.tile-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.tile-helper {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.post-comments {
+    display: grid;
+    gap: 24px;
+}
+
+.comments-header {
+    display: grid;
+    gap: 10px;
+}
+
+.comments-title {
+    margin: 0;
+    font-size: 1.35rem;
+}
+
+.comments-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+}
+
+.comments-sort {
+    display: inline-flex;
+    gap: 8px;
+}
+
+.sort-button {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sort-button--active,
+.sort-button:hover {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.comment-list {
+    display: grid;
+    gap: 16px;
+}
+
+.comment-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 18px 20px;
+    display: grid;
+    gap: 12px;
+}
+
+.comment-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.comment-body {
+    color: var(--text-primary);
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.comment-delete {
+    align-self: flex-start;
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-delete:hover {
+    border-color: rgba(255, 107, 107, 0.7);
+    color: #ff6b6b;
+}
+
+.comment-form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 20px;
+    padding: 22px 24px;
+    display: grid;
+    gap: 14px;
+}
+
+.comment-form-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.comment-writer-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 136px;
+    border-radius: 14px;
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--text-primary);
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.comment-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.18);
+}
+
+.comment-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.comment-status {
+    font-size: 0.88rem;
+    color: var(--text-tertiary);
+}
+
+.comment-status.error {
+    color: var(--danger-color);
+}
+
+.comment-status.success {
+    color: var(--success-color);
+}
+
+.comment-form-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-extra-btn {
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-extra-btn:hover {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.comment-submit {
+    padding: 10px 24px;
+    border-radius: 12px;
+    border: 1px solid var(--primary-color);
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.25s ease;
+}
+
+.comment-submit:hover {
+    filter: brightness(1.08);
+}
+
+.community-post-page {
+    display: flex;
+    justify-content: center;
+    padding: 0 clamp(12px, 4vw, 48px);
+}
+
+.community-post-page .community-post {
+    width: min(1200px, 100%);
+}
+
+@media (max-width: 820px) {
+    .post-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .reaction-grid {
+        justify-content: center;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .post-title {
+        font-size: 1.9rem;
+    }
+
+    .reaction-grid {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    .comments-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .comment-form-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .comment-form-actions {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .comment-extra-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .comment-submit {
+        width: 100%;
+    }
+}
+
+
+
+
