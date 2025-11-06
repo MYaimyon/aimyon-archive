@@ -1,7 +1,7 @@
 <header class="site-header">
   <nav class="navbar">
     <div class="container">
-      <a href="index.html" class="logo" aria-label="Aimyon Archive 홈">あいみょん</a>
+      <a href="index.html" class="logo" aria-label="Aimyon Archive 홈으로 이동">あいみょん</a>
       <ul class="nav-menu" role="menubar">
         <li role="none"><a role="menuitem" href="index.html">홈</a></li>
         <li role="none"><a role="menuitem" href="profile.html">프로필</a></li>
@@ -13,8 +13,18 @@
         <li role="none"><a role="menuitem" href="timeline.html">타임라인</a></li>
         <li role="none"><a role="menuitem" href="live.html">라이브</a></li>
         <li role="none"><a role="menuitem" href="items.html">아이템</a></li>
-        <li role="none"><a role="menuitem" href="search.html">검색</a></li>
       </ul>
+      <form class="nav-search" role="search" action="search.html" method="get">
+        <label class="visually-hidden" for="globalSearchInput">통합 검색</label>
+        <input
+          type="search"
+          id="globalSearchInput"
+          name="q"
+          placeholder="앨범, 곡, 장소 등 검색"
+          autocomplete="off"
+        >
+        <button type="submit" class="nav-search-button">검색</button>
+      </form>
     </div>
   </nav>
 </header>

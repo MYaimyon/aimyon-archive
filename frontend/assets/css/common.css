@@ -76,10 +76,14 @@ ol {
 }
 
 .navbar .container {
+    width: min(1360px, 100%);
+    max-width: none;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 40px);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
+    gap: clamp(24px, 4vw, 48px);
 }
 
 .logo {
@@ -87,12 +91,17 @@ ol {
     font-weight: 700;
     color: var(--primary-color);
     text-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+    flex: 0 0 auto;
+    margin-right: clamp(24px, 4vw, 72px);
 }
 
 .nav-menu {
     display: flex;
-    gap: 18px;
+    gap: clamp(10px, 1.6vw, 16px);
     align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .nav-menu li {
@@ -102,7 +111,7 @@ ol {
 .nav-menu a {
     color: var(--text-secondary);
     font-weight: 500;
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 999px;
     transition: color 0.2s ease, background 0.2s ease;
     white-space: nowrap;
@@ -113,6 +122,103 @@ ol {
     color: #ffffff;
     background: rgba(255, 255, 255, 0.12);
 }
+
+.nav-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 10px 6px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    width: clamp(180px, 18vw, 260px);
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    margin-left: clamp(16px, 3vw, 48px);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.nav-search:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.35);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-search input {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 0.95rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.nav-search input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.nav-search input:focus {
+    outline: none;
+}
+
+.nav-search-button {
+    background: var(--primary-color);
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nav-search-button:hover,
+.nav-search-button:focus {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+@media (max-width: 1200px) {
+    .navbar .container {
+        gap: clamp(12px, 3vw, 32px);
+    }
+
+    .nav-menu {
+        gap: clamp(10px, 1.4vw, 16px);
+    }
+
+    .nav-search {
+        width: clamp(180px, 28vw, 260px);
+    }
+}
+
+@media (max-width: 960px) {
+    .navbar .container {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .logo {
+        margin-right: 16px;
+    }
+
+    .nav-menu {
+        order: 2;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        row-gap: 8px;
+        width: 100%;
+    }
+
+    .nav-search {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
 
 /* ========================================
    BUTTONS
