@@ -1,22 +1,23 @@
-ï»¿# ë‹¤ìŒ ìž‘ì—… ëª©ë¡ (2025-10-22 ê¸°ì¤€)
+# ´ÙÀ½ ÀÛ¾÷ ¸ñ·Ï (2025-10-22 ±âÁØ)
+> Mock preview IDs: see docs/mock-data-reference.md
 
-## í”„ëŸ°íŠ¸ì—”ë“œ
-- [ ] lbum-detail.htmlì— /api/albums/{id} fetch ì ìš© (ë¡œì»¬ ë¯¸ë¦¬ë³´ê¸° í¬í•¨)
-- [ ] song-detail.html êµ¬ì¡° ì ê²€ ë° ì¶”í›„ /api/tracks/{id} ì—°ë™ ëŒ€ë¹„ TODO í‘œì‹œ
-- [ ] ê³µí†µ ì»´í¬ë„ŒíŠ¸/ìŠ¤íƒ€ì¼ ì¸ì½”ë”© ì •ë¦¬, í–¥í›„ ë¦¬ë‰´ì–¼ì„ ìœ„í•œ ì™€ì´ì–´í”„ë ˆìž„ ì´ˆì•ˆ ì¤€ë¹„
+## ÇÁ·±Æ®¿£µå
+- [ ] lbum-detail.html¿¡ /api/albums/{id} fetch Àû¿ë (·ÎÄÃ ¹Ì¸®º¸±â Æ÷ÇÔ)
+- [ ] song-detail.html ±¸Á¶ Á¡°Ë ¹× ÃßÈÄ /api/tracks/{id} ¿¬µ¿ ´ëºñ TODO Ç¥½Ã
+- [ ] °øÅë ÄÄÆ÷³ÍÆ®/½ºÅ¸ÀÏ ÀÎÄÚµù Á¤¸®, ÇâÈÄ ¸®´º¾óÀ» À§ÇÑ ¿ÍÀÌ¾îÇÁ·¹ÀÓ ÃÊ¾È ÁØºñ
 
-## ë°±ì—”ë“œ & ë°ì´í„°
-- [ ] /api/albums/{id} ì‘ë‹µì— ìŠ¤í† ë¦¬/ê´€ë ¨ ë¯¸ë””ì–´ í•„ë“œ ì •ë¦¬
-- [ ] /api/tracks ê²€ìƒ‰/ìƒì„¸ ì‘ë‹µ êµ¬ì¡° í™•ì • ë° ìƒ˜í”Œ ë°ì´í„° ë³´ê°•
-- [ ] Story / Place / Live ë“± ë‚˜ë¨¸ì§€ ë„ë©”ì¸ ì—”í‹°í‹° ì„¤ê³„
-- [ ] ìƒ˜í”Œ ë°ì´í„° â†’ ì‹¤ì œ ë°ì´í„° ìˆ˜ì§‘/ì •ë¦¬ ë£¨í‹´ ìˆ˜ë¦½ (SQL/JSON ë¤í”„ í¬í•¨)
+## ¹é¿£µå & µ¥ÀÌÅÍ
+- [ ] /api/albums/{id} ÀÀ´ä¿¡ ½ºÅä¸®/°ü·Ã ¹Ìµð¾î ÇÊµå Á¤¸®
+- [ ] /api/tracks °Ë»ö/»ó¼¼ ÀÀ´ä ±¸Á¶ È®Á¤ ¹× »ùÇÃ µ¥ÀÌÅÍ º¸°­
+- [ ] Story / Place / Live µî ³ª¸ÓÁö µµ¸ÞÀÎ ¿£Æ¼Æ¼ ¼³°è
+- [ ] »ùÇÃ µ¥ÀÌÅÍ ¡æ ½ÇÁ¦ µ¥ÀÌÅÍ ¼öÁý/Á¤¸® ·çÆ¾ ¼ö¸³ (SQL/JSON ´ýÇÁ Æ÷ÇÔ)
 
-## ì»¤ë®¤ë‹ˆí‹°/ê´€ë¦¬ìž ì„¤ê³„
-- [ ] ê²Œì‹œíŒ/ëŒ“ê¸€/ì¢‹ì•„ìš”/ì¦ê²¨ì°¾ê¸° ìš”êµ¬ì‚¬í•­ ë¬¸ì„œí™”
-- [ ] ê´€ë¦¬ìž CRUD, ê¶Œí•œ ì •ì±…, ì´ë¯¸ì§€ ì—…ë¡œë“œ ìŠ¤íŠ¸ëž˜í‹°ì§€ ì •ë¦¬
-- [ ] ì¸ì¦(JWT) íë¦„ ì„¤ê³„ (íšŒì›ê°€ìž…/ë¡œê·¸ì¸/í† í° ê°±ì‹ )
+## Ä¿¹Â´ÏÆ¼/°ü¸®ÀÚ ¼³°è
+- [ ] °Ô½ÃÆÇ/´ñ±Û/ÁÁ¾Æ¿ä/Áñ°ÜÃ£±â ¿ä±¸»çÇ× ¹®¼­È­
+- [ ] °ü¸®ÀÚ CRUD, ±ÇÇÑ Á¤Ã¥, ÀÌ¹ÌÁö ¾÷·Îµå ½ºÆ®·¡Æ¼Áö Á¤¸®
+- [ ] ÀÎÁõ(JWT) Èå¸§ ¼³°è (È¸¿ø°¡ÀÔ/·Î±×ÀÎ/ÅäÅ« °»½Å)
 
-## ë¬¸ì„œ & ë°°í¬ ì¤€ë¹„
-- [ ] README ë° docs(especially system-design.md) ì—…ë°ì´íŠ¸ ì§€ì†
-- [ ] AWS ë°°í¬ ì²´í¬ë¦¬ìŠ¤íŠ¸ ì´ˆì•ˆ (EC2/RDS/S3, í™˜ê²½ë³€ìˆ˜ ê´€ë¦¬)
-- [ ] ìƒ˜í”Œ ë°ì´í„° ì‚­ì œ/ì´ˆê¸°í™” ìŠ¤í¬ë¦½íŠ¸ ì •ë¦¬
+## ¹®¼­ & ¹èÆ÷ ÁØºñ
+- [ ] README ¹× docs(especially system-design.md) ¾÷µ¥ÀÌÆ® Áö¼Ó
+- [ ] AWS ¹èÆ÷ Ã¼Å©¸®½ºÆ® ÃÊ¾È (EC2/RDS/S3, È¯°æº¯¼ö °ü¸®)
+- [ ] »ùÇÃ µ¥ÀÌÅÍ »èÁ¦/ÃÊ±âÈ­ ½ºÅ©¸³Æ® Á¤¸®

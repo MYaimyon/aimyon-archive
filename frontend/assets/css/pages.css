@@ -3196,6 +3196,12 @@
     color: var(--text-secondary);
 }
 
+.comment-meta-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .comment-body {
     color: var(--text-primary);
     line-height: 1.6;

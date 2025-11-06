@@ -1,93 +1,96 @@
-ï»¿# Aimyon Archive
+# Aimyon Archive
 
-ì•„ì´ë¬­(Aimyon) ìž…ë¬¸ìžë„ ì‰½ê²Œ íƒìƒ‰í•  ìˆ˜ ìžˆëŠ” íŒ¬ ì•„ì¹´ì´ë¸Œë¥¼ ë§Œë“œëŠ” ë¹„ìƒì—…Â·í•™ìŠµìš© í”„ë¡œì íŠ¸ìž…ë‹ˆë‹¤. MVP ëª©í‘œ ì‹œì ì€ 2025ë…„ 10ì›” ë§, ì˜ˆì‚°ì€ 0ì›(í•„ìš” ì‹œ AWS í”„ë¦¬í‹°ì–´ ìµœëŒ€ 20,000ì›)ìž…ë‹ˆë‹¤.
+¾ÆÀÌ’D(Aimyon) ÀÔ¹®ÀÚµµ ½±°Ô Å½»öÇÒ ¼ö ÀÖ´Â ÆÒ ¾ÆÄ«ÀÌºê¸¦ ¸¸µå´Â ºñ»ó¾÷¡¤ÇÐ½À¿ë ÇÁ·ÎÁ§Æ®ÀÔ´Ï´Ù. MVP ¸ñÇ¥ ½ÃÁ¡Àº 2025³â 10¿ù ¸», ¿¹»êÀº 0¿ø(ÇÊ¿ä ½Ã AWS ÇÁ¸®Æ¼¾î ÃÖ´ë 20,000¿ø)ÀÔ´Ï´Ù.
 
-## ë¹„ì „ & í•µì‹¬ ê°€ì¹˜
-- ìŒì•…: ì•¨ë²” â†’ ê³¡ ìƒì„¸ íë¦„, ê°€ì‚¬ ìš”ì•½/ìŠ¤í† ë¦¬/ë¼ì´ë¸Œ ì˜ìƒê¹Œì§€ í•œ ë²ˆì— íŒŒì•…
-- ë¯¸ë””ì–´: ì¸í„°ë·°Â·ë°©ì†¡Â·ë¬­ì–´ë¡ì„ ì£¼ì œë³„ë¡œ ëª¨ì•„ ì½ê¸° ì¤‘ì‹¬ìœ¼ë¡œ ì œê³µ
-- ë¬­ì§€ìˆœë¡€ & ì•„ì´í…œ: ì§€ë„/ìž¥ì†Œ/ì¸ì¦ìƒ·, ì°©ìš©Â·ì¶”ì²œ ì•„ì´í…œ íë ˆì´ì…˜
-- í™œë™ ê¸°ë¡: íƒ€ìž„ë¼ì¸, ë¼ì´ë¸Œ ì„¸íŠ¸ë¦¬ìŠ¤íŠ¸, ì°¨íŠ¸Â·ìˆ˜ìƒ, ë…¸ëž˜ë°© ë²ˆí˜¸
-- ì»¤ë®¤ë‹ˆí‹°: íŒ¬ì•„íŠ¸, í›„ê¸°, ì¸ì¦ìƒ·, ìžìœ ê²Œì‹œíŒ ë“± ì°¸ì—¬í˜• ê³µê°„
-- ê²€ìƒ‰: ì•¨ë²”/ê³¡/ìž¥ì†Œ/ì•„ì´í…œ/ë¼ì´ë¸Œ ì¤‘ì‹¬ ë¹ ë¥¸ íƒìƒ‰
+## ºñÀü & ÇÙ½É °¡Ä¡
+- À½¾Ç: ¾Ù¹ü ¡æ °î »ó¼¼ Èå¸§, °¡»ç ¿ä¾à/½ºÅä¸®/¶óÀÌºê ¿µ»ó±îÁö ÇÑ ¹ø¿¡ ÆÄ¾Ç
+- ¹Ìµð¾î: ÀÎÅÍºä¡¤¹æ¼Û¡¤’D¾î·ÏÀ» ÁÖÁ¦º°·Î ¸ð¾Æ ÀÐ±â Áß½ÉÀ¸·Î Á¦°ø
+- ’DÁö¼ø·Ê & ¾ÆÀÌÅÛ: Áöµµ/Àå¼Ò/ÀÎÁõ¼¦, Âø¿ë¡¤ÃßÃµ ¾ÆÀÌÅÛ Å¥·¹ÀÌ¼Ç
+- È°µ¿ ±â·Ï: Å¸ÀÓ¶óÀÎ, ¶óÀÌºê ¼¼Æ®¸®½ºÆ®, Â÷Æ®¡¤¼ö»ó, ³ë·¡¹æ ¹øÈ£
+- Ä¿¹Â´ÏÆ¼: ÆÒ¾ÆÆ®, ÈÄ±â, ÀÎÁõ¼¦, ÀÚÀ¯°Ô½ÃÆÇ µî Âü¿©Çü °ø°£
+- °Ë»ö: ¾Ù¹ü/°î/Àå¼Ò/¾ÆÀÌÅÛ/¶óÀÌºê Áß½É ºü¸¥ Å½»ö
 
-## ì •ë³´ êµ¬ì¡° (ë¼ìš°íŒ… ê³„íš)
+## Á¤º¸ ±¸Á¶ (¶ó¿ìÆÃ °èÈ¹)
 `
-/                í™ˆ
-/music           ìŒì•… í—ˆë¸Œ
-  â”” /albums      ì•¨ë²” ë¦¬ìŠ¤íŠ¸
-  â”” /tracks/{id} ê³¡ ìƒì„¸
-/media           ì¸í„°ë·° & ë¯¸ë””ì–´ (ì¸í„°ë·°/ë°©ì†¡/ë¬­ì–´ë¡)
-/places          ë¬­ì§€ìˆœë¡€ (ì§€ë„/ìž¥ì†Œ/ì¸ì¦ìƒ·)
-/items           ë¬­ì•„ì´í…œ
-/timeline        í™œë™ íƒ€ìž„ë¼ì¸
-/live            ë¼ì´ë¸Œ & ì„¸íŠ¸ë¦¬ìŠ¤íŠ¸
-/records         ì°¨íŠ¸ & ìˆ˜ìƒ
-/karaoke         ë…¸ëž˜ë°© ë²ˆí˜¸
-/community       ì»¤ë®¤ë‹ˆí‹° (íŒ¬ì•„íŠ¸/í›„ê¸°/ì¸ì¦ìƒ·/ìžìœ ê²Œì‹œíŒ)
-/search          í†µí•© ê²€ìƒ‰ (ì•¨ë²”/ê³¡/ìž¥ì†Œ/ì•„ì´í…œ/ë¼ì´ë¸Œ)
+/                È¨
+/music           À½¾Ç Çãºê
+  ¦¦ /albums      ¾Ù¹ü ¸®½ºÆ®
+  ¦¦ /tracks/{id} °î »ó¼¼
+/media           ÀÎÅÍºä & ¹Ìµð¾î (ÀÎÅÍºä/¹æ¼Û/’D¾î·Ï)
+/places          ’DÁö¼ø·Ê (Áöµµ/Àå¼Ò/ÀÎÁõ¼¦)
+/items           ’D¾ÆÀÌÅÛ
+/timeline        È°µ¿ Å¸ÀÓ¶óÀÎ
+/live            ¶óÀÌºê & ¼¼Æ®¸®½ºÆ®
+/records         Â÷Æ® & ¼ö»ó
+/karaoke         ³ë·¡¹æ ¹øÈ£
+/community       Ä¿¹Â´ÏÆ¼ (ÆÒ¾ÆÆ®/ÈÄ±â/ÀÎÁõ¼¦/ÀÚÀ¯°Ô½ÃÆÇ)
+/search          ÅëÇÕ °Ë»ö (¾Ù¹ü/°î/Àå¼Ò/¾ÆÀÌÅÛ/¶óÀÌºê)
 `
 
-## MVP ë²”ìœ„
-- í¬í•¨: ì•¨ë²”â†’ê³¡ ìƒì„¸, ë¯¸ë””ì–´ ì½ê¸°, ë¬­ì§€ìˆœë¡€, ì•„ì´í…œ, íƒ€ìž„ë¼ì¸Â·ë¼ì´ë¸Œ(í…ìŠ¤íŠ¸), ì»¤ë®¤ë‹ˆí‹°(ìž‘ì„±/ëŒ“ê¸€/ì¢‹ì•„ìš”), ê°„ë‹¨ ê²€ìƒ‰, ê´€ë¦¬ìž CRUD/ì´ë¯¸ì§€ ì—…ë¡œë“œ (ë¡œê·¸ì¸ì€ 2ì°¨ ê°œë°œ ê°€ëŠ¥)
-- ì œì™¸: ì˜¤ëŠ˜ì˜ ë¬­ì–´ë¡/ëžœë¤ ìœ„ì ¯ ë“± ë¹„í•µì‹¬ ë¶€ê°€ ê¸°ëŠ¥
+## MVP ¹üÀ§
+- Æ÷ÇÔ: ¾Ù¹ü¡æ°î »ó¼¼, ¹Ìµð¾î ÀÐ±â, ’DÁö¼ø·Ê, ¾ÆÀÌÅÛ, Å¸ÀÓ¶óÀÎ¡¤¶óÀÌºê(ÅØ½ºÆ®), Ä¿¹Â´ÏÆ¼(ÀÛ¼º/´ñ±Û/ÁÁ¾Æ¿ä), °£´Ü °Ë»ö, °ü¸®ÀÚ CRUD/ÀÌ¹ÌÁö ¾÷·Îµå (·Î±×ÀÎÀº 2Â÷ °³¹ß °¡´É)
+- Á¦¿Ü: ¿À´ÃÀÇ ’D¾î·Ï/·£´ý À§Á¬ µî ºñÇÙ½É ºÎ°¡ ±â´É
 
-## ë°ì´í„° ëª¨ë¸ ìŠ¤ì¼€ì¹˜
-| Entity         | ì„¤ëª…                     | ê´€ê³„ ì˜ˆì‹œ              |
+## µ¥ÀÌÅÍ ¸ðµ¨ ½ºÄÉÄ¡
+| Entity         | ¼³¸í                     | °ü°è ¿¹½Ã              |
 |----------------|--------------------------|------------------------|
-| Album          | ì•¨ë²” ë©”íƒ€ ë°ì´í„°         | Album 1:N Track        |
-| Track          | ê³¡ ë©”íƒ€                   | Track 1:N Story        |
-| Story          | ê³¡ ë¹„í•˜ì¸ë“œ/ê°€ì‚¬ ìš”ì•½    | Story N:1 Track        |
-| Interview      | ì¸í„°ë·°/ë¯¸ë””ì–´ ìš”ì•½Â·ë§í¬  | ë…ë¦½                   |
-| Place          | ë¬­ì§€ìˆœë¡€ ìž¥ì†Œ(ì¢Œí‘œ í¬í•¨) | Place 1:N CommunityPost|
-| Item           | ì°©ìš©/ì¶”ì²œ ì•„ì´í…œ         | ë…ë¦½ (Trackì™€ ì—°ê³„ ê°€ëŠ¥)|
-| LiveEvent      | ê³µì—°/ì„¸íŠ¸ë¦¬ìŠ¤íŠ¸          | ë…ë¦½                   |
-| CommunityPost  | ì»¤ë®¤ë‹ˆí‹° ê²Œì‹œê¸€          | Post 1:N Comment       |
-| Comment        | ëŒ“ê¸€/ëŒ€ëŒ“ê¸€              | N:1 CommunityPost      |
-| User           | íšŒì› ì •ë³´                | User 1:N Post/Comment  |
+| Album          | ¾Ù¹ü ¸ÞÅ¸ µ¥ÀÌÅÍ         | Album 1:N Track        |
+| Track          | °î ¸ÞÅ¸                   | Track 1:N Story        |
+| Story          | °î ºñÇÏÀÎµå/°¡»ç ¿ä¾à    | Story N:1 Track        |
+| Interview      | ÀÎÅÍºä/¹Ìµð¾î ¿ä¾à¡¤¸µÅ©  | µ¶¸³                   |
+| Place          | ’DÁö¼ø·Ê Àå¼Ò(ÁÂÇ¥ Æ÷ÇÔ) | Place 1:N CommunityPost|
+| Item           | Âø¿ë/ÃßÃµ ¾ÆÀÌÅÛ         | µ¶¸³ (Track¿Í ¿¬°è °¡´É)|
+| LiveEvent      | °ø¿¬/¼¼Æ®¸®½ºÆ®          | µ¶¸³                   |
+| CommunityPost  | Ä¿¹Â´ÏÆ¼ °Ô½Ã±Û          | Post 1:N Comment       |
+| Comment        | ´ñ±Û/´ë´ñ±Û              | N:1 CommunityPost      |
+| User           | È¸¿ø Á¤º¸                | User 1:N Post/Comment  |
 
-## ê²€ìƒ‰ ì •ì±…
-- ëŒ€ìƒ: Album, Track, Place, Item, LiveEvent, CommunityPost(ì œëª©/íƒœê·¸)
-- ì œì™¸: Interview, ë¬­ì–´ë¡ Quote (ê²€ìƒ‰ ë¶€ë‹´ ìµœì†Œí™”)
-- MVP: LIKE ê¸°ë°˜ ê°„ë‹¨ ê²€ìƒ‰ â†’ ì¶”í›„ ì „ë¬¸ ê²€ìƒ‰ìœ¼ë¡œ í™•ìž¥ ê°€ëŠ¥
+## °Ë»ö Á¤Ã¥
+- ´ë»ó: Album, Track, Place, Item, LiveEvent, CommunityPost(Á¦¸ñ/ÅÂ±×)
+- Á¦¿Ü: Interview, ’D¾î·Ï Quote (°Ë»ö ºÎ´ã ÃÖ¼ÒÈ­)
+- MVP: LIKE ±â¹Ý °£´Ü °Ë»ö ¡æ ÃßÈÄ Àü¹® °Ë»öÀ¸·Î È®Àå °¡´É
 
-## ê¸°ìˆ  ìŠ¤íƒ ê³„íš
-- Frontend: ê¸°ì¡´ HTML/CSS/JS ìžì‚° â†’ ì´í›„ JSP(View) + fetch()ë¡œ API ì—°ë™
-- Backend: Java 21, Spring Boot 3 (Gradle ê¸°ë°˜), Spring MVC/Security/JPA
-- Database: PostgreSQL (ë¡œì»¬ ê°œë°œ â†’ AWS RDSë¡œ ì´ì „)
-- Infra: AWS EC2 t2.micro, RDS(PostgreSQL), S3(60ì¼ í›„ Glacier ìˆ˜ëª…ì£¼ê¸°)
+## ±â¼ú ½ºÅÃ °èÈ¹
+- Frontend: ±âÁ¸ HTML/CSS/JS ÀÚ»ê ¡æ ÀÌÈÄ JSP(View) + fetch()·Î API ¿¬µ¿
+- Backend: Java 21, Spring Boot 3 (Gradle ±â¹Ý), Spring MVC/Security/JPA
+- Database: PostgreSQL (·ÎÄÃ °³¹ß ¡æ AWS RDS·Î ÀÌÀü)
+- Infra: AWS EC2 t2.micro, RDS(PostgreSQL), S3(60ÀÏ ÈÄ Glacier ¼ö¸íÁÖ±â)
 
-## ë””ë ‰í„°ë¦¬ êµ¬ì¡° (ì´ˆì•ˆ)
+## µð·ºÅÍ¸® ±¸Á¶ (ÃÊ¾È)
 `
 root/
-â”œâ”€â”€ frontend/            # ì •ì  ìžì‚° / ì¶”í›„ JSP ë§ˆì´ê·¸ë ˆì´ì…˜ ë¦¬ì†ŒìŠ¤
-â”œâ”€â”€ backend/             # Spring Boot API (ìƒì„± ì˜ˆì •)
-â”‚   â”œâ”€â”€ aimyon-archive-api/
-â”‚   â””â”€â”€ scripts/
-â”œâ”€â”€ docs/                # ê¸°íšÂ·ì„¤ê³„Â·ì§„í–‰ ë¬¸ì„œ
-â”œâ”€â”€ README.md
-â””â”€â”€ CHANGELOG.md
+¦§¦¡¦¡ frontend/            # Á¤Àû ÀÚ»ê / ÃßÈÄ JSP ¸¶ÀÌ±×·¹ÀÌ¼Ç ¸®¼Ò½º
+¦§¦¡¦¡ backend/             # Spring Boot API (»ý¼º ¿¹Á¤)
+¦¢   ¦§¦¡¦¡ aimyon-archive-api/
+¦¢   ¦¦¦¡¦¡ scripts/
+¦§¦¡¦¡ docs/                # ±âÈ¹¡¤¼³°è¡¤ÁøÇà ¹®¼­
+¦§¦¡¦¡ README.md
+¦¦¦¡¦¡ CHANGELOG.md
 `
-- docs/project-plan.md : ì „ì²´ ê³„íš ë° ë¡œë“œë§µ
-- docs/next_tasks.md   : ë‹¨ê¸° ìš°ì„  ìž‘ì—…
-- docs/project_progress.md : ì§„í–‰ í˜„í™© ë° ë¦¬ìŠ¤í¬
+- docs/project-plan.md : ÀüÃ¼ °èÈ¹ ¹× ·Îµå¸Ê
+- docs/next_tasks.md   : ´Ü±â ¿ì¼± ÀÛ¾÷
+- docs/project_progress.md : ÁøÇà ÇöÈ² ¹× ¸®½ºÅ©
 
-## ì§„í–‰ í˜„í™© (2025-10-16 ê¸°ì¤€)
-- [x] í”„ë¡œì íŠ¸ ë°©í–¥ ì •ë¦¬ ë° ë¬¸ì„œí™” (README, docs/*)
-- [ ] Spring Boot í”„ë¡œì íŠ¸ ìƒì„± ë° Gradle ì„¤ì •
-- [ ] PostgreSQL ìŠ¤í‚¤ë§ˆ/ë§ˆì´ê·¸ë ˆì´ì…˜ ì´ˆì•ˆ
-- [ ] /api/albums, /api/tracks ê¸°ë³¸ API êµ¬í˜„
-- [ ] í”„ëŸ°íŠ¸ fetch ì—°ê²° ë° ì»¤ë®¤ë‹ˆí‹°/ê²€ìƒ‰/ê´€ë¦¬ìž UI ê¸°ëŠ¥í™”
+## ÁøÇà ÇöÈ² (2025-10-16 ±âÁØ)
+- [x] ÇÁ·ÎÁ§Æ® ¹æÇâ Á¤¸® ¹× ¹®¼­È­ (README, docs/*)
+- [ ] Spring Boot ÇÁ·ÎÁ§Æ® »ý¼º ¹× Gradle ¼³Á¤
+- [ ] PostgreSQL ½ºÅ°¸¶/¸¶ÀÌ±×·¹ÀÌ¼Ç ÃÊ¾È
+- [ ] /api/albums, /api/tracks ±âº» API ±¸Çö
+- [ ] ÇÁ·±Æ® fetch ¿¬°á ¹× Ä¿¹Â´ÏÆ¼/°Ë»ö/°ü¸®ÀÚ UI ±â´ÉÈ­
 
-## í–¥í›„ ìš°ì„ ìˆœìœ„
-1. Spring Boot í”„ë¡œì íŠ¸ ì´ˆê¸°í™” (Gradle) + ê¸°ë³¸ API(/api/albums, /api/tracks)
-2. PostgreSQL ERD í™•ì •, Flyway/Liquibase ë§ˆì´ê·¸ë ˆì´ì…˜ íŒŒì´í”„ë¼ì¸
-3. í”„ëŸ°íŠ¸ fetch() ìœ í‹¸ ëª¨ë“ˆ ìž‘ì„± â†’ ì •ì  ë°ì´í„° ì œê±° ë° API ì—°ë™
-4. ì»¤ë®¤ë‹ˆí‹°/ê²€ìƒ‰/ê´€ë¦¬ìž ê¸°ëŠ¥ ì„¸ë¶€ ì„¤ê³„ ë° êµ¬í˜„ ìˆœì°¨ ì§„í–‰
-5. í…ŒìŠ¤íŠ¸/ë¬¸ì„œ ë³´ê°•, í•„ìš” ì‹œ AWS ë°°í¬ ë° ë¹„ìš© ëª¨ë‹ˆí„°ë§
+## ÇâÈÄ ¿ì¼±¼øÀ§
+1. Spring Boot ÇÁ·ÎÁ§Æ® ÃÊ±âÈ­ (Gradle) + ±âº» API(/api/albums, /api/tracks)
+2. PostgreSQL ERD È®Á¤, Flyway/Liquibase ¸¶ÀÌ±×·¹ÀÌ¼Ç ÆÄÀÌÇÁ¶óÀÎ
+3. ÇÁ·±Æ® fetch() À¯Æ¿ ¸ðµâ ÀÛ¼º ¡æ Á¤Àû µ¥ÀÌÅÍ Á¦°Å ¹× API ¿¬µ¿
+4. Ä¿¹Â´ÏÆ¼/°Ë»ö/°ü¸®ÀÚ ±â´É ¼¼ºÎ ¼³°è ¹× ±¸Çö ¼øÂ÷ ÁøÇà
+5. Å×½ºÆ®/¹®¼­ º¸°­, ÇÊ¿ä ½Ã AWS ¹èÆ÷ ¹× ºñ¿ë ¸ð´ÏÅÍ¸µ
 
-## í˜‘ì—… & ì—­í• 
-- Codex: ì„¤ê³„Â·ê°œë°œÂ·ë¬¸ì„œÂ·í…ŒìŠ¤íŠ¸ ì „ë‹´, ì§„í–‰ ìƒí™© ê³µìœ 
-- ì§„ì„±: ì˜¤ë„ˆ(ìµœì¢… ì˜ì‚¬ê²°ì •)
-- ChatGPT: ì°¸ê³  ë¬¸ë‹µ/ì„¤ëª… ë³´ì¡°
+## Çù¾÷ & ¿ªÇÒ
+- Codex: ¼³°è¡¤°³¹ß¡¤¹®¼­¡¤Å×½ºÆ® Àü´ã, ÁøÇà »óÈ² °øÀ¯
+- Áø¼º: ¿À³Ê(ÃÖÁ¾ ÀÇ»ç°áÁ¤)
+- ChatGPT: Âü°í ¹®´ä/¼³¸í º¸Á¶
 
-ì¤‘ìš” ê²°ì •ì´ë‚˜ ì§„í–‰ìƒ ë³€ê²½ì€ docs/ ë¬¸ì„œì™€ ì»¤ë°‹ ë©”ì‹œì§€ë¡œ ê¾¸ì¤€ížˆ ê¸°ë¡í•©ë‹ˆë‹¤.
+Áß¿ä °áÁ¤ÀÌ³ª ÁøÇà»ó º¯°æÀº docs/ ¹®¼­¿Í Ä¿¹Ô ¸Þ½ÃÁö·Î ²ÙÁØÈ÷ ±â·ÏÇÕ´Ï´Ù.
+
+## Mock Preview
+- [docs/mock-data-reference.md](docs/mock-data-reference.md) : Mock data IDs and usage for opening pages with `mock=1`

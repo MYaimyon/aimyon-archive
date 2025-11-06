@@ -1,40 +1,41 @@
-# Aimyon Archive API 설계 (초안)
+﻿# Aimyon Archive API ?ㅺ퀎 (珥덉븞)
 
-## 공통 사항
+## 怨듯넻 ?ы빆
 - Base URL: /api
-- 응답 형식: pplication/json
-- 인증: MVP 초기에는 비로그인 기반, 관리자/커뮤니티 권한은 추후 JWT 도입 예정
-- 페이징 기본: page, size (기본값 page=0, size=20)
-- 정렬 기본: sort 쿼리 파라미터 사용 (예: sort=releaseDate,desc)
+- ?묐떟 ?뺤떇: pplication/json
+- ?몄쬆: MVP 珥덇린?먮뒗 鍮꾨줈洹몄씤 湲곕컲, 愿由ъ옄/而ㅻ??덊떚 沅뚰븳? 異뷀썑 JWT ?꾩엯 ?덉젙
+- ?섏씠吏?湲곕낯: page, size (湲곕낯媛?page=0, size=20)
+- ?뺣젹 湲곕낯: sort 荑쇰━ ?뚮씪誘명꽣 ?ъ슜 (?? sort=releaseDate,desc)
 
 ---
 
-## 1. 앨범 (Albums)
+## 1. ?⑤쾾 (Albums)
 ### 1.1 GET /api/albums
-목록 조회. 필터와 검색을 함께 제공.
+紐⑸줉 議고쉶. ?꾪꽣? 寃?됱쓣 ?④퍡 ?쒓났.
 
-#### 요청 파라미터
-| 이름 | 타입 | 예시 | 설명 |
+#### ?붿껌 ?뚮씪誘명꽣
+| ?대쫫 | ???| ?덉떆 | ?ㅻ챸 |
 |------|------|------|------|
-| page | int | 0 | 페이지 번호 (0부터 시작) |
-| size | int | 20 | 페이지 크기 |
-| sort | string | eleaseDate,desc | 정렬 기준 (속성,방향) |
-| 	ype | string | ALBUM | ALBUM, SINGLE, EP 등 앨범 유형 필터 |
-| year | int | 2018 | 발매 연도 필터 |
-| keyword | string | マリーゴールド | 제목/설명 검색 키워드 |
+| page | int | 0 | ?섏씠吏 踰덊샇 (0遺???쒖옉) |
+| size | int | 20 | ?섏씠吏 ?ш린 |
+| sort | string | 
+eleaseDate,desc | ?뺣젹 湲곗? (?띿꽦,諛⑺뼢) |
+| 	ype | string | ALBUM | ALBUM, SINGLE, EP ???⑤쾾 ?좏삎 ?꾪꽣 |
+| year | int | 2018 | 諛쒕ℓ ?곕룄 ?꾪꽣 |
+| keyword | string | ?욁꺁?쇈궡?쇈꺂??| ?쒕ぉ/?ㅻ챸 寃???ㅼ썙??|
 
-#### 응답 예시
+#### ?묐떟 ?덉떆
 `json
 {
   "content": [
     {
       "id": 1,
-      "titleJa": "青春のエキサイトメント",
-      "titleKo": "청춘의 엑사이트먼트",
+      "titleJa": "?믤삦??궓??궢?ㅳ깉?▲꺍??,
+      "titleKo": "泥?텣???묒궗?댄듃癒쇳듃",
       "type": "ALBUM",
       "releaseDate": "2017-09-13",
       "coverUrl": "https://...",
-      "tags": ["J-POP", "포크"]
+      "tags": ["J-POP", "?ы겕"]
     }
   ],
   "page": 0,
@@ -45,26 +46,26 @@
 `
 
 ### 1.2 GET /api/albums/{albumId}
-특정 앨범 상세. 트랙, 스토리, 관련 미디어를 포함.
+?뱀젙 ?⑤쾾 ?곸꽭. ?몃옓, ?ㅽ넗由? 愿??誘몃뵒?대? ?ы븿.
 
-#### 응답 예시
+#### ?묐떟 ?덉떆
 `json
 {
   "id": 1,
-  "titleJa": "青春のエキサイトメント",
-  "titleKo": "청춘의 엑사이트먼트",
+  "titleJa": "?믤삦??궓??궢?ㅳ깉?▲꺍??,
+  "titleKo": "泥?텣???묒궗?댄듃癒쇳듃",
   "type": "ALBUM",
   "releaseDate": "2017-09-13",
-  "description": "데뷔 정규 1집...",
+  "description": "?곕퇃 ?뺢퇋 1吏?..",
   "coverUrl": "https://...",
   "tracks": [
     {
       "id": 101,
-      "titleJa": "愛を伝えたいだとか",
-      "titleKo": "사랑을 전하고 싶다거나",
+      "titleJa": "?쎼굮鴉앫걟?잆걚?졼겏??,
+      "titleKo": "?щ옉???꾪븯怨??띕떎嫄곕굹",
       "trackNo": 1,
       "duration": "03:58",
-      "lyricsSummary": "사랑에 대한 솔직한 고백",
+      "lyricsSummary": "?щ옉??????붿쭅??怨좊갚",
       "storyId": 201
     }
   ],
@@ -73,7 +74,7 @@
       "id": 201,
       "trackId": 101,
       "category": "INTERVIEW",
-      "content": "인터뷰 요약...",
+      "content": "?명꽣酉??붿빟...",
       "source": "Magazine",
       "publishedAt": "2017-10-01"
     }
@@ -87,20 +88,20 @@
 
 ---
 
-## 2. 트랙 (Tracks)
+## 2. ?몃옓 (Tracks)
 ### 2.1 GET /api/tracks/{trackId}
-곡 상세 정보.
+怨??곸꽭 ?뺣낫.
 
-#### 응답 예시
+#### ?묐떟 ?덉떆
 `json
 {
   "id": 101,
   "albumId": 1,
-  "titleJa": "夜行バス",
-  "titleKo": "야행 버스",
+  "titleJa": "鸚쒑죱?먦궧",
+  "titleKo": "?쇳뻾 踰꾩뒪",
   "trackNo": 2,
   "duration": "03:45",
-  "lyricsSummary": "밤행 버스를 타고...",
+  "lyricsSummary": "諛ㅽ뻾 踰꾩뒪瑜??怨?..",
   "mvUrl": "https://youtube.com/...",
   "stories": [
     {
@@ -112,30 +113,124 @@
     }
   ],
   "relatedTracks": [
-    { "id": 102, "titleJa": "マリーゴールド", "titleKo": "마리골드" }
+    { "id": 102, "titleJa": "?욁꺁?쇈궡?쇈꺂??, "titleKo": "留덈━怨⑤뱶" }
   ]
 }
 `
 
 ### 2.2 GET /api/tracks
-간단 목록/검색 (선택). 자동완성이나 검색용으로 사용.
+媛꾨떒 紐⑸줉/寃??(?좏깮). ?먮룞?꾩꽦?대굹 寃?됱슜?쇰줈 ?ъ슜.
 
-| 파라미터 | 설명 |
+| ?뚮씪誘명꽣 | ?ㅻ챸 |
 |----------|-------|
-| keyword | 제목 검색 |
-| lbumId | 특정 앨범 소속 곡만 |
-| page, size | 페이징 |
+| keyword | ?쒕ぉ 寃??|
+| lbumId | ?뱀젙 ?⑤쾾 ?뚯냽 怨〓쭔 |
+| page, size | ?섏씠吏?|
 
-응답: content 배열에 id, 	itleJa, 	itleKo, lbumId 정도의 요약 정보 제공.
+?묐떟: content 諛곗뿴??id, 	itleJa, 	itleKo, lbumId ?뺣룄???붿빟 ?뺣낫 ?쒓났.
 
 ---
 
-## 3. 커뮤니티/관리자 관련 (미리보기)
-- /api/community/posts (GET/POST)
-- /api/community/posts/{id}/comments (GET/POST)
-- /api/admin/albums (POST/PUT/DELETE)
+---
 
-세부 구조는 MVP 후반에 별도로 정리 예정.
+## 3. Community
+
+### 3.1 GET /api/community/boards
+게시판 목록. 프런트에서는 slug 기반으로 탭을 구성한다.
+
+```json
+[
+  { "slug": "free", "name": "자유게시판", "description": "잡담, 후기" },
+  { "slug": "pilgrimage", "name": "묭지순례 인증", "description": "성지 인증샷 공유" }
+]
+```
+
+### 3.2 GET /api/community/posts
+게시글 목록. `board` 파라미터 필수.
+
+| 파라미터 | 설명 |
+|----------|------|
+| board | 게시판 slug |
+| keyword | 제목/본문 검색 |
+| page, size | 페이지네이션 |
+| sort | `createdAt,desc` 기본 |
+
+```json
+{
+  "content": [
+    {
+      "id": "mock-post-1001",
+      "board": "free",
+      "title": "처음 Aimyon을 알게 된 순간",
+      "category": "잡담",
+      "author": "미도리",
+      "createdAt": "2024-10-20T10:15:00+09:00",
+      "viewCount": 128,
+      "likeCount": 12,
+      "commentCount": 4,
+      "notice": false
+    }
+  ],
+  "page": 0,
+  "size": 15,
+  "totalElements": 32,
+  "totalPages": 3
+}
+```
+
+### 3.3 GET /api/community/posts/{id}
+게시글 상세와 메타 정보를 반환.
+
+```json
+{
+  "id": "mock-post-1001",
+  "board": "free",
+  "title": "처음 Aimyon을 알게 된 순간",
+  "author": "미도리",
+  "authorId": 102938,
+  "createdAt": "2024-10-20T10:15:00+09:00",
+  "updatedAt": "2024-10-20T11:00:00+09:00",
+  "viewCount": 128,
+  "likeCount": 12,
+  "commentCount": 4,
+  "content": "<p>처음 들었던 Marigold가...</p>",
+  "tags": ["잡담"],
+  "shareUrl": "https://aimyon-archive.com/community/post/1001",
+  "isNotice": false,
+  "isLiked": false
+}
+```
+
+### 3.4 POST /api/community/posts/{id}/like
+좋아요 토글. `userId` 쿼리 파라미터 필요. 응답으로 최신 게시글 DTO를 반환한다.
+
+### 3.5 GET /api/community/posts/{id}/comments
+댓글 목록.
+
+```json
+[
+  {
+    "id": "c-1",
+    "userId": 102938,
+    "author": "aimyon팬",
+    "content": "저도 오사카 공연 다녀왔어요!",
+    "createdAt": "2024-10-20T11:12:00+09:00",
+    "isOwner": true
+  }
+]
+```
+
+### 3.6 POST /api/community/posts/{id}/comments
+본문:
+
+```json
+{
+  "userId": 102938,
+  "content": "댓글 내용"
+}
+```
+
+성공 시 201 + 새 댓글 DTO. 삭제는 `DELETE /api/community/comments/{commentId}?userId=` 형태.
 
 ---
 
@@ -252,7 +347,7 @@ Returns concert detail including setlist in order.
   "notes": "Encore featured acoustic version of ""Marigold"".",
   "posterImageUrl": "https://...",
   "setlist": [
-    { "order": 1, "trackId": 3, "title": "愛を伝えたいだとか", "section": "MAIN" },
+    { "order": 1, "trackId": 3, "title": "?쎼굮鴉앫걟?잆걚?졼겏??, "section": "MAIN" },
     { "order": 2, "title": "Marigold (Acoustic)", "section": "MAIN" },
     { "order": 15, "trackId": 21, "section": "ENCORE" }
   ]
@@ -309,7 +404,7 @@ Detailed view with media assets.
 {
   "id": 501,
   "title": "Vintage Denim Jacket",
-  "category": { "code": "FASHION", "name": "패션" },
+  "category": { "code": "FASHION", "name": "?⑥뀡" },
   "description": "Worn during 2023 TV appearance",
   "sourceType": "MEDIA",
   "sourceDetail": "Music Station",
@@ -344,10 +439,10 @@ Aggregated search across supported domains.
 ```json
 {
   "albums": [
-    { "id": 1, "title": "青春のエキサイトメント", "releaseDate": "2017-09-13" }
+    { "id": 1, "title": "?믤삦??궓??궢?ㅳ깉?▲꺍??, "releaseDate": "2017-09-13" }
   ],
   "tracks": [
-    { "id": 3, "title": "愛を伝えたいだとか", "albumId": 1 }
+    { "id": 3, "title": "?쎼굮鴉앫걟?잆걚?졼겏??, "albumId": 1 }
   ],
   "places": [
     { "id": 11, "name": "Osaka pilgrimage cafe" }
@@ -368,9 +463,9 @@ Aggregated search across supported domains.
 
 ------
 
-## 다음 작업 메모
-- DTO/엔티티 설계 시 위 필드에 맞춰 클래스 작성 (예: AlbumResponse)
-- Page<T> 형태 응답을 위한 공통 래퍼(response wrapper) 도입 고려
-- API 문서화 도구(OpenAPI/Swagger) 설정: Springdoc-openapi 사용 예정
+## ?ㅼ쓬 ?묒뾽 硫붾え
+- DTO/?뷀떚???ㅺ퀎 ?????꾨뱶??留욎떠 ?대옒???묒꽦 (?? AlbumResponse)
+- Page<T> ?뺥깭 ?묐떟???꾪븳 怨듯넻 ?섑띁(response wrapper) ?꾩엯 怨좊젮
+- API 臾몄꽌???꾧뎄(OpenAPI/Swagger) ?ㅼ젙: Springdoc-openapi ?ъ슜 ?덉젙
 
-문서 업데이트 시 버전 기록을 남겨 주세요.
+臾몄꽌 ?낅뜲?댄듃 ??踰꾩쟾 湲곕줉???④꺼 二쇱꽭??

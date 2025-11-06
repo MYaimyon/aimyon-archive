@@ -1,28 +1,25 @@
 # Mock Data Reference
 
-앱을 프런트에서 빠르게 확인할 때 사용 가능한 샘플 ID 목록입니다.
+Quick links for loading mock data in the browser while backend APIs are not ready.
 
-## 앨범 상세
-- `mock-album-1` — Shunkanteki Six Sense (정규)
-- `mock-album-2` — Heard That There's Good Pasta (싱글)
-- `mock-album-3` — Falling into Your Eyes Record (EP)
+## Album Detail
+- `mock-album-1` - Shunkanteki Six Sense (Full album)
+- `mock-album-2` - Heard That There's Good Pasta (Single)
+- `mock-album-3` - Falling into Your Eyes Record (EP)
+  - Use: `album-detail.html?id=mock-album-1&mock=1`
 
-사용 예: `album-detail.html?id=mock-album-1&mock=1`
+## Track Detail
+- `mock-track-1` - Marigold
+- `mock-track-2` - Ai o Tsutaetai Datoka
+- `mock-track-3` - Sakura ga Furu Yoru wa
+- `mock-track-4` - Good Night Baby
+- `mock-track-5` - Morning Pasta
+- `mock-track-6` - Forever You
+  - Use: `song-detail.html?id=mock-track-1&mock=1`
 
-## 트랙 상세
-- `mock-track-1` — Marigold
-- `mock-track-2` — Ai o Tsutaetai Datoka
-- `mock-track-3` — Sakura ga Furu Yoru wa
-- `mock-track-4` — Good Night Baby
-- `mock-track-5` — Morning Pasta
-- `mock-track-6` — Forever You
+## Community
+- Board slugs: `free`, `pilgrimage`
+- Sample post IDs: `mock-post-1001`, `mock-post-1002`, `mock-post-2101`
+  - Use: `community.html?mock=1` or `community-post.html?id=mock-post-1001&mock=1`
 
-사용 예: `song-detail.html?id=mock-track-1&mock=1`
-
-## 커뮤니티
-- 게시판 슬러그: `free`, `news`, `recommend`
-- 샘플 게시글 ID: `mock-post-1001`, `mock-post-2001`, `mock-post-3001` 등
-
-사용 예: `community.html?mock=1`
-
-> `mock=1` 파라미터를 붙이면 백엔드 없이도 위 샘플 데이터가 페이지에 표시됩니다. 실제 API가 준비된 뒤에는 파라미터 없이 접근하면 됩니다.
+> Add `mock=1` to the query string to force the front-end to use the bundled mock data. When the real API is ready, simply omit the parameter.
