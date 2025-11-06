@@ -9,6 +9,7 @@ import com.aimyon.archive.aimyon_arhcive_api.repository.CommunityBoardRepository
 import com.aimyon.archive.aimyon_arhcive_api.repository.CommunityCommentRepository;
 import com.aimyon.archive.aimyon_arhcive_api.repository.CommunityPostRepository;
 import com.aimyon.archive.aimyon_arhcive_api.repository.PostLikeRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Profile("!mock")
 @Transactional(readOnly = true)
 public class CommunityService {
 

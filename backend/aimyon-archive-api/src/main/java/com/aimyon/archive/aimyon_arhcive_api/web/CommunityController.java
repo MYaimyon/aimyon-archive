@@ -2,6 +2,7 @@ package com.aimyon.archive.aimyon_arhcive_api.web;
 
 import com.aimyon.archive.aimyon_arhcive_api.dto.*;
 import com.aimyon.archive.aimyon_arhcive_api.service.CommunityService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Profile("!mock")
 @RequestMapping("/api/community")
 public class CommunityController {
 

@@ -6,6 +6,7 @@ import com.aimyon.archive.aimyon_arhcive_api.dto.AlbumDetailResponse;
 import com.aimyon.archive.aimyon_arhcive_api.dto.AlbumSummaryResponse;
 import com.aimyon.archive.aimyon_arhcive_api.dto.PagedResponse;
 import com.aimyon.archive.aimyon_arhcive_api.repository.AlbumRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
+@Profile("!mock")
 @Transactional(readOnly = true)
 public class AlbumService {
 
