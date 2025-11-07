@@ -3,6 +3,7 @@ package com.aimyon.archive.aimyon_arhcive_api.web;
 import com.aimyon.archive.aimyon_arhcive_api.dto.*;
 import com.aimyon.archive.aimyon_arhcive_api.service.CommunityService;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.core.Authentication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -48,14 +49,35 @@ public class CommunityController {
 
     @PostMapping("/posts")
     @ResponseStatus(HttpStatus.CREATED)
-    public CommunityPostResponse createPost(@RequestBody CommunityPostCreateRequest request) {
+    public CommunityPostResponse createPost(@RequestBody CommunityPostCreateRequest request, Authentication auth) {
+        Long currentUserId = tryResolveUserId(auth);
+        if (currentUserId != null && request.userId() != null && !request.userId().equals(currentUserId)) {
+            throw new org.springframework.web.server.ResponseStatusException(HttpStatus.FORBIDDEN, "User mismatch");
+        }
         return communityService.createPost(request);
     }
 
     @PutMapping("/posts/{postId}")
     public CommunityPostResponse updatePost(@PathVariable Long postId,
-                                            @RequestBody CommunityPostUpdateRequest request) {
+                                            @RequestBody CommunityPostUpdateRequest request,
+                                            Authentication auth) {
+        Long currentUserId = tryResolveUserId(auth);
+        if (currentUserId != null && request.userId() != null && !request.userId().equals(currentUserId)) {
+            throw new org.springframework.web.server.ResponseStatusException(HttpStatus.FORBIDDEN, "User mismatch");
+        }
         return communityService.updatePost(postId, request);
+    }
+
+    private Long tryResolveUserId(Authentication auth) {
+        try {
+            if (auth == null) return null;
+            var method = auth.getClass().getMethod("getUserId");
+            Object val = method.invoke(auth);
+            if (val instanceof Long l) return l;
+            if (val instanceof Number n) return n.longValue();
+            if (val != null) return Long.valueOf(String.valueOf(val));
+        } catch (Exception ignored) {}
+        return null;
     }
 
     @DeleteMapping("/posts/{postId}")

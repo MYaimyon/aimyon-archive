@@ -94,9 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setStatus("등록 중입니다...");
     submitBtn?.setAttribute("disabled", "");
 
+    const extraHeaders = (typeof Auth !== 'undefined' && Auth.authHeader) ? Auth.authHeader() : {};
     fetch(`${COMMUNITY_API_BASE}/posts`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: Object.assign({ "Content-Type": "application/json" }, extraHeaders),
       body: JSON.stringify({
         userId,
         boardSlug,

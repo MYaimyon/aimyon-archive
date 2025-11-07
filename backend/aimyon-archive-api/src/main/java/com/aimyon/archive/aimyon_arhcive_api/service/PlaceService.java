@@ -7,6 +7,7 @@ import com.aimyon.archive.aimyon_arhcive_api.dto.PlacePageResponse;
 import com.aimyon.archive.aimyon_arhcive_api.dto.PlaceResponse;
 import com.aimyon.archive.aimyon_arhcive_api.repository.PlaceRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Profile("!mock")
 @Transactional(readOnly = true)
 public class PlaceService {
 

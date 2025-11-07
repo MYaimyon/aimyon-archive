@@ -3,11 +3,13 @@ package com.aimyon.archive.aimyon_arhcive_api.web;
 import com.aimyon.archive.aimyon_arhcive_api.dto.PlacePageResponse;
 import com.aimyon.archive.aimyon_arhcive_api.dto.PlaceResponse;
 import com.aimyon.archive.aimyon_arhcive_api.service.PlaceService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Profile("!mock")
 @RequestMapping("/api/places")
 public class PlaceController {
 

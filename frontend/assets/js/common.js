@@ -10,6 +10,24 @@ async function loadComponent(selector, path) {
         }
         const html = await response.text();
         container.innerHTML = html;
+        try {
+            const event = new CustomEvent('component:loaded', { detail: { selector, path } });
+            document.dispatchEvent(event);
+            // If header loaded, ensure auth script is present and render controls
+            if (String(path).includes('header.html')) {
+                if (!window.__authLoaded) {
+                    const s = document.createElement('script');
+                    s.src = '../assets/js/auth.js';
+                    s.onload = () => {
+                        window.__authLoaded = true;
+                        if (window.Auth?.renderNavAuth) window.Auth.renderNavAuth();
+                    };
+                    document.head.appendChild(s);
+                } else {
+                    if (window.Auth?.renderNavAuth) window.Auth.renderNavAuth();
+                }
+            }
+        } catch {}
     } catch (error) {
         console.error(`컴포넌트 로드 실패 (${path}):`, error);
     }
@@ -17,6 +35,8 @@ async function loadComponent(selector, path) {
 
 document.addEventListener('DOMContentLoaded', () => {
     loadComponent('#header-placeholder', '../components/header.html');
+    loadComponent('#sidebar-placeholder', '../components/sidebar.html');
+    loadComponent('#search-strip-placeholder', '../components/search-strip.html');
     loadComponent('#footer-placeholder', '../components/footer.html');
 });
 

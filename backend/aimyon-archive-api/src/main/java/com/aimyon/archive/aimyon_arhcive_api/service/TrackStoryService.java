@@ -5,6 +5,7 @@ import com.aimyon.archive.aimyon_arhcive_api.dto.TrackStoryResponse;
 import com.aimyon.archive.aimyon_arhcive_api.repository.TrackRepository;
 import com.aimyon.archive.aimyon_arhcive_api.repository.TrackStoryRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@Profile("!mock")
 @Transactional(readOnly = true)
 public class TrackStoryService {
 

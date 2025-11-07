@@ -5,6 +5,7 @@ import com.aimyon.archive.aimyon_arhcive_api.dto.NewsEventRequest;
 import com.aimyon.archive.aimyon_arhcive_api.dto.NewsEventResponse;
 import com.aimyon.archive.aimyon_arhcive_api.repository.NewsEventRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Profile("!mock")
 @Transactional(readOnly = true)
 public class NewsEventService {
 

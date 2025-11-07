@@ -2,6 +2,7 @@ package com.aimyon.archive.aimyon_arhcive_api.web;
 
 import com.aimyon.archive.aimyon_arhcive_api.dto.TrackStoryResponse;
 import com.aimyon.archive.aimyon_arhcive_api.service.TrackStoryService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Profile("!mock")
 @RequestMapping("/api/tracks/{trackId}/stories")
 public class TrackStoryController {
 

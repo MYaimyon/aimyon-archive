@@ -11,3 +11,8 @@
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 8080
+app:
+  jwt:
+    # 길고 임의의 문자열로 교체하세요 (32바이트 이상 권장)
+    secret: "dev-local-change-this-secret-dev-local-change-this-secret"
+    expirationMillis: 604800000 # 7 days

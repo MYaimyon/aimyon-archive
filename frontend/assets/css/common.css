@@ -12,7 +12,45 @@
 :root {
     --primary-color: #ff6b6b;
     --primary-hover: #ff8a8a;
-    --bg-dark: #1e1e2e;
+    /* ========================================
+   SEARCH STRIP (below header)
+======================================== */
+.search-strip {
+    padding: 14px 0 18px;
+}
+.search-strip .container {
+    display: flex;
+    justify-content: center;
+}
+.search-strip .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    padding: 8px 10px 8px 16px;
+    width: clamp(300px, 44vw, 720px);
+}
+.search-strip .search-box input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    flex: 1;
+    min-width: 0;
+}
+.search-strip .search-box input::placeholder { color: var(--text-tertiary); }
+.search-strip .search-box input:focus { outline: none; }
+.search-strip .search-box button {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-weight: 700;
+}
+--bg-dark: #1e1e2e;
     --bg-card: rgba(255, 255, 255, 0.05);
     --bg-secondary: rgba(255, 255, 255, 0.04);
     --text-primary: #e0e0e0;
@@ -72,7 +110,7 @@ ol {
 }
 
 .navbar {
-    padding: 16px 0;
+    padding: 18px 0;
 }
 
 .navbar .container {
@@ -92,7 +130,7 @@ ol {
     color: var(--primary-color);
     text-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
     flex: 0 0 auto;
-    margin-right: clamp(24px, 4vw, 72px);
+    margin-right: clamp(16px, 2vw, 32px);
 }
 
 .nav-menu {
@@ -106,6 +144,7 @@ ol {
 
 .nav-menu li {
     display: flex;
+    flex: 0 0 auto;
 }
 
 .nav-menu a {
@@ -179,6 +218,33 @@ ol {
     outline: none;
 }
 
+/* Auth area */
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+.nav-auth a,
+.nav-auth button {
+    font-size: 0.95rem;
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+}
+.nav-auth a:hover,
+.nav-auth button:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.12);
+}
+.nav-auth .nav-username {
+    color: #fff;
+    font-weight: 600;
+}
+
 @media (max-width: 1200px) {
     .navbar .container {
         gap: clamp(12px, 3vw, 32px);
@@ -217,6 +283,11 @@ ol {
         width: 100%;
         max-width: 100%;
     }
+
+    .nav-auth {
+        order: 2;
+        margin-left: auto;
+    }
 }
 
 
@@ -236,6 +307,145 @@ ol {
     cursor: pointer;
 }
 
+
+/* ========================================
+   SIDEBAR (Sub Services)
+======================================== */
+.site-sidebar {
+    position: fixed;
+    top: clamp(84px, 10vw, 120px); /* below header */
+    right: clamp(8px, 2vw, 24px);
+    width: 220px;
+    z-index: 900;
+}
+
+.sidebar-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+}
+
+.sidebar-title {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.side-menu {
+    display: grid;
+    gap: 8px;
+}
+
+.side-link {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.14);
+}
+.side-link:hover { background: rgba(255,255,255,0.12); }
+
+@media (max-width: 1200px) {
+    .site-sidebar { display: none; }
+}
+
+/* ========================================
+   HEADER LAYOUT REBALANCE (flex-wrap 2-row)
+   - Top row: logo (left), search + auth (right)
+   - Second row: menu (wrap)
+======================================== */
+body {
+    padding-top: clamp(72px, 9vw, 110px);
+}
+
+.site-header .navbar .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(16px, 3vw, 32px);
+}
+
+.logo { order: 0; }
+
+.nav-search {
+    order: 1;
+    margin-left: auto;
+    width: clamp(220px, 28vw, 380px);
+}
+
+.nav-auth { order: 1; }
+
+.nav-menu {
+    order: 2;
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(8px, 1.2vw, 16px);
+    justify-content: flex-start;
+}
+
+@media (max-width: 960px) {
+    .nav-search { order: 3; width: 100%; max-width: 100%; }
+    .nav-auth { order: 1; margin-left: 0; }
+    .nav-menu { order: 2; }
+}
+
+/* ========================================
+   HEADER LAYOUT FINAL TUNING (one-row header)
+   - Single row grid: logo | menu | auth
+======================================== */
+.site-header .navbar .container {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto; /* one row only */
+    align-items: center;
+    column-gap: clamp(12px, 2vw, 24px);
+    padding-left: clamp(8px, 1.5vw, 16px) !important;
+    padding-right: clamp(8px, 1.5vw, 16px) !important;
+}
+
+.nav-left { grid-column: 1; grid-row: 1; display: flex; align-items: center; justify-content: flex-start; }
+.nav-right { grid-column: 3; grid-row: 1; display: flex; align-items: center; justify-content: flex-end; gap: 14px; margin-left: 12px; }
+
+.nav-menu {
+    grid-column: 2; grid-row: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    gap: clamp(8px, 1vw, 14px);
+    justify-content: center;
+    min-width: 0;
+}
+
+.nav-search {
+    width: clamp(150px, 18vw, 220px);
+    margin-left: 0;
+    padding: 4px 8px 4px 12px;
+}
+
+@media (max-width: 960px) {
+    .site-header .navbar .container {
+        grid-template-columns: 1fr auto;
+        row-gap: 6px;
+    }
+    .nav-menu { grid-column: 1 / -1; width: 100%; flex-wrap: wrap; justify-content: flex-start; }
+    .nav-search { width: 100%; max-width: 100%; }
+}
+
+/* ========================================
+   HEADER MENU SCALE (spacing + size)
+======================================== */
+.site-header .nav-menu { gap: clamp(10px, 1.2vw, 18px); min-width: 0; }
+.site-header .nav-menu a {
+    font-size: 1.02rem;
+    font-weight: 600;
+    padding: 8px 10px;
+    letter-spacing: 0.1px;
+}
 .btn-primary {
     background: var(--primary-color);
     color: #fff;
@@ -260,3 +470,4 @@ ol {
     transform: translateY(-1px);
     box-shadow: 0 14px 24px rgba(10, 10, 20, 0.28);
 }
+
