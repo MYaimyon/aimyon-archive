@@ -1,0 +1,4 @@
+/* Local quick overrides to avoid fighting large pages.css */
+/* NEWS & EVENTS: align subtitle with '전체 보기' by nudging down */
+.home-events .section-subtitle { margin-top: 6px !important; }
+
