@@ -43,3 +43,9 @@
 .hero-search button:hover {
     background: var(--primary-hover);
 }
+
+/* Pull hero up so it touches the fixed header (while preserving content spacing) */
+.home-hero {
+    margin-top: -72px;
+    padding-top: calc(140px + 72px);
+}
