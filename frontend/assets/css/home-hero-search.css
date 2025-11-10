@@ -49,3 +49,5 @@
     margin-top: -72px;
     padding-top: calc(140px + 72px);
 }
+.home-section .section-header .section-title { text-align: left; margin-left: -6px; }
+
