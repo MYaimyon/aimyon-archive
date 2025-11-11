@@ -52,7 +52,13 @@
         <div class="inline-grid">
           <label class="form-field">
             <span class="form-label">휴대폰(선택)</span>
-            <input type="tel" id="suPhone" inputmode="tel" placeholder="010-0000-0000">
+            <div class="phone-inputs">
+              <input type="text" id="suPhone1" class="phone-part fixed" value="010" readonly aria-label="국번(고정)">
+              <span class="dash" aria-hidden="true">-</span>
+              <input type="text" id="suPhone2" class="phone-part" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" aria-label="중간번호">
+              <span class="dash" aria-hidden="true">-</span>
+              <input type="text" id="suPhone3" class="phone-part" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" aria-label="끝번호">
+            </div>
           </label>
 
           <label class="form-field">
@@ -92,4 +98,3 @@
 <script src="../assets/js/signup.js"></script>
 </body>
 </html>
-

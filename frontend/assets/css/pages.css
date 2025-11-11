@@ -1754,7 +1754,7 @@
 
     .home-search-form {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-end;
     }
 
     .home-search-form input[type="text"] {
@@ -2882,7 +2882,7 @@
 @media (max-width: 768px) {
     .community-header {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-end;
     }
 
     .community-tabs {
@@ -2896,7 +2896,7 @@
 
     .community-search {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-end;
     }
 
     .community-search .btn {
@@ -2919,7 +2919,7 @@
 
     .compose-actions {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-end;
     }
 
     .compose-actions .btn {
@@ -3229,7 +3229,7 @@
 
     .comment-form-footer {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-end;
     }
 
     .comment-submit {
@@ -3354,7 +3354,7 @@
     display: flex;
     justify-content: center;
     gap: 18px;
-    align-items: stretch;
+    align-items: flex-end;
     width: 100%;
     flex-wrap: wrap;
 }
@@ -3639,7 +3639,7 @@ button.reaction-tile {
 
     .reaction-grid {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-end;
         width: 100%;
     }
 
@@ -3650,7 +3650,7 @@ button.reaction-tile {
 
     .comment-form-footer {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-end;
     }
 
     .comment-form-actions {
@@ -3673,7 +3673,7 @@ button.reaction-tile {
 .field-inline {
     display: flex;
     gap: 8px;
-    align-items: center;
+    align-items: flex-end; /* 버튼/인풋 높이 일치 */
 }
 .field-inline input {
     flex: 1;
@@ -3687,6 +3687,7 @@ button.reaction-tile {
     margin-top: 4px;
     color: var(--text-tertiary);
     font-size: 0.85rem;
+    min-height: 18px;
 }
 .inline-grid {
     display: grid;
@@ -3705,6 +3706,43 @@ button.reaction-tile {
     gap: 8px;
     font-size: 0.95rem;
 }
+
+/* auth forms: inputs/buttons on dark theme */
+.auth-card { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); border-radius: 18px; }
+.form-vertical { display: grid; gap: 14px; }
+.form-vertical .form-field { display: grid; gap: 8px; }
+.form-vertical .form-label { color: var(--text-primary); font-weight: 600; }
+.form-vertical input,
+.form-vertical select,
+.form-vertical textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.06);
+    color: var(--text-primary);
+}
+.form-vertical input,
+.form-vertical select { height: 44px; }
+.form-vertical input::placeholder { color: var(--text-tertiary); }
+.form-vertical input:focus,
+.form-vertical select:focus,
+.form-vertical textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.18);
+}
+.radio-group input[type="radio"],
+.checkbox-group input[type="checkbox"] { accent-color: var(--primary-color); }
+.btn-compact { border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.08); color: var(--text-primary); border-radius: 12px; }
+.field-inline .btn-compact { height: 44px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center;  align-self: flex-end; }
+
+/* Signup: phone number parts */
+.phone-inputs { display: flex; align-items: center; gap: 8px; }
+.phone-inputs .phone-part { width: 80px; height: 44px; }
+.phone-inputs .phone-part.fixed { width: 64px; background: var(--bg-secondary); color: var(--text-secondary); cursor: default; }
+.phone-inputs .dash { color: var(--text-secondary); }
+.btn-compact:hover { background: rgba(255,255,255,0.14); }
 
 /* === Home section headers: title/subtitle/link 2-row grid (scoped) === */
 .home-events .section-header,

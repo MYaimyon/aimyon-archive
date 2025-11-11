@@ -31,7 +31,9 @@
     const usernameEl = document.getElementById('suUsername');
     const displayEl = document.getElementById('suDisplayName');
     const emailEl = document.getElementById('suEmail');
-    const phoneEl = document.getElementById('suPhone');
+    const phone1El = document.getElementById('suPhone1');
+    const phone2El = document.getElementById('suPhone2');
+    const phone3El = document.getElementById('suPhone3');
     const birthEl = document.getElementById('suBirth');
     const pwEl = document.getElementById('suPw');
     const pwConfirmEl = document.getElementById('suPwConfirm');
@@ -60,6 +62,34 @@
       else { passwordNote.textContent = M.pwBad; passwordNote.style.color = '#ff6b6b'; }
     }
     pwEl?.addEventListener('input', updatePasswordNote);
+
+    // Phone inputs: digits-only, maxlength 4, auto-advance/backspace
+    function sanitize(el){
+      const v = (el.value || '').replace(/\D/g,'').slice(0,4);
+      el.value = v;
+      return v;
+    }
+    function onPartInput(curr, next){
+      const v = sanitize(curr);
+      if(v.length === 4 && next){ next.focus(); }
+    }
+    function onPartKeydown(curr, prev, e){
+      if(e.key === 'Backspace' && curr.value.length === 0 && prev){
+        e.preventDefault(); prev.focus();
+      }
+    }
+    function onPartPaste(e){
+      const text = (e.clipboardData?.getData('text') || '').replace(/\D/g,'');
+      if(!text) return; e.preventDefault();
+      const a = text.slice(0,4), b = text.slice(4,8);
+      phone2El.value = a; phone3El.value = b;
+      if(b){ phone3El.focus(); } else { phone2El.focus(); }
+    }
+    phone2El?.addEventListener('input', ()=> onPartInput(phone2El, phone3El));
+    phone3El?.addEventListener('input', ()=> onPartInput(phone3El, null));
+    phone2El?.addEventListener('keydown', (e)=> onPartKeydown(phone2El, phone1El, e));
+    phone3El?.addEventListener('keydown', (e)=> onPartKeydown(phone3El, phone2El, e));
+    phone2El?.addEventListener('paste', onPartPaste);
 
     usernameEl?.addEventListener('input', ()=>{
       usernameChecked = false;
@@ -97,7 +127,10 @@
       const username = (usernameEl.value||'').trim();
       const displayName = (displayEl.value||'').trim();
       const email = (emailEl.value||'').trim();
-      const phone = (phoneEl.value||'').trim();
+      const phone1 = (phone1El?.value || '010').trim();
+      const phone2 = (phone2El?.value || '').trim();
+      const phone3 = (phone3El?.value || '').trim();
+      const phone = (phone2 || phone3) ? `${phone1}-${phone2}-${phone3}` : '';
       const birth = birthEl.value || null;
       const password = pwEl.value || '';
       const passwordConfirm = pwConfirmEl.value || '';
@@ -133,4 +166,3 @@
     });
   }
 })();
-
