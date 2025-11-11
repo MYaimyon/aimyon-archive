@@ -3696,12 +3696,10 @@ button.reaction-tile {
 }
 .radio-group { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.95rem; }
 .radio-group label { display: inline-flex; align-items: center; gap: 6px; }
-.checkbox-group label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.95rem;
-}
+.checkbox-group label { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+/* For signup: use non-label container so text click won't toggle */
+.checkbox-group .checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+.checkbox-group .checkbox-text { color: var(--text-primary); }
 
 /* auth forms: inputs/buttons on dark theme */
 .auth-card { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); border-radius: 18px; }
