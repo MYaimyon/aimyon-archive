@@ -12,6 +12,7 @@
     pwRules: "\uBE44\uBC00\uBC88\uD638 \uADDC\uCE59\uC744 \uD655\uC778\uD574 \uC8FC\uC138\uC694.",
     pwMismatch: "\uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2E4.",
     pwEqual: "\uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD569\uB2C8\uB2E4.",
+    birthInvalid: "\uC0DD\uB144\uC6D4\uC77C\uC740 YYYY-MM-DD \uD615\uC2DD\uC73C\uB85C \uC785\uB825\uD574 \uC8FC\uC138\uC694.",
     terms: "\uD544\uC218 \uC57D\uAD00\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694.",
     submitting: "\uAC00\uC785 \uCC98\uB9AC \uC911...",
     success: "\uAC00\uC785\uC774 \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4! \uBA54\uC778\uC73C\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4.",
@@ -131,7 +132,7 @@
       const phone2 = (phone2El?.value || '').trim();
       const phone3 = (phone3El?.value || '').trim();
       const phone = (phone2 || phone3) ? `${phone1}-${phone2}-${phone3}` : '';
-      const birth = birthEl.value || null;
+      const birth = (birthEl.value || '').trim() || null;
       const password = pwEl.value || '';
       const passwordConfirm = pwConfirmEl.value || '';
       const genderEl = document.querySelector('input[name="suGender"]:checked');
@@ -139,6 +140,7 @@
 
       if(!usernameChecked) return setStatus(M.checkNeeded, 'error');
       if(!validatePasswordRules(password)) return setStatus(M.pwRules, 'error');
+      if(birth && !/^\d{4}-\d{2}-\d{2}$/.test(birth)) return setStatus(M.birthInvalid, 'error');
       if(password !== passwordConfirm) return setStatus(M.pwMismatch, 'error');
       if(!termsEl.checked || !privacyEl.checked) return setStatus(M.terms, 'error');
 
@@ -166,3 +168,14 @@
     });
   }
 })();
+    // Birth date: digits-only, auto-insert dashes (YYYY-MM-DD)
+    function formatBirth(){
+      if(!birthEl) return;
+      const d = (birthEl.value || '').replace(/\D/g,'').slice(0,8);
+      let out = '';
+      if(d.length >= 4) out = d.slice(0,4);
+      if(d.length > 4) out += '-' + d.slice(4,6);
+      if(d.length > 6) out += '-' + d.slice(6,8);
+      birthEl.value = out;
+    }
+    birthEl?.addEventListener('input', formatBirth);
