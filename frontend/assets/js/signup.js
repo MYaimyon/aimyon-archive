@@ -1,9 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('signupForm');
-  const nameEl = document.getElementById('suName');
+  const usernameEl = document.getElementById('suUsername');
+  const displayEl = document.getElementById('suDisplayName');
   const emailEl = document.getElementById('suEmail');
+  const phoneEl = document.getElementById('suPhone');
+  const birthEl = document.getElementById('suBirth');
   const pwEl = document.getElementById('suPw');
+  const pwConfirmEl = document.getElementById('suPwConfirm');
+  const termsEl = document.getElementById('agreeTerms');
+  const privacyEl = document.getElementById('agreePrivacy');
+  const marketingEl = document.getElementById('agreeMarketing');
   const statusEl = document.getElementById('signupStatus');
+  const usernameNote = document.getElementById('usernameNote');
+  const passwordNote = document.getElementById('passwordRuleNote');
+  const btnCheckUsername = document.getElementById('btnCheckUsername');
+  const btnCheckEmail = document.getElementById('btnCheckEmail');
+
+  let usernameChecked = false;
+  let emailChecked = false;
 
   const setStatus = (msg, type) => {
     if (!statusEl) return;
@@ -11,33 +25,158 @@ document.addEventListener('DOMContentLoaded', () => {
     statusEl.className = 'compose-status' + (type ? ' ' + type : '');
   };
 
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = nameEl.value.trim();
-    const email = emailEl.value.trim();
-    const password = pwEl.value.trim();
-    if (!username || !email || !password) {
-      setStatus('ëª¨ë“  í•­ëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”.', 'error');
+  const clearStatus = () => setStatus('', '');
+
+  const getGender = () => {
+    const checked = document.querySelector('input[name="suGender"]:checked');
+    return checked ? checked.value : null;
+  };
+
+  const validatePasswordRules = (pw) => {
+    const hasLetter = /[A-Za-z]/.test(pw);
+    const hasDigit = /\d/.test(pw);
+    const hasSpecial = /[^A-Za-z0-9]/.test(pw);
+    return pw.length >= 8 && hasLetter && hasDigit && hasSpecial;
+  };
+
+  const updatePasswordNote = () => {
+    const pw = pwEl.value;
+    if (!pw) {
+      passwordNote.textContent = '´ë¹®ÀÚ´Â ¼±ÅÃÀÌÁö¸¸, ¼ıÀÚ¿Í Æ¯¼ö¹®ÀÚ´Â ¹İµå½Ã Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.';
+      passwordNote.style.color = 'var(--text-tertiary)';
       return;
     }
-    setStatus('ê°€ì… ì²˜ë¦¬ ì¤‘...');
+    if (validatePasswordRules(pw)) {
+      passwordNote.textContent = '»ç¿ë °¡´ÉÇÑ ºñ¹Ğ¹øÈ£ÀÔ´Ï´Ù.';
+      passwordNote.style.color = '#65d26e';
+    } else {
+      passwordNote.textContent = '8ÀÚ ÀÌ»ó, ¼ıÀÚ¿Í Æ¯¼ö¹®ÀÚ¸¦ ²À Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.';
+      passwordNote.style.color = '#ff6b6b';
+    }
+  };
+
+  pwEl.addEventListener('input', () => {
+    updatePasswordNote();
+  });
+
+  usernameEl.addEventListener('input', () => {
+    usernameChecked = false;
+    usernameNote.textContent = 'Áßº¹ È®ÀÎÀ» ´­·¯ »ç¿ë °¡´É ¿©ºÎ¸¦ È®ÀÎÇÏ¼¼¿ä.';
+    usernameNote.style.color = 'var(--text-tertiary)';
+  });
+
+  emailEl.addEventListener('input', () => {
+    emailChecked = false;
+  });
+
+  btnCheckUsername.addEventListener('click', async () => {
+    const username = usernameEl.value.trim();
+    if (!username) {
+      usernameNote.textContent = '¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.';
+      usernameNote.style.color = '#ff6b6b';
+      return;
+    }
+    try {
+      const res = await fetch(`/api/auth/check-username?value=${encodeURIComponent(username)}`);
+      const data = await res.json();
+      usernameChecked = data.available;
+      if (data.available) {
+        usernameNote.textContent = '»ç¿ë °¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.';
+        usernameNote.style.color = '#65d26e';
+      } else {
+        usernameNote.textContent = 'ÀÌ¹Ì »ç¿ë ÁßÀÎ ¾ÆÀÌµğÀÔ´Ï´Ù.';
+        usernameNote.style.color = '#ff6b6b';
+      }
+    } catch {
+      usernameNote.textContent = 'Áßº¹ È®ÀÎ¿¡ ½ÇÆĞÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØÁÖ¼¼¿ä.';
+      usernameNote.style.color = '#ff6b6b';
+    }
+  });
+
+  btnCheckEmail.addEventListener('click', async () => {
+    const email = emailEl.value.trim();
+    if (!email) {
+      setStatus('ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.', 'error');
+      return;
+    }
+    try {
+      const res = await fetch(`/api/auth/check-email?value=${encodeURIComponent(email)}`);
+      const data = await res.json();
+      emailChecked = data.available;
+      if (data.available) {
+        setStatus('»ç¿ë °¡´ÉÇÑ ÀÌ¸ŞÀÏÀÔ´Ï´Ù.', 'success');
+      } else {
+        setStatus('ÀÌ¹Ì »ç¿ë ÁßÀÎ ÀÌ¸ŞÀÏÀÔ´Ï´Ù.', 'error');
+      }
+    } catch {
+      setStatus('ÀÌ¸ŞÀÏ È®ÀÎ¿¡ ½ÇÆĞÇß½À´Ï´Ù.', 'error');
+    }
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearStatus();
+
+    const username = usernameEl.value.trim();
+    const displayName = displayEl.value.trim();
+    const email = emailEl.value.trim();
+    const phone = phoneEl.value.trim();
+    const birth = birthEl.value || null;
+    const password = pwEl.value;
+    const passwordConfirm = pwConfirmEl.value;
+    const gender = getGender();
+
+    if (!usernameChecked) {
+      setStatus('¾ÆÀÌµğ Áßº¹ È®ÀÎÀ» ÇØÁÖ¼¼¿ä.', 'error');
+      return;
+    }
+    if (!emailChecked) {
+      setStatus('ÀÌ¸ŞÀÏ Áßº¹ È®ÀÎÀ» ÇØÁÖ¼¼¿ä.', 'error');
+      return;
+    }
+    if (!validatePasswordRules(password)) {
+      setStatus('ºñ¹Ğ¹øÈ£ ±ÔÄ¢À» ´Ù½Ã È®ÀÎÇØÁÖ¼¼¿ä.', 'error');
+      return;
+    }
+    if (password !== passwordConfirm) {
+      setStatus('ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.', 'error');
+      return;
+    }
+    if (!termsEl.checked || !privacyEl.checked) {
+      setStatus('ÇÊ¼ö ¾à°ü¿¡ ¸ğµÎ µ¿ÀÇÇØÁÖ¼¼¿ä.', 'error');
+      return;
+    }
+
+    const payload = {
+      username,
+      email,
+      password,
+      displayName,
+      phoneNumber: phone || null,
+      birthDate: birth,
+      gender,
+      marketingOptIn: marketingEl.checked,
+      agreeTerms: termsEl.checked,
+      agreePrivacy: privacyEl.checked
+    };
+
+    setStatus('°¡ÀÔ Ã³¸® Áß...', '');
     try {
       const res = await fetch('http://localhost:8080/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password })
+        body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error('register failed');
-      const payload = await res.json();
-      Auth.set(payload); // auto login
-      setStatus('ê°€ì… ì™„ë£Œ! ë¡œê·¸ì¸ ìƒíƒœë¡œ ì´ë™í•©ë‹ˆë‹¤...', 'success');
+      const data = await res.json();
+      Auth.set(data);
+      setStatus('°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù! Àá½Ã ÈÄ ÀÌµ¿ÇÕ´Ï´Ù.', 'success');
       setTimeout(() => {
         window.location.href = 'index.html';
-      }, 600);
+      }, 800);
     } catch (err) {
       console.error(err);
-      setStatus('ê°€ì…ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. ì¤‘ë³µ ì•„ì´ë””/ì´ë©”ì¼ì¸ì§€ í™•ì¸í•´ ì£¼ì„¸ìš”.', 'error');
+      setStatus('°¡ÀÔ¿¡ ½ÇÆĞÇß½À´Ï´Ù. ÀÔ·Â Á¤º¸¸¦ ´Ù½Ã È®ÀÎÇØÁÖ¼¼¿ä.', 'error');
     }
   });
 });
-

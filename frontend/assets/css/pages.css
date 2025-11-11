@@ -1194,13 +1194,10 @@
     text-align: center;
     margin-bottom: 15px;
 }
-
 .section-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    text-align: center;
-    margin-bottom: 60px;
-    opacity: 0.8;
+    text-align: left;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .links-grid {
@@ -2326,14 +2323,8 @@
         justify-content: center;
     }
 
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .section-link {
-        align-self: flex-start;
-    }
+    /* Removed global mobile stack for .section-header to avoid conflicts.
+       Page-specific headers should control their own mobile layout. */
 
     .events-board__head,
     .events-board__item {
@@ -3644,14 +3635,14 @@ button.reaction-tile {
 }
 
 @media (max-width: 600px) {
-    .post-title {
-        font-size: 1.9rem;
-    }
+    .post-title { font-size: 1.9rem; }
 
     .reaction-grid {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
     .comments-controls {
         flex-direction: column;
         align-items: flex-start;
@@ -3672,9 +3663,7 @@ button.reaction-tile {
         text-align: center;
     }
 
-    .comment-submit {
-        width: 100%;
-    }
+    .comment-submit { width: 100%; }
 }
 
 
@@ -3716,7 +3705,6 @@ button.reaction-tile {
     gap: 8px;
     font-size: 0.95rem;
 }
-/* cleaned: removed older home-events alignment blocks in favor of unified grid rules below */
 
 /* === Home section headers: title/subtitle/link 2-row grid (scoped) === */
 .home-events .section-header,
@@ -3724,23 +3712,33 @@ button.reaction-tile {
   display: grid !important;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
+  grid-template-areas: "title link" "subtitle link" !important;
   gap: 24px;
   align-items: end;
 }
 .home-events .section-title,
 .home-videos .section-title {
-  grid-column: 1; grid-row: 1;
+  grid-area: title;
   margin: 0 0 4px;
+  text-align: left;
+  justify-self: start;
 }
 .home-events .section-subtitle,
 .home-videos .section-subtitle {
-  grid-column: 1; grid-row: 2;
+  grid-area: subtitle;
   margin: 0; line-height: 1.5;
 }
 .home-events .section-link,
 .home-videos .section-link {
-  grid-column: 2; grid-row: 2;
-  align-self: center; /* visually align with subtitle */
+  grid-area: link;
+  align-self: end; /* visually align with subtitle */
   white-space: nowrap; line-height: 1.5;
 }
+
+/* Responsive tweaks for home section headers */
+@media (max-width: 768px) {
+  .home-events .section-header,
+  .home-videos .section-header {
+    gap: 16px;
+  }
 }

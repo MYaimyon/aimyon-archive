@@ -12,7 +12,16 @@
 :root {
     --primary-color: #ff6b6b;
     --primary-hover: #ff8a8a;
-    /* ========================================
+    --bg-dark: #1e1e2e;
+    --bg-card: rgba(255, 255, 255, 0.05);
+    --bg-secondary: rgba(255, 255, 255, 0.04);
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: rgba(255, 255, 255, 0.55);
+    --border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ========================================
    SEARCH STRIP (below header)
 ======================================== */
 .search-strip {
@@ -49,14 +58,6 @@
     border-radius: 999px;
     padding: 8px 14px;
     font-weight: 700;
-}
---bg-dark: #1e1e2e;
-    --bg-card: rgba(255, 255, 255, 0.05);
-    --bg-secondary: rgba(255, 255, 255, 0.04);
-    --text-primary: #e0e0e0;
-    --text-secondary: #a0a0a0;
-    --text-tertiary: rgba(255, 255, 255, 0.55);
-    --border-color: rgba(255, 255, 255, 0.12);
 }
 
 body {
@@ -357,8 +358,9 @@ ol {
    - Top row: logo (left), search + auth (right)
    - Second row: menu (wrap)
 ======================================== */
+/* Header is single-row fixed; keep stable offset */
 body {
-    padding-top: clamp(72px, 9vw, 110px);
+    padding-top: 72px;
 }
 
 .site-header .navbar .container {
