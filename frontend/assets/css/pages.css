@@ -3694,12 +3694,8 @@ button.reaction-tile {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
 }
-.radio-group {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    font-size: 0.95rem;
-}
+.radio-group { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.95rem; }
+.radio-group label { display: inline-flex; align-items: center; gap: 6px; }
 .checkbox-group label {
     display: flex;
     align-items: center;
@@ -3724,6 +3720,15 @@ button.reaction-tile {
 }
 .form-vertical input,
 .form-vertical select { height: 44px; }
+/* radios/checkboxes should not inherit text-input styling */
+.form-vertical input[type="radio"],
+.form-vertical input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
 .form-vertical input::placeholder { color: var(--text-tertiary); }
 .form-vertical input:focus,
 .form-vertical select:focus,
