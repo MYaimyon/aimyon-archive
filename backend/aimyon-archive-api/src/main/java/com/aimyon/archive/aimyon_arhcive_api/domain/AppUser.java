@@ -28,6 +28,27 @@ public class AppUser {
     @Column(name = "password_hash", nullable = false, length = 200)
     private String passwordHash;
 
+    @Column(name = "display_name", length = 80)
+    private String displayName;
+
+    @Column(name = "phone_number", length = 40)
+    private String phoneNumber;
+
+    @Column(name = "gender", length = 20)
+    private String gender;
+
+    @Column(name = "marketing_opt_in")
+    private Boolean marketingOptIn;
+
+    @Column(name = "terms_agreed")
+    private Boolean termsAgreed;
+
+    @Column(name = "privacy_agreed")
+    private Boolean privacyAgreed;
+
+    @Column(name = "birth_date")
+    private java.time.LocalDate birthDate;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "app_user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -44,4 +65,3 @@ public class AppUser {
         }
     }
 }
-

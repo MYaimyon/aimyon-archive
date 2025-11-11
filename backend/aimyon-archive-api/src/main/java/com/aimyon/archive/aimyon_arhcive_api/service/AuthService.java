@@ -30,6 +30,9 @@ public class AuthService {
 
     @Transactional
     public AuthDtos.AuthResponse register(AuthDtos.RegisterRequest req) {
+        // Frontend no longer enforces complexity; keep only basic length via DTO.
+        // Additional complexity checks removed for local profile convenience.
+
         userRepository.findByUsername(req.username()).ifPresent(u -> {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         });
@@ -37,10 +40,21 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         });
 
+        if (Boolean.FALSE.equals(req.agreeTerms()) || Boolean.FALSE.equals(req.agreePrivacy())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Terms and privacy agreements are required");
+        }
+
         AppUser saved = userRepository.save(AppUser.builder()
                 .username(req.username())
                 .email(req.email())
                 .passwordHash(passwordEncoder.encode(req.password()))
+                .displayName(req.displayName())
+                .phoneNumber(req.phoneNumber())
+                .birthDate(req.birthDate())
+                .gender(req.gender())
+                .marketingOptIn(req.marketingOptIn() != null && req.marketingOptIn())
+                .termsAgreed(req.agreeTerms())
+                .privacyAgreed(req.agreePrivacy())
                 .roles(List.of("USER"))
                 .build());
 
@@ -59,5 +73,16 @@ public class AuthService {
         String token = jwtUtil.generate(user.getId(), user.getUsername(), user.getRoles());
         return new AuthDtos.AuthResponse(user.getId(), user.getUsername(), user.getRoles(), token);
     }
-}
 
+    public boolean isUsernameAvailable(String username) {
+        return userRepository.findByUsername(username).isEmpty();
+    }
+
+    public boolean isEmailAvailable(String email) {
+        return userRepository.findByEmail(email).isEmpty();
+    }
+
+    private void validatePassword(String password) {
+        // No-op: DTO enforces @Size(min=8). Remove extra complexity requirements.
+    }
+}

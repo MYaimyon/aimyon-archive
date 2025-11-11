@@ -1,5 +1,16 @@
 // signup.js (UTF-8 safe, no literal \n artifacts)
 (function(){
+  // API base: same-origin in prod, localhost:8080 in local dev.
+  // Can override by defining window.APP_API_BASE before this script.
+  const API_BASE = (() => {
+    if (typeof window !== 'undefined' && window.APP_API_BASE != null) return window.APP_API_BASE;
+    if (typeof location !== 'undefined') {
+      const h = location.hostname;
+      const isLocal = h === 'localhost' || h === '127.0.0.1' || (h && h.endsWith('.local'));
+      return isLocal ? 'http://localhost:8080' : '';
+    }
+    return '';
+  })();
   const M = {
     checkNeeded: "\uC911\uBCF5 \uD655\uC778\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.",
     usernameRequired: "\uC544\uC774\uB514\uB97C \uC785\uB825\uD574 \uC8FC\uC138\uC694.",
@@ -42,27 +53,13 @@
     const privacyEl = document.getElementById('agreePrivacy');
     const marketingEl = document.getElementById('agreeMarketing');
     const usernameNote = document.getElementById('usernameNote');
-    const passwordNote = document.getElementById('passwordRuleNote');
+    // no password rule note anymore
     const pwMatchNote = document.getElementById('passwordMatchNote');
     const btnCheckUsername = document.getElementById('btnCheckUsername');
 
     let usernameChecked = false;
 
-    function validatePasswordRules(pw){
-      const hasLetter = /[A-Za-z]/.test(pw);
-      const hasDigit = /\d/.test(pw);
-      const hasSpecial = /[^A-Za-z0-9]/.test(pw);
-      return pw.length >= 8 && hasLetter && hasDigit && hasSpecial;
-    }
-
-    function updatePasswordNote(){
-      if(!passwordNote) return;
-      const pw = pwEl.value || '';
-      if(!pw){ passwordNote.textContent = M.pwDefault; passwordNote.style.color = 'var(--text-tertiary)'; return; }
-      if(validatePasswordRules(pw)) { passwordNote.textContent = M.pwOk; passwordNote.style.color = '#65d26e'; }
-      else { passwordNote.textContent = M.pwBad; passwordNote.style.color = '#ff6b6b'; }
-    }
-    pwEl?.addEventListener('input', updatePasswordNote);
+    // removed password complexity guidance/validation on frontend
 
     // Birth date: digits-only, YYYYMMDD (8 digits)
     function formatBirth(){
@@ -121,7 +118,8 @@
       const username = (usernameEl.value||'').trim();
       if(!username){ if(usernameNote){ usernameNote.style.display='block'; usernameNote.textContent = M.usernameRequired; usernameNote.style.color = '#ff6b6b'; } return; }
       try{
-        const res = await fetch(`/api/auth/check-username?value=${encodeURIComponent(username)}`);
+        const res = await fetch(`${API_BASE}/api/auth/check-username?value=${encodeURIComponent(username)}`);
+        if(!res.ok) throw new Error('HTTP '+res.status);
         const data = await res.json();
         usernameChecked = !!data.available;
         if(usernameNote){ usernameNote.style.display='block'; if(usernameChecked){ usernameNote.textContent = M.usernameOk; usernameNote.style.color = '#65d26e'; }
@@ -147,7 +145,7 @@
       const gender = genderEl ? genderEl.value : null;
 
       if(!usernameChecked) return setStatus(M.checkNeeded, 'error');
-      if(!validatePasswordRules(password)) return setStatus(M.pwRules, 'error');
+      // no frontend password complexity enforcement
       if(birth && !/^\d{8}$/.test(birth)) return setStatus(M.birthInvalid, 'error');
       if(password !== passwordConfirm) return setStatus(M.pwMismatch, 'error');
       if(!termsEl.checked || !privacyEl.checked) return setStatus(M.terms, 'error');
@@ -164,7 +162,7 @@
 
       setStatus(M.submitting, '');
       try{
-        const res = await fetch('http://localhost:8080/api/auth/register', {
+        const res = await fetch(`${API_BASE}/api/auth/register`, {
           method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
         });
         if(!res.ok) throw new Error('register failed');

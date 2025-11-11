@@ -8,6 +8,7 @@ public record CommunityPostResponse(
         Long boardId,
         String boardSlug,
         Long userId,
+        String author,
         String title,
         String content,
         List<String> mediaUrls,

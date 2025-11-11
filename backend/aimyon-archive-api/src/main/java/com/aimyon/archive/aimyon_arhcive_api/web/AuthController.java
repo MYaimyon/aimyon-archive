@@ -28,5 +28,16 @@ public class AuthController {
     public AuthDtos.AuthResponse login(@Valid @RequestBody AuthDtos.LoginRequest req) {
         return authService.login(req);
     }
-}
 
+    @GetMapping("/check-username")
+    public AvailabilityResponse checkUsername(@RequestParam("value") String username) {
+        return new AvailabilityResponse(authService.isUsernameAvailable(username));
+    }
+
+    @GetMapping("/check-email")
+    public AvailabilityResponse checkEmail(@RequestParam("value") String email) {
+        return new AvailabilityResponse(authService.isEmailAvailable(email));
+    }
+
+    public record AvailabilityResponse(boolean available) {}
+}

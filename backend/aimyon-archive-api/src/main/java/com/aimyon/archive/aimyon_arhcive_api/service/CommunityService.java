@@ -9,6 +9,7 @@ import com.aimyon.archive.aimyon_arhcive_api.repository.CommunityBoardRepository
 import com.aimyon.archive.aimyon_arhcive_api.repository.CommunityCommentRepository;
 import com.aimyon.archive.aimyon_arhcive_api.repository.CommunityPostRepository;
 import com.aimyon.archive.aimyon_arhcive_api.repository.PostLikeRepository;
+import com.aimyon.archive.aimyon_arhcive_api.repository.AppUserRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,15 +31,18 @@ public class CommunityService {
     private final CommunityPostRepository postRepository;
     private final CommunityCommentRepository commentRepository;
     private final PostLikeRepository postLikeRepository;
+    private final AppUserRepository userRepository;
 
     public CommunityService(CommunityBoardRepository boardRepository,
                             CommunityPostRepository postRepository,
                             CommunityCommentRepository commentRepository,
-                            PostLikeRepository postLikeRepository) {
+                            PostLikeRepository postLikeRepository,
+                            AppUserRepository userRepository) {
         this.boardRepository = boardRepository;
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
         this.postLikeRepository = postLikeRepository;
+        this.userRepository = userRepository;
     }
 
     public List<CommunityBoardResponse> getBoards() {
@@ -228,11 +232,15 @@ public class CommunityService {
     }
 
     private CommunityPostResponse toPostResponse(CommunityPost post, CommunityBoard board) {
+        String author = userRepository.findById(post.getUserId())
+                .map(u -> (u.getDisplayName() != null && !u.getDisplayName().isBlank()) ? u.getDisplayName() : u.getUsername())
+                .orElse("회원 #" + post.getUserId());
         return new CommunityPostResponse(
                 post.getId(),
                 board.getId(),
                 board.getSlug(),
                 post.getUserId(),
+                author,
                 post.getTitle(),
                 post.getContent(),
                 List.copyOf(post.getMediaUrls()),
@@ -245,10 +253,14 @@ public class CommunityService {
     }
 
     private CommunityCommentResponse toCommentResponse(CommunityComment comment) {
+        String author = userRepository.findById(comment.getUserId())
+                .map(u -> (u.getDisplayName() != null && !u.getDisplayName().isBlank()) ? u.getDisplayName() : u.getUsername())
+                .orElse("회원 #" + comment.getUserId());
         return new CommunityCommentResponse(
                 comment.getId(),
                 comment.getPost().getId(),
                 comment.getUserId(),
+                author,
                 comment.getParent() != null ? comment.getParent().getId() : null,
                 comment.getContent(),
                 comment.getCreatedAt()
