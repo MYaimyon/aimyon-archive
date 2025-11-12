@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -15,10 +15,11 @@
     <article class="card auth-card" style="padding:28px 28px; display:grid; gap:18px;">
       <header style="margin-bottom:6px;">
         <h1 style="font-size:1.8rem; margin:0;">회원가입</h1>
-        <p style="color:var(--text-secondary); margin:6px 0 0;">필수 항목을 입력하고 약관에 동의해주세요.</p>
+        <p style="color:var(--text-secondary); margin:6px 0 0;">필수 항목을 입력하고 약관에 동의해 주세요.</p>
       </header>
 
       <form id="signupForm" class="form-vertical" style="display:grid; gap:16px;">
+        <!-- 아이디 + 중복 확인 -->
         <div class="field-inline">
           <label class="form-field" style="flex:1;">
             <span class="form-label">아이디</span>
@@ -28,6 +29,7 @@
         </div>
         <small id="usernameNote" class="field-note" style="display:none"></small>
 
+        <!-- 비밀번호/확인 -->
         <label class="form-field">
           <span class="form-label">비밀번호</span>
           <input type="password" id="suPw" required autocomplete="new-password" placeholder="비밀번호를 입력하세요">
@@ -39,6 +41,7 @@
         </label>
         <small id="passwordMatchNote" class="field-note" style="display:none"></small>
 
+        <!-- 닉네임/이메일 -->
         <label class="form-field">
           <span class="form-label">닉네임</span>
           <input type="text" id="suDisplayName" placeholder="닉네임을 입력하세요">
@@ -49,6 +52,7 @@
           <input type="email" id="suEmail" required autocomplete="email" placeholder="you@example.com">
         </label>
 
+        <!-- 휴대폰/생년월일 -->
         <div class="inline-grid">
           <label class="form-field">
             <span class="form-label">휴대폰(선택)</span>
@@ -67,11 +71,13 @@
           </label>
         </div>
 
+        <!-- 성별 -->
         <div class="radio-group" aria-label="성별">
           <label><input type="radio" name="suGender" value="MALE"> 남성</label>
           <label><input type="radio" name="suGender" value="FEMALE"> 여성</label>
         </div>
 
+        <!-- 약관 동의 -->
         <div class="checkbox-group">
           <div class="checkbox-item"><input type="checkbox" id="agreeTerms" required><span class="checkbox-text">이용약관 동의(필수)</span></div>
           <div class="checkbox-item"><input type="checkbox" id="agreePrivacy" required><span class="checkbox-text">개인정보 처리방침 동의(필수)</span></div>
@@ -92,7 +98,6 @@
 <div id="footer-placeholder"></div>
 
 <script src="../assets/js/common.js"></script>
-<script src="../assets/js/auth.js"></script>
 <script src="../assets/js/signup.js"></script>
 </body>
 </html>

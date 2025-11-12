@@ -13,18 +13,15 @@ async function loadComponent(selector, path) {
         try {
             const event = new CustomEvent('component:loaded', { detail: { selector, path } });
             document.dispatchEvent(event);
-            // If header loaded, ensure auth script is present and render controls
+            // If header loaded, ensure auth is available exactly once and render controls
             if (String(path).includes('header.html')) {
-                if (!window.__authLoaded) {
+                if (!window.Auth) {
                     const s = document.createElement('script');
                     s.src = '../assets/js/auth.js';
-                    s.onload = () => {
-                        window.__authLoaded = true;
-                        if (window.Auth?.renderNavAuth) window.Auth.renderNavAuth();
-                    };
+                    s.onload = () => { window.Auth?.renderNavAuth?.(); };
                     document.head.appendChild(s);
                 } else {
-                    if (window.Auth?.renderNavAuth) window.Auth.renderNavAuth();
+                    window.Auth?.renderNavAuth?.();
                 }
             }
         } catch {}
@@ -37,6 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
   loadComponent('#header-placeholder', '../components/header.html');
   loadComponent('#sidebar-placeholder', '../components/sidebar.html');
   loadComponent('#footer-placeholder', '../components/footer.html');
+  // Re-render auth UI if localStorage changes in another tab or after redirect timing
+  window.addEventListener('storage', (e) => {
+    if (e?.key === 'aimyonAuth') {
+      window.Auth?.renderNavAuth?.();
+    }
+  });
 });
 
 function showTab(tabName, evt) {

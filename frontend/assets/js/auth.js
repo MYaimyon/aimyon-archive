@@ -1,4 +1,9 @@
-const Auth = (() => {
+﻿// Guard against duplicate loads
+if (typeof window !== 'undefined' && window.Auth) {
+  // If already loaded, ensure nav renders once
+  try { window.Auth.renderNavAuth && window.Auth.renderNavAuth(); } catch {}
+} else {
+  window.Auth = (() => {
   const STORAGE_KEY = 'aimyonAuth';
 
   const load = () => {
@@ -39,7 +44,7 @@ const Auth = (() => {
     const u = user();
     if (isLoggedIn() && u) {
       host.innerHTML = `
-        <span class="nav-username">${escapeHtml(u.username)}</span>
+        <span class="nav-username">${(window.escapeHtml?window.escapeHtml(u.username):String(u.username))}</span>
         <button type="button" id="logoutBtn">로그아웃</button>
       `;
       document.getElementById('logoutBtn')?.addEventListener('click', () => {
@@ -73,13 +78,15 @@ const Auth = (() => {
 
   return { isLoggedIn, token, user, set, logout, authHeader, renderNavAuth };
 })();
-
-function escapeHtml(text) {
-  return String(text)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }
 
+if (typeof window !== 'undefined' && !window.escapeHtml) {
+  window.escapeHtml = function(text) {
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  };
+}

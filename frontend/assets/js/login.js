@@ -1,4 +1,4 @@
-﻿// Login page script (UTF-8 safe)
+﻿// Login page script (UTF-8 safe, single copy)
 (function(){
   const API_BASE = (() => {
     if (typeof window !== 'undefined' && window.APP_API_BASE != null) return window.APP_API_BASE;
@@ -21,13 +21,13 @@
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const identity = (idEl.value || '').trim();
-      const password = (pwEl.value || '').trim();
+      const identity = (idEl?.value || '').trim();
+      const password = (pwEl?.value || '').trim();
       if (!identity || !password) {
-        setStatus('아이디와 비밀번호를 입력해 주세요.', 'error');
+        setStatus('\uC544\uC774\uB514\uC640 \uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574 \uC8FC\uC138\uC694.', 'error');
         return;
       }
-      setStatus('로그인 중...');
+      setStatus('\uB85C\uADF8\uC778 \uC911...');
 
       try {
         const res = await fetch(`${API_BASE}/api/auth/login`, {
@@ -37,12 +37,19 @@
         });
         if (!res.ok) throw new Error('login failed');
         const payload = await res.json();
+        // persist auth (fallback)
+        try {
+          localStorage.setItem('aimyonAuth', JSON.stringify({
+            token: payload.token,
+            user: { id: payload.userId, username: payload.username, roles: payload.roles || [] }
+          }));
+        } catch {}
         if (window.Auth && typeof Auth.set === 'function') Auth.set(payload);
-        setStatus('로그인 성공! 메인으로 이동합니다.', 'success');
+        setStatus('\uB85C\uADF8\uC778 \uC131\uACF5! \uBA54\uC778\uC73C\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4.', 'success');
         setTimeout(() => { window.location.href = 'index.html'; }, 700);
       } catch (err) {
         console.error(err);
-        setStatus('로그인에 실패했습니다. 입력 정보를 확인해 주세요.', 'error');
+        setStatus('\uB85C\uADF8\uC778\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uC785\uB825 \uC815\uBCF4\uB97C \uD655\uC778\uD574 \uC8FC\uC138\uC694.', 'error');
       }
     });
   });
