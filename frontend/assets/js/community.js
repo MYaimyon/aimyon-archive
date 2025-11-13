@@ -176,17 +176,8 @@ document.addEventListener("DOMContentLoaded", () => {
     status.message(message || "게시글이 아직 없습니다");
   };
 
-  const attachDeleteHandlers = () => {
-    if (!postsBody) return;
-    postsBody.querySelectorAll(".row-delete").forEach((button) => {
-      button.addEventListener("click", () => {
-        const id = button.getAttribute("data-id");
-        if (id) {
-          deletePost(id, button);
-        }
-      });
-    });
-  };
+  // 목록에서는 삭제 버튼을 노출하지 않습니다 (상세 화면에서 처리)
+  const attachDeleteHandlers = () => {};
 
   const renderRows = (items) => {
     if (!postsBody) return;
@@ -225,10 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const createdAt = formatDate(post.createdAt);
         const viewCount = Number(post.viewCount ?? post.views ?? post.hit ?? 0);
         const recommendCount = Number(post.likeCount ?? post.recommendCount ?? 0);
-        const canDelete = Number(post.userId) === currentUserId() && !preferMock && Boolean(post.id);
-        const deleteButton = canDelete
-          ? `<button class="row-delete" data-id="${escapeHtml(String(post.id))}" type="button">삭제</button>`
-          : "";
+        // 목록 화면에서는 삭제 버튼을 제공하지 않음
+        const deleteButton = "";
 
         const titleLink = post.id
           ? `community-post.html?id=${encodeURIComponent(post.id)}`
@@ -384,48 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
-  const deletePost = (postId, buttonEl) => {
-    if (!postId) return;
-    if (!buttonEl) return;
-
-    if (preferMock) {
-      allPosts = allPosts.filter((post) => String(post.id) !== String(postId));
-      applyFilters();
-      status.message("샘플 데이터에서 게시글이 삭제됐습니다.");
-      return;
-    }
-
-    const confirmed = confirm("이 게시글을 삭제할까요?");
-    if (!confirmed) return;
-
-    buttonEl.disabled = true;
-    const extraHeaders = (typeof Auth !== 'undefined' && Auth.authHeader) ? Auth.authHeader() : {};
-    fetch(
-      `${COMMUNITY_API_BASE}/posts/${encodeURIComponent(postId)}?userId=${currentUserId()}&admin=false`,
-      {
-        method: "DELETE",
-        headers: Object.assign({}, extraHeaders)
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          if (res.status === 403) throw new Error("forbidden");
-          throw new Error("delete failed");
-        }
-        status.message("게시글이 삭제되었습니다.");
-        loadPosts(activeSlug);
-      })
-      .catch((err) => {
-        if (String(err && err.message) === "forbidden") {
-          alert("본인 글만 삭제할 수 있어요.");
-        } else {
-          alert("게시글 삭제에 실패했습니다.");
-        }
-      })
-      .finally(() => {
-        buttonEl.disabled = false;
-      });
-  };
+  // 삭제는 상세 페이지에서 처리합니다.
 
   searchInput?.addEventListener("input", () => {
     applyFilters();
@@ -511,4 +459,3 @@ function createStatusManager(element, baseClass) {
     }
   };
 }
-
