@@ -18,7 +18,7 @@ const MOCK_POSTS = {
   "mock-post-1001": {
     id: "mock-post-1001",
     board: "free",
-    title: "처음 Aimyon을 알게 된 순간",
+    title: "처음 Aimyon에 빠진 순간",
     author: "미도리",
     authorId: 102938,
     createdAt: "2024-10-20T10:15:00+09:00",
@@ -27,40 +27,8 @@ const MOCK_POSTS = {
     likeCount: 12,
     commentCount: 4,
     content:
-      "<p>중학생 때 우연히 들었던 <em>Marigold</em>가 너무 좋아서 그날부터 Aimyon을 찾아 들었어요. 최근 투어에서는 세트리스트도 훨씬 풍성해져서 감동!</p><p>여러분은 어떤 곡에서 Aimyon을 좋아하게 되었나요?</p>",
-    tags: ["잡담"],
-    isNotice: false
-  },
-  "mock-post-1002": {
-    id: "mock-post-1002",
-    board: "free",
-    title: "오사카 공연 다녀온 인증샷 공유",
-    author: "라이브덕후",
-    authorId: 220011,
-    createdAt: "2024-10-18T21:42:00+09:00",
-    updatedAt: "2024-10-18T21:42:00+09:00",
-    viewCount: 204,
-    likeCount: 25,
-    commentCount: 9,
-    content:
-      "<p>10/18 오사카 공연 다녀왔어요! 세트리스트 정리와 사진 몇 장 공유합니다.</p><ul><li>Marigold</li><li>I Love You</li><li>아이네 클라이네</li></ul><p>현장 분위기가 최고였습니다 :)</p>",
-    tags: ["후기"],
-    isNotice: false
-  },
-  "mock-post-2101": {
-    id: "mock-post-2101",
-    board: "pilgrimage",
-    title: "시즈오카 Aimyon 벽화 인증",
-    author: "묭맘",
-    authorId: 302244,
-    createdAt: "2024-10-16T14:40:00+09:00",
-    updatedAt: "2024-10-16T14:40:00+09:00",
-    viewCount: 171,
-    likeCount: 22,
-    commentCount: 5,
-    content:
-      "<p>시즈오카 역 근처 Aimyon 벽화 다녀왔어요! 위치는 북쪽 출구에서 도보 5분.</p><p>사진 찍으실 분들은 평일 오전 추천드려요.</p>",
-    tags: ["인증샷"],
+      "<p>중학생 때 <em>Marigold</em>를 듣고 빠졌어요. 그날부터 Aimyon을 찾아 들었습니다. 최근 세트리스트도 훨씬 다양해져서 감동!</p><p>여러분은 어떤 곡으로 Aimyon을 좋아하게 되었나요?</p>",
+    tags: ["수다"],
     isNotice: false
   }
 };
@@ -71,33 +39,8 @@ const MOCK_COMMENTS = {
       id: "c-1001-1",
       userId: 881122,
       author: "노래부르는고양이",
-      content: "저는 愛を伝えたいだとか 듣고 빠졌어요!",
+      content: "愛を伝えたいだとか 듣고 빠졌어요!",
       createdAt: "2024-10-20T11:12:00+09:00"
-    },
-    {
-      id: "c-1001-2",
-      userId: 990001,
-      author: "도쿄시민",
-      content: "최근 투어 셋리스트 공유해주셔서 감사해요 :)",
-      createdAt: "2024-10-20T11:45:00+09:00"
-    }
-  ],
-  "mock-post-1002": [
-    {
-      id: "c-1002-1",
-      userId: 441122,
-      author: "LIVE기록러",
-      content: "Marigold 오프닝 너무 좋았죠!",
-      createdAt: "2024-10-19T08:20:00+09:00"
-    }
-  ],
-  "mock-post-2101": [
-    {
-      id: "c-2101-1",
-      userId: 100777,
-      author: "순례자",
-      content: "지도 공유 감사합니다. 주차 공간도 있나요?",
-      createdAt: "2024-10-16T16:20:00+09:00"
     }
   ]
 };
@@ -130,13 +73,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (!postId) {
-    status.error("필요한 게시글 ID가 없습니다.");
+    status.error("요청한 게시글 ID가 없습니다.");
     if (elements.content) {
       elements.content.innerHTML = "<p>게시글을 찾을 수 없습니다.</p>";
     }
     return;
   }
 
+  const getAuthUser = () => (typeof Auth !== 'undefined' && typeof Auth.user === 'function') ? Auth.user() : null;
+  const loadAuthLocal = () => { try { const raw = localStorage.getItem('aimyonAuth'); return raw ? JSON.parse(raw) : null; } catch { return null; } };
   const getOrCreateUserId = () => {
     const stored = localStorage.getItem(USER_ID_STORAGE_KEY);
     if (stored && Number.isInteger(Number(stored))) {
@@ -146,10 +91,17 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(USER_ID_STORAGE_KEY, String(randomId));
     return randomId;
   };
-
   const USER_ID = getOrCreateUserId();
+
+  const currentUserName = () => {
+    const au = getAuthUser();
+    if (au?.username) return au.username;
+    const local = loadAuthLocal();
+    if (local?.user?.username) return local.user.username;
+    return `#${USER_ID}`;
+  };
   if (elements.commentWriterLabel) {
-    elements.commentWriterLabel.textContent = `#${USER_ID}`;
+    elements.commentWriterLabel.textContent = currentUserName();
   }
 
   const likeStorageKey = `${LIKE_STORAGE_PREFIX}${postId}`;
@@ -186,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateLikeButton = () => {
     const count = currentPost?.likeCount ?? 0;
     const icon = isLiked ? "★" : "☆";
-    const label = isLiked ? "추천 완료" : "추천";
+    const label = isLiked ? "추천 취소" : "추천";
 
     if (elements.likeCountMain) {
       elements.likeCountMain.textContent = count;
@@ -196,8 +148,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (elements.likeButton) {
       elements.likeButton.dataset.liked = String(isLiked);
-      elements.likeButton.querySelector(".tile-icon").textContent = icon;
-      elements.likeButton.querySelector(".tile-title").textContent = label;
+      const iconEl = elements.likeButton.querySelector(".tile-icon");
+      const titleEl = elements.likeButton.querySelector(".tile-title");
+      if (iconEl) iconEl.textContent = icon;
+      if (titleEl) titleEl.textContent = label;
     }
   };
 
@@ -220,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!elements.commentList) return;
     if (!currentComments.length) {
       elements.commentList.innerHTML =
-        '<div class="community-empty"><p>등록된 댓글이 아직 없어요.</p></div>';
+        '<div class="community-empty"><p>등록된 댓글이 아직 없습니다</p></div>';
       return;
     }
 
@@ -324,108 +278,62 @@ document.addEventListener("DOMContentLoaded", () => {
         commentStatus.clear();
       })
       .catch(() => {
-        commentStatus.error("댓글을 불러오지 못했습니다.");
+        commentStatus.error("댓글을 불러오지 못했어요.");
         currentComments = [];
-        updateCommentCounts(0);
-        elements.commentList.innerHTML =
-          '<div class="community-empty"><p>댓글을 불러오지 못했습니다.</p></div>';
+        renderComments();
       });
   };
 
-  const toggleLike = () => {
-    if (!elements.likeButton || !currentPost) return;
-    elements.likeButton.disabled = true;
-
-    if (usingMock) {
-      isLiked = !isLiked;
-      currentPost.likeCount = (currentPost.likeCount ?? 0) + (isLiked ? 1 : -1);
-      if (currentPost.likeCount < 0) currentPost.likeCount = 0;
-      localStorage.setItem(likeStorageKey, String(isLiked));
-      updateLikeButton();
-      elements.likeButton.disabled = false;
-      return;
-    }
-
-    const method = isLiked ? "DELETE" : "POST";
-    fetch(`${COMMUNITY_POST_BASE}/${encodeURIComponent(postId)}/like?userId=${USER_ID}`, {
-      method
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("like failed");
-        return res.json();
-      })
-      .then((post) => {
-        currentPost = post;
-        isLiked = !isLiked;
-        localStorage.setItem(likeStorageKey, String(isLiked));
-        updateLikeButton();
-      })
-      .catch(() => {
-        alert("추천 처리 중 문제가 발생했습니다.");
-      })
-      .finally(() => {
-        elements.likeButton.disabled = false;
-      });
-  };
-
-  const submitComment = (event) => {
-    event.preventDefault();
-    const content = elements.commentInput?.value.trim();
-    if (!content) {
-      commentStatus.error("댓글 내용을 입력해 주세요.");
-      return;
-    }
-
-    const submitButton = elements.commentSubmit;
-    if (submitButton) submitButton.disabled = true;
-    commentStatus.loading("댓글을 등록하는 중입니다...");
+  const submitComment = (e) => {
+    e.preventDefault();
+    if (!elements.commentInput || !elements.commentSubmit) return;
+    const content = (elements.commentInput.value || "").trim();
+    if (!content) return;
+    elements.commentSubmit.disabled = true;
 
     if (usingMock) {
       const newComment = {
         id: `mock-${Date.now()}`,
         userId: USER_ID,
-        author: `#${USER_ID}`,
+        author: currentUserName(),
         content,
-        createdAt: new Date().toISOString(),
-        isOwner: true
+        createdAt: new Date().toISOString()
       };
-      currentComments.unshift(newComment);
-      currentPost.commentCount = (currentPost.commentCount ?? 0) + 1;
+      currentComments.push(newComment);
       elements.commentInput.value = "";
-      commentStatus.message("샘플 댓글이 등록되었습니다.");
-      renderComments();
       updateCommentCounts(currentComments.length);
-      setTimeout(() => commentStatus.clear(), 1500);
-      if (submitButton) submitButton.disabled = false;
+      renderComments();
+      commentStatus.message("샘플 댓글이 등록되었습니다.");
+      setTimeout(() => commentStatus.clear(), 1200);
+      elements.commentSubmit.disabled = false;
       return;
     }
 
-    fetch(`${COMMUNITY_POST_BASE}/${encodeURIComponent(postId)}/comments`, {
+    const body = { postId, userId: USER_ID, content };
+    const extraHeaders = (typeof Auth !== 'undefined' && Auth.authHeader) ? Auth.authHeader() : {};
+    fetch(`${COMMUNITY_COMMENT_BASE}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: USER_ID, content })
+      headers: Object.assign({ 'Content-Type': 'application/json' }, extraHeaders),
+      body: JSON.stringify(body)
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("comment failed");
-        return res.json();
-      })
-      .then(() => {
+      .then((res) => { if (!res.ok) throw new Error('comment failed'); return res.json(); })
+      .then((saved) => {
         elements.commentInput.value = "";
         commentStatus.message("댓글이 등록되었습니다.");
         loadComments();
-        setTimeout(() => commentStatus.clear(), 1500);
+        setTimeout(() => commentStatus.clear(), 1200);
       })
       .catch(() => {
-        commentStatus.error("댓글 등록에 실패했습니다.");
+        commentStatus.error("댓글 등록 중 오류가 발생했습니다.");
       })
       .finally(() => {
-        if (submitButton) submitButton.disabled = false;
+        elements.commentSubmit.disabled = false;
       });
   };
 
   const deleteComment = (commentId, buttonEl) => {
     if (!commentId) return;
-    if (!confirm("댓글을 삭제할까요?")) return;
+    if (!confirm("이 댓글을 삭제할까요?")) return;
     buttonEl.disabled = true;
 
     if (usingMock) {
@@ -433,7 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPost.commentCount = Math.max((currentPost.commentCount ?? 1) - 1, 0);
       renderComments();
       updateCommentCounts(currentComments.length);
-      commentStatus.message("샘플 댓글을 삭제했습니다.");
+      commentStatus.message("샘플 댓글이 삭제되었습니다.");
       setTimeout(() => commentStatus.clear(), 1200);
       buttonEl.disabled = false;
       return;
@@ -443,19 +351,35 @@ document.addEventListener("DOMContentLoaded", () => {
       method: "DELETE"
     })
       .then((res) => {
-        if (!res.ok) throw new Error("delete failed");
+        if (!res.ok) {
+          if (res.status === 403) throw new Error('forbidden');
+          throw new Error('delete failed');
+        }
       })
       .then(() => {
         commentStatus.message("댓글이 삭제되었습니다.");
         loadComments();
         setTimeout(() => commentStatus.clear(), 1200);
       })
-      .catch(() => {
-        commentStatus.error("댓글 삭제 중 오류가 발생했습니다.");
+      .catch((err) => {
+        if (String(err && err.message) === 'forbidden') {
+          commentStatus.error("본인 댓글만 삭제할 수 있어요.");
+        } else {
+          commentStatus.error("댓글 삭제 중 오류가 발생했습니다.");
+        }
       })
       .finally(() => {
         buttonEl.disabled = false;
       });
+  };
+
+  const toggleLike = () => {
+    if (!currentPost) return;
+    // Local-only like toggle to avoid API dependency for now
+    isLiked = !isLiked;
+    currentPost.likeCount = Math.max((currentPost.likeCount ?? 0) + (isLiked ? 1 : -1), 0);
+    localStorage.setItem(likeStorageKey, String(isLiked));
+    updateLikeButton();
   };
 
   if (elements.likeButton) {
@@ -480,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .then(() => alert("링크가 복사되었습니다."))
           .catch(() => alert("링크 복사에 실패했습니다."));
       } else {
-        prompt("링크를 복사해 주세요:", shareData.url);
+        prompt("링크를 복사해 주세요", shareData.url);
       }
     });
   }
@@ -545,3 +469,4 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
+

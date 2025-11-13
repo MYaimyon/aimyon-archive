@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
     <section class="community-hero">
         <div class="container">
             <h1 class="community-hero__title">커뮤니티</h1>
-            <p class="community-hero__subtitle">팬들과 묭지 인증, 자유로운 이야기를 나누고 Aimyon의 순간을 함께 기록해요.</p>
+            <p class="community-hero__subtitle">일상과 음악, 추억을 나눠 보세요.</p>
         </div>
     </section>
 
@@ -31,7 +31,7 @@
                 <div class="community-search">
                     <label class="visually-hidden" for="communitySearchInput">게시글 검색</label>
                     <input type="search" id="communitySearchInput" placeholder="제목이나 내용을 입력해 검색하세요.">
-                    <span class="community-search-icon" aria-hidden="true">🔍</span>
+                    <span class="community-search-icon" aria-hidden="true">🔎</span>
                 </div>
 
                 <div id="communityStatus" class="community-status" aria-live="polite"></div>
@@ -41,7 +41,7 @@
                         <thead>
                         <tr>
                             <th scope="col" class="col-title">제목</th>
-                            <th scope="col" class="col-author">글쓴이</th>
+                            <th scope="col" class="col-author">작성자</th>
                             <th scope="col" class="col-date">작성일</th>
                             <th scope="col" class="col-views">조회</th>
                             <th scope="col" class="col-recommends">추천</th>
@@ -51,7 +51,7 @@
                     </table>
                 </div>
 
-                <nav class="community-pagination" id="communityPagination" aria-label="게시글 페이지">
+                <nav class="community-pagination" id="communityPagination" aria-label="게시글 페이지네이션">
                     <button type="button" id="communityPrevPage" class="btn btn-secondary btn-compact" disabled>이전</button>
                     <span id="communityPageInfo" aria-live="polite">1 / 1</span>
                     <button type="button" id="communityNextPage" class="btn btn-secondary btn-compact" disabled>다음</button>
@@ -68,3 +68,4 @@
 <script src="../assets/js/community.js"></script>
 </body>
 </html>
+

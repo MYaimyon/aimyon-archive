@@ -14,8 +14,8 @@
     <section class="compose-hero">
         <div class="container">
             <a href="community.html" class="compose-back">&larr; 커뮤니티로 돌아가기</a>
-            <h1 class="compose-hero__title">새 글 작성</h1>
-            <p class="compose-hero__subtitle">Aimyon과 관련된 순간, 후기를 자유롭게 남겨주세요.</p>
+            <h1 class="compose-hero__title">게시글 작성</h1>
+            <p class="compose-hero__subtitle">Aimyon과 관련된 이야기, 추억을 자유롭게 공유해 주세요.</p>
         </div>
     </section>
 
@@ -26,8 +26,8 @@
                     <h2>작성 안내</h2>
                     <ul>
                         <li>게시판을 먼저 선택하면 분류가 더 정확해요.</li>
-                        <li>임시 사용자 ID로 저장되며, 추후 계정 기능이 추가됩니다.</li>
-                        <li>타인에 대한 비방이나 개인정보는 삼가주세요.</li>
+                        <li>로그인한 사용자명이 표시됩니다.</li>
+                        <li>타인 비방이나 개인정보 노출은 피해주세요.</li>
                     </ul>
                 </aside>
 
@@ -35,7 +35,7 @@
                     <header class="compose-header">
                         <div>
                             <h2>게시글 정보</h2>
-                            <p class="compose-helper">제목과 내용을 입력하고 게시판을 선택한 뒤 등록 버튼을 눌러주세요.</p>
+                            <p class="compose-helper">제목과 내용을 입력하고 게시판을 선택한 뒤, 등록 버튼을 눌러 주세요.</p>
                         </div>
                         <span class="compose-user">사용자 ID <strong id="composeUserId">-</strong></span>
                     </header>
@@ -50,12 +50,12 @@
 
                         <label class="compose-field">
                             <span class="compose-label">제목</span>
-                            <input type="text" id="composeTitle" placeholder="예: Road Show 후기를 공유합니다" required>
+                            <input type="text" id="composeTitle" placeholder="예: Road Show 후기 공유해요" required>
                         </label>
 
                         <label class="compose-field">
                             <span class="compose-label">내용</span>
-                            <textarea id="composeContent" placeholder="어떤 순간이 기억에 남았는지, 추천하고 싶은 묭지를 적어주세요." required rows="10"></textarea>
+                            <textarea id="composeContent" placeholder="어떤 순간이 기억에 남았나요? 자유롭게 써 주세요." required rows="10"></textarea>
                         </label>
 
                         <p id="composeStatus" class="compose-status" role="status"></p>
@@ -77,3 +77,4 @@
 <script src="../assets/js/community-write.js"></script>
 </body>
 </html>
+

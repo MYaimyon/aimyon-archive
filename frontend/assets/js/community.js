@@ -15,14 +15,14 @@ const PAGE_SIZE = 15;
 const MOCK_COMMUNITY = {
   boards: [
     { slug: "free", name: "자유게시판" },
-    { slug: "pilgrimage", name: "묭지순례 인증" }
+    { slug: "pilgrimage", name: "성지순례 인증" }
   ],
   posts: {
     free: [
       {
         id: "mock-post-1001",
-        title: "처음 Aimyon을 알게 된 순간",
-        category: "잡담",
+        title: "처음 Aimyon에 빠진 순간",
+        category: "수다",
         author: "미도리",
         createdAt: "2024-10-20T10:15:00+09:00",
         viewCount: 128,
@@ -31,9 +31,9 @@ const MOCK_COMMUNITY = {
       },
       {
         id: "mock-post-1002",
-        title: "오사카 공연 다녀온 인증샷 공유",
+        title: "역대 공연 인증샷 공유",
         category: "후기",
-        author: "라이브덕후",
+        author: "라이브덕",
         createdAt: "2024-10-18T21:42:00+09:00",
         viewCount: 204,
         likeCount: 25,
@@ -41,7 +41,7 @@ const MOCK_COMMUNITY = {
       },
       {
         id: "mock-post-1003",
-        title: "베스트 수록곡 TOP5 함께 뽑아보자!",
+        title: "베스트 트랙 TOP5 함께 뽑아보자!",
         category: "투표",
         author: "밍밍",
         createdAt: "2024-10-15T13:00:00+09:00",
@@ -55,8 +55,8 @@ const MOCK_COMMUNITY = {
       {
         id: "mock-post-2101",
         title: "시즈오카 Aimyon 벽화 인증",
-        category: "인증샷",
-        author: "묭맘",
+        category: "인증",
+        author: "하루",
         createdAt: "2024-10-16T14:40:00+09:00",
         viewCount: 171,
         likeCount: 22,
@@ -64,8 +64,8 @@ const MOCK_COMMUNITY = {
       },
       {
         id: "mock-post-2102",
-        title: "하마마츠 카페 방문 스탬프",
-        category: "성지순례",
+        title: "하마마츠 카페 방문 아이템",
+        category: "후기",
         author: "코코",
         createdAt: "2024-10-11T09:20:00+09:00",
         viewCount: 142,
@@ -74,9 +74,9 @@ const MOCK_COMMUNITY = {
       },
       {
         id: "mock-post-2103",
-        title: "신주쿠 버스킹 자리 지도 공유",
+        title: "후쿠오카 버스 루트 정보 공유",
         category: "정보",
-        author: "순례자",
+        author: "유이",
         createdAt: "2024-10-05T18:00:00+09:00",
         viewCount: 210,
         likeCount: 32,
@@ -107,7 +107,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const pageInfoEl = document.getElementById("communityPageInfo");
   const statusEl = document.getElementById("communityStatus");
 
-  const userId = getOrCreateUserId();
+  const userIdLocal = getOrCreateUserId();
+  const getAuthUser = () => (typeof Auth !== 'undefined' && typeof Auth.user === 'function') ? Auth.user() : null;
+  const loadAuthLocal = () => { try { const raw = localStorage.getItem('aimyonAuth'); return raw ? JSON.parse(raw) : null; } catch { return null; } };
+  const currentUserId = () => {
+    const au = getAuthUser();
+    if (au?.id) return Number(au.id);
+    const local = loadAuthLocal();
+    if (local?.user?.id) return Number(local.user.id);
+    return Number(userIdLocal);
+  };
   const urlParams = new URLSearchParams(window.location.search);
   const requestedBoard = urlParams.get("board");
   const preferMock = urlParams.get("mock") === "1";
@@ -162,9 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const renderEmptyState = (message) => {
     if (!postsBody) return;
     postsBody.innerHTML =
-      '<tr class="community-empty-row"><td colspan="5">게시글이 아직 없어요.</td></tr>';
+      '<tr class="community-empty-row"><td colspan="5">게시글이 아직 없습니다</td></tr>';
     updatePagination(1, 1);
-    status.message(message || "게시글이 아직 없어요.");
+    status.message(message || "게시글이 아직 없습니다");
   };
 
   const attachDeleteHandlers = () => {
@@ -182,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const renderRows = (items) => {
     if (!postsBody) return;
     if (!items.length) {
-      renderEmptyState("조건에 맞는 게시글이 없어요.");
+      renderEmptyState("조건에 맞는 게시글이 없습니다");
       return;
     }
 
@@ -216,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const createdAt = formatDate(post.createdAt);
         const viewCount = Number(post.viewCount ?? post.views ?? post.hit ?? 0);
         const recommendCount = Number(post.likeCount ?? post.recommendCount ?? 0);
-        const canDelete = Number(post.userId) === userId && !preferMock && Boolean(post.id);
+        const canDelete = Number(post.userId) === currentUserId() && !preferMock && Boolean(post.id);
         const deleteButton = canDelete
           ? `<button class="row-delete" data-id="${escapeHtml(String(post.id))}" type="button">삭제</button>`
           : "";
@@ -313,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
     paginationEl?.setAttribute("hidden", "");
 
     if (preferMock) {
-      loadMockPosts(boardSlug, "샘플 게시글을 불러왔어요.");
+      loadMockPosts(boardSlug, "샘플 게시글을 불러왔습니다.");
       return;
     }
 
@@ -339,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!boardsEl) return;
 
     if (preferMock) {
-      loadMockBoards("샘플 게시판 데이터를 보여주는 중입니다.");
+      loadMockBoards("샘플 게시판/게시글을 보여주는 중입니다.");
       return;
     }
 
@@ -382,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (preferMock) {
       allPosts = allPosts.filter((post) => String(post.id) !== String(postId));
       applyFilters();
-      status.message("샘플 데이터에서 게시글을 삭제했어요.");
+      status.message("샘플 데이터에서 게시글이 삭제됐습니다.");
       return;
     }
 
@@ -390,19 +399,28 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!confirmed) return;
 
     buttonEl.disabled = true;
+    const extraHeaders = (typeof Auth !== 'undefined' && Auth.authHeader) ? Auth.authHeader() : {};
     fetch(
-      `${COMMUNITY_API_BASE}/posts/${encodeURIComponent(postId)}?userId=${userId}&admin=false`,
+      `${COMMUNITY_API_BASE}/posts/${encodeURIComponent(postId)}?userId=${currentUserId()}&admin=false`,
       {
-        method: "DELETE"
+        method: "DELETE",
+        headers: Object.assign({}, extraHeaders)
       }
     )
       .then((res) => {
-        if (!res.ok) throw new Error("delete failed");
-        status.message("게시글을 삭제했어요.");
+        if (!res.ok) {
+          if (res.status === 403) throw new Error("forbidden");
+          throw new Error("delete failed");
+        }
+        status.message("게시글이 삭제되었습니다.");
         loadPosts(activeSlug);
       })
-      .catch(() => {
-        alert("게시글 삭제에 실패했습니다.");
+      .catch((err) => {
+        if (String(err && err.message) === "forbidden") {
+          alert("본인 글만 삭제할 수 있어요.");
+        } else {
+          alert("게시글 삭제에 실패했습니다.");
+        }
       })
       .finally(() => {
         buttonEl.disabled = false;
@@ -493,3 +511,4 @@ function createStatusManager(element, baseClass) {
     }
   };
 }
+

@@ -1,4 +1,4 @@
-﻿const COMMUNITY_API_BASE = (() => {
+const COMMUNITY_API_BASE = (() => {
   if (window.location.protocol === 'file:') return 'http://localhost:8080/api/community';
   const { protocol, hostname, port } = window.location;
   if (port && port !== '' && port !== '8080') return `${protocol}//${hostname}:8080/api/community`;
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (requestedBoard && boards.some((b) => b.slug === requestedBoard)) boardSelect.value = requestedBoard;
       })
       .catch(() => {
-        boardSelect.innerHTML = '<option value="" disabled>게시판을 불러오지 못했습니다</option>';
+        boardSelect.innerHTML = '<option value="" disabled>게시판을 가져오지 못했습니다</option>';
         boardSelect.disabled = true;
       });
   };
@@ -105,10 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
     })
       .then((res) => { if (!res.ok) throw new Error('create failed'); return res.json(); })
       .then(() => {
-        setStatus('등록이 완료되었습니다! 목록으로 이동합니다.', 'success');
+        setStatus('게시글이 등록되었습니다! 목록으로 이동합니다.', 'success');
         setTimeout(() => { window.location.href = `community.html?board=${encodeURIComponent(boardSlug)}`; }, 1200);
       })
-      .catch(() => setStatus('게시글 등록에 실패했습니다. 다시 시도해 주세요.', 'error'))
+      .catch(() => setStatus('게시글 작성에 실패했습니다. 다시 시도해 주세요.', 'error'))
       .finally(() => submitBtn?.removeAttribute('disabled'));
   });
 });
+
