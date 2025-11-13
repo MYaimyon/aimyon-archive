@@ -9,7 +9,6 @@ const COMMUNITY_API_BASE = (() => {
   return "/api/community";
 })();
 
-const USER_ID_KEY = "aimyonCommunityUserId";
 const PAGE_SIZE = 15;
 
 const MOCK_COMMUNITY = {
@@ -87,15 +86,7 @@ const MOCK_COMMUNITY = {
   }
 };
 
-const getOrCreateUserId = () => {
-  const stored = localStorage.getItem(USER_ID_KEY);
-  if (stored && !Number.isNaN(Number(stored))) {
-    return Number(stored);
-  }
-  const randomId = Math.floor(Math.random() * 900000) + 100000;
-  localStorage.setItem(USER_ID_KEY, String(randomId));
-  return randomId;
-};
+// 임시 사용자 ID 생성 기능 제거 (로그인 사용자만 쓰기 가능)
 
 document.addEventListener("DOMContentLoaded", () => {
   const boardsEl = document.getElementById("communityBoards");
@@ -107,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const pageInfoEl = document.getElementById("communityPageInfo");
   const statusEl = document.getElementById("communityStatus");
 
-  const userIdLocal = getOrCreateUserId();
   const getAuthUser = () => (typeof Auth !== 'undefined' && typeof Auth.user === 'function') ? Auth.user() : null;
   const loadAuthLocal = () => { try { const raw = localStorage.getItem('aimyonAuth'); return raw ? JSON.parse(raw) : null; } catch { return null; } };
   const currentUserId = () => {
@@ -115,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (au?.id) return Number(au.id);
     const local = loadAuthLocal();
     if (local?.user?.id) return Number(local.user.id);
-    return Number(userIdLocal);
+    return null;
   };
   const urlParams = new URLSearchParams(window.location.search);
   const requestedBoard = urlParams.get("board");
@@ -393,6 +383,18 @@ document.addEventListener("DOMContentLoaded", () => {
       renderCurrentPage();
     }
   });
+
+  // Require login before navigating to compose page
+  const composeLink = document.querySelector('.community-actions a[href="community-write.html"]');
+  if (composeLink) {
+    composeLink.addEventListener('click', (e) => {
+      const au = getAuthUser() || (loadAuthLocal() && loadAuthLocal().user);
+      if (!(au && au.id)) {
+        e.preventDefault();
+        alert('로그인 후 작성할 수 있습니다.');
+      }
+    });
+  }
 
   paginationEl?.setAttribute("hidden", "");
   loadBoards();

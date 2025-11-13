@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (!postId) {
-    status.error('게시글 ID가 없습니다.');
-    if (el.content) el.content.innerHTML = '<p>게시글을 찾을 수 없습니다.</p>';
+    status.error('게시글 ID가 ?�습?�다.');
+    if (el.content) el.content.innerHTML = '<p>게시글??찾을 ???�습?�다.</p>';
     return;
   }
 
@@ -110,12 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const n = Number.isFinite(count) ? count : 0;
     if (el.cmtMeta) el.cmtMeta.textContent = n;
     const totalLabel = document.getElementById('commentTotalLabel');
-    if (totalLabel) totalLabel.innerHTML = `전체 댓글 <strong>${n}</strong>개`;
+    if (totalLabel) totalLabel.innerHTML = `?�체 ?��? <strong>${n}</strong>�?;
   };
 
   const updateLikeButton = () => {
     const count = currentPost?.likeCount ?? 0;
-    const icon = isLiked ? '★' : '☆';
+    const icon = isLiked ? '?? : '??;
     const label = isLiked ? '추천 취소' : '추천';
     if (el.likeMain) el.likeMain.textContent = count;
     if (el.likeMeta) el.likeMeta.textContent = count;
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderPost = () => {
     if (!currentPost) return;
     const { title, author, createdAt, content, viewCount, likeCount, commentCount } = currentPost;
-    if (el.title) el.title.textContent = title || '제목 없음';
+    if (el.title) el.title.textContent = title || '?�목 ?�음';
     if (el.author) el.author.textContent = author || '-';
     if (el.date) el.date.textContent = formatDateTime(createdAt);
     if (el.view) el.view.textContent = Number(viewCount ?? 0).toLocaleString();
@@ -149,11 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderComments = () => {
     if (!el.cmtList) return;
     if (!currentComments.length) {
-      el.cmtList.innerHTML = '<div class="community-empty"><p>등록된 댓글이 없습니다</p></div>';
+      el.cmtList.innerHTML = '<div class="community-empty"><p>?�록???��????�습?�다</p></div>';
       return;
     }
     el.cmtList.innerHTML = currentComments.map((c) => {
-      const author = c.author || `회원 #${c.userId ?? '-'}`;
+      const author = c.author || `?�원 #${c.userId ?? '-'}`;
       const date = formatDateTime(c.createdAt);
       const body = escapeHtml(c.content || '').replace(/\n/g, '<br>');
       return `
@@ -169,18 +169,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const loadMockData = (fromFallback = false) => {
     const mp = pickMockPost(postId) || pickMockPost('mock-post-1001');
-    if (!mp) { status.error('샘플 게시글을 찾을 수 없습니다.'); return; }
+    if (!mp) { status.error('?�플 게시글??찾을 ???�습?�다.'); return; }
     usingMock = true;
     currentPost = mp;
     currentComments = pickMockComments(mp.id);
-    status.message(fromFallback ? '게시글을 불러오지 못해 샘플 데이터를 보여줍니다.' : '샘플 데이터를 보여주는 중입니다.');
+    status.message(fromFallback ? '게시글??불러?��? 못해 ?�플 ?�이?��? 보여줍니??' : '?�플 ?�이?��? 보여주는 중입?�다.');
     renderPost();
     renderComments();
   };
 
   const loadPost = () => {
     if (preferMock) { loadMockData(false); return Promise.resolve(); }
-    status.loading('게시글을 불러오는 중입니다...');
+    status.loading('게시글??불러?�는 중입?�다...');
     return fetch(`${COMMUNITY_POST_BASE}/${encodeURIComponent(postId)}`, { headers: { Accept: 'application/json' } })
       .then((res) => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
       .then((post) => { usingMock = false; currentPost = post; isLiked = Boolean(post.isLiked); renderPost(); status.clear(); })
@@ -190,11 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const loadComments = () => {
     if (usingMock) { currentComments = pickMockComments(currentPost?.id); updateCommentCounts(currentComments.length); renderComments(); return; }
     if (!currentPost) return;
-    commentStatus.loading('댓글을 불러오는 중입니다...');
+    commentStatus.loading('?��???불러?�는 중입?�다...');
     fetch(`${COMMUNITY_POST_BASE}/${encodeURIComponent(postId)}/comments`, { headers: { Accept: 'application/json' } })
       .then((res) => { if (!res.ok) throw new Error('comments failed'); return res.json(); })
       .then((comments) => { currentComments = Array.isArray(comments) ? comments : []; updateCommentCounts(currentComments.length); renderComments(); commentStatus.clear(); })
-      .catch(() => { commentStatus.error('댓글을 불러오지 못했어요.'); currentComments = []; renderComments(); });
+      .catch(() => { commentStatus.error('?��???불러?��? 못했?�요.'); currentComments = []; renderComments(); });
   };
 
   const submitComment = (e) => {
@@ -206,15 +206,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (usingMock) {
       currentComments.push({ id: `mock-${Date.now()}`, userId: USER_ID, author: currentUserName(), content, createdAt: new Date().toISOString() });
       el.cmtInput.value = '';
-      updateCommentCounts(currentComments.length); renderComments(); commentStatus.message('샘플 댓글이 등록되었습니다.'); setTimeout(() => commentStatus.clear(), 1200); el.cmtSubmit.disabled = false; return;
+      updateCommentCounts(currentComments.length); renderComments(); commentStatus.message('?�플 ?��????�록?�었?�니??'); setTimeout(() => commentStatus.clear(), 1200); el.cmtSubmit.disabled = false; return;
     }
     const au = getAuthUser();
-    const body = { postId, userId: au?.id ?? USER_ID, content };
+    if (!au?.id) { commentStatus.error('�α����� �ʿ��մϴ�.'); el.cmtSubmit.disabled = false; return; } const body = { postId, userId: au.id, content };
     const headers = Object.assign({ 'Content-Type': 'application/json' }, getAuthHeader());
     fetch(`${COMMUNITY_COMMENT_BASE}`, { method: 'POST', headers, body: JSON.stringify(body) })
       .then((res) => { if (!res.ok) throw new Error('comment failed'); return res.json(); })
-      .then(() => { el.cmtInput.value = ''; commentStatus.message('댓글이 등록되었습니다.'); loadComments(); setTimeout(() => commentStatus.clear(), 1200); })
-      .catch(() => { commentStatus.error('댓글 등록 중 오류가 발생했습니다.'); })
+      .then(() => { el.cmtInput.value = ''; commentStatus.message('?��????�록?�었?�니??'); loadComments(); setTimeout(() => commentStatus.clear(), 1200); })
+      .catch(() => { commentStatus.error('?��? ?�록 �??�류가 발생?�습?�다.'); })
       .finally(() => { el.cmtSubmit.disabled = false; });
   };
 
@@ -228,14 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const deletePost = () => {
     if (!currentPost || !postId) return;
-    if (!confirm('이 게시글을 삭제할까요?')) return;
+    if (!confirm('??게시글????��?�까??')) return;
     const btn = el.postDeleteButton; if (btn) btn.disabled = true;
-    if (usingMock) { status.message('샘플 게시글이 삭제되었습니다.'); setTimeout(() => { window.location.href = 'community.html'; }, 800); if (btn) btn.disabled = false; return; }
+    if (usingMock) { status.message('?�플 게시글????��?�었?�니??'); setTimeout(() => { window.location.href = 'community.html'; }, 800); if (btn) btn.disabled = false; return; }
     const au = getAuthUser(); const userId = au?.id; const admin = isAdminUser();
     fetch(`${COMMUNITY_POST_BASE}/${encodeURIComponent(postId)}?userId=${encodeURIComponent(userId ?? '')}&admin=${String(admin)}`, { method: 'DELETE', headers: Object.assign({}, getAuthHeader()) })
       .then((res) => { if (!res.ok) { if (res.status === 403) throw new Error('forbidden'); throw new Error('delete failed'); } })
-      .then(() => { status.message('게시글이 삭제되었습니다.'); setTimeout(() => { window.location.href = 'community.html'; }, 800); })
-      .catch((err) => { if (String(err && err.message) === 'forbidden') alert('본인 글만 삭제할 수 있어요.'); else alert('게시글 삭제에 실패했습니다.'); })
+      .then(() => { status.message('게시글????��?�었?�니??'); setTimeout(() => { window.location.href = 'community.html'; }, 800); })
+      .catch((err) => { if (String(err && err.message) === 'forbidden') alert('본인 글�???��?????�어??'); else alert('게시글 ??��???�패?�습?�다.'); })
       .finally(() => { if (btn) btn.disabled = false; });
   };
 
@@ -243,8 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (el.shareBtn) el.shareBtn.addEventListener('click', () => {
     const shareData = { title: currentPost?.title || document.title, url: window.location.href };
     if (navigator.share) { navigator.share(shareData).catch(() => {}); return; }
-    if (navigator.clipboard?.writeText) { navigator.clipboard.writeText(shareData.url).then(() => alert('링크가 복사되었습니다.')).catch(() => alert('링크 복사에 실패했습니다.')); }
-    else { prompt('링크를 복사해 주세요', shareData.url); }
+    if (navigator.clipboard?.writeText) { navigator.clipboard.writeText(shareData.url).then(() => alert('링크가 복사?�었?�니??')).catch(() => alert('링크 복사???�패?�습?�다.')); }
+    else { prompt('링크�?복사??주세??, shareData.url); }
   });
 
   el.cmtForm?.addEventListener('submit', submitComment);

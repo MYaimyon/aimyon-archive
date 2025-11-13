@@ -5,15 +5,6 @@ const COMMUNITY_API_BASE = (() => {
   return '/api/community';
 })();
 
-const USER_ID_KEY = 'aimyonCommunityUserId';
-const getOrCreateUserId = () => {
-  const stored = localStorage.getItem(USER_ID_KEY);
-  if (stored && !Number.isNaN(Number(stored))) return Number(stored);
-  const randomId = Math.floor(Math.random() * 900000) + 100000;
-  localStorage.setItem(USER_ID_KEY, String(randomId));
-  return randomId;
-};
-
 document.addEventListener('DOMContentLoaded', () => {
   const formEl = document.getElementById('communityComposeForm');
   const boardSelect = document.getElementById('composeBoard');
@@ -25,28 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const getAuthUser = () => (typeof Auth !== 'undefined' && typeof Auth.user === 'function') ? Auth.user() : null;
   const loadAuthLocal = () => { try { const raw = localStorage.getItem('aimyonAuth'); return raw ? JSON.parse(raw) : null; } catch { return null; } };
-  const tempId = getOrCreateUserId();
-  const currentUserId = () => {
-    const au = getAuthUser();
-    if (au?.id) return au.id;
-    const local = loadAuthLocal();
-    if (local?.user?.id) return local.user.id;
-    return tempId;
-  };
-  const currentUserName = () => {
-    const au = getAuthUser();
-    if (au?.username) return au.username;
-    const local = loadAuthLocal();
-    if (local?.user?.username) return local.user.username;
-    return `#${tempId}`;
-  };
-
-  const updateUserLabel = () => { if (userIdEl) userIdEl.textContent = currentUserName(); };
-  updateUserLabel();
-  document.addEventListener('component:loaded', (e) => { if (e?.detail?.path?.includes('header.html')) { setTimeout(updateUserLabel, 0); setTimeout(updateUserLabel, 50); } });
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const requestedBoard = urlParams.get('board');
+  const currentUser = () => getAuthUser() || (loadAuthLocal()?.user ?? null);
+  const currentUserId = () => currentUser()?.id ?? null;
+  const currentUserName = () => currentUser()?.username ?? '-';
 
   const setStatus = (message, type = 'info') => {
     if (!statusEl) return;
@@ -56,24 +28,55 @@ document.addEventListener('DOMContentLoaded', () => {
     if (type === 'error') statusEl.classList.add('error');
   };
 
+  const updateUserLabel = () => { if (userIdEl) userIdEl.textContent = currentUserName(); };
+  updateUserLabel();
+  window.addEventListener('storage', (e) => { if (e && e.key === 'aimyonAuth') { updateUserLabel(); enforceAuth(); } });
+  document.addEventListener('component:loaded', (e) => { if (e?.detail?.path?.includes('header.html')) { setTimeout(updateUserLabel, 0); setTimeout(updateUserLabel, 50); } });
+
+  const enforceAuth = () => {
+    if (!currentUserId()) {
+      submitBtn?.setAttribute('disabled', '');
+      titleInput?.setAttribute('disabled', '');
+      contentInput?.setAttribute('disabled', '');
+      boardSelect?.setAttribute('disabled', '');
+      setStatus('\uB85C\uADF8\uC778\uC774 \uD544\uC694\uD569\uB2C8\uB2E4. \uC624\uB978\uCABD \uC0C1\uB2E8\uC5D0\uC11C \uB85C\uADF8\uC778\uD574 \uC8FC\uC138\uC694.', 'error');
+      return false;
+    }
+    submitBtn?.removeAttribute('disabled');
+    titleInput?.removeAttribute('disabled');
+    contentInput?.removeAttribute('disabled');
+    boardSelect?.removeAttribute('disabled');
+    setStatus('');
+    return true;
+  };
+  enforceAuth();
+
   const populateBoards = () => {
     if (!boardSelect) return;
-    boardSelect.innerHTML = '<option value="">게시판을 선택하세요</option>';
+    boardSelect.innerHTML = '<option value="">\uAC8C\uC2DC\uD310\uC744 \uC120\uD0DD\uD558\uC138\uC694</option>';
     fetch(`${COMMUNITY_API_BASE}/boards`)
       .then((res) => res.json())
       .then((boards) => {
         if (!Array.isArray(boards) || boards.length === 0) {
-          boardSelect.innerHTML = '<option value="" disabled>게시판이 없습니다</option>';
+          boardSelect.innerHTML = '<option value="" disabled>\uAC8C\uC2DC\uD310\uC774 \uC5C6\uC2B5\uB2C8\uB2E4</option>';
           boardSelect.disabled = true;
           return;
         }
         const options = boards.map((b) => `<option value="${b.slug}">${b.name}</option>`).join('');
         boardSelect.insertAdjacentHTML('beforeend', options);
+        const requestedBoard = new URLSearchParams(window.location.search).get('board');
         if (requestedBoard && boards.some((b) => b.slug === requestedBoard)) boardSelect.value = requestedBoard;
+        enforceAuth();
       })
       .catch(() => {
-        boardSelect.innerHTML = '<option value="" disabled>게시판을 가져오지 못했습니다</option>';
-        boardSelect.disabled = true;
+        // Fallback: static boards
+        const fallback = [
+          { slug: 'free', name: '\uC790\uC720\uAC8C\uC2DC\uD310' },
+          { slug: 'pilgrimage', name: '\uC131\uC9C0\uC21C\uB840 \uC778\uC99D' }
+        ];
+        const options = fallback.map((b) => `<option value="${b.slug}">${b.name}</option>`).join('');
+        boardSelect.innerHTML = '<option value="">\uAC8C\uC2DC\uD310\uC744 \uC120\uD0DD\uD558\uC138\uC694</option>' + options;
+        boardSelect.disabled = false;
       });
   };
   populateBoards();
@@ -81,15 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
   formEl?.addEventListener('submit', (event) => {
     event.preventDefault();
     if (!boardSelect || !titleInput || !contentInput) return;
+    if (!currentUserId()) { setStatus('\uB85C\uADF8\uC778\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.', 'error'); return; }
 
     const boardSlug = boardSelect.value.trim();
     const title = titleInput.value.trim();
     const content = contentInput.value.trim();
 
-    if (!boardSlug) { setStatus('게시판을 선택해 주세요.', 'error'); boardSelect.focus(); return; }
-    if (!title || !content) { setStatus('제목과 내용을 입력해 주세요.', 'error'); return; }
+    if (!boardSlug) { setStatus('\uAC8C\uC2DC\uD310\uC744 \uC120\uD0DD\uD558\uC138\uC694.', 'error'); boardSelect.focus(); return; }
+    if (!title || !content) { setStatus('\uC81C\uBAA9\uACFC \uB0B4\uC6A9\uC744 \uC785\uB825\uD574 \uC8FC\uC138\uC694.', 'error'); return; }
 
-    setStatus('등록 중입니다...');
+    setStatus('\uB4F1\uB85D \uC911\uC785\uB2C8\uB2E4...', '');
     submitBtn?.setAttribute('disabled', '');
 
     const extraHeaders = (typeof Auth !== 'undefined' && Auth.authHeader) ? Auth.authHeader() : {};
@@ -105,10 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
       .then((res) => { if (!res.ok) throw new Error('create failed'); return res.json(); })
       .then(() => {
-        setStatus('게시글이 등록되었습니다! 목록으로 이동합니다.', 'success');
+        setStatus('\uAC8C\uC2DC\uAE00\uC774 \uB4F1\uB85D\uB418\uC5C8\uC2B5\uB2C8\uB2E4! \uBAA9\uB85D\uC73C\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4.', 'success');
         setTimeout(() => { window.location.href = `community.html?board=${encodeURIComponent(boardSlug)}`; }, 1200);
       })
-      .catch(() => setStatus('게시글 작성에 실패했습니다. 다시 시도해 주세요.', 'error'))
+      .catch(() => setStatus('\uAC8C\uC2DC\uAE00 \uC791\uC131\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD574 \uC8FC\uC138\uC694.', 'error'))
       .finally(() => submitBtn?.removeAttribute('disabled'));
   });
 });
