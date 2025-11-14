@@ -1,4 +1,4 @@
-﻿/* ========================================
+/* ========================================
    SONG DETAIL PAGE STYLES
 ======================================== */
 
@@ -46,7 +46,7 @@
 /* YouTube Section */
 .youtube-section {
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 30px;
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
@@ -62,7 +62,7 @@
 /* Tabs Section */
 .tabs-section {
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 12px;
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
     overflow: hidden;
@@ -192,7 +192,7 @@
 /* Related Songs */
 .related-songs {
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 30px;
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
@@ -270,7 +270,7 @@
 .places-hero__stats {
     display: flex;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 12px;
     padding-top: 6px;
 }
 
@@ -281,7 +281,7 @@
 }
 
 .places-hero__stat strong {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     color: var(--primary-color);
 }
 
@@ -310,7 +310,7 @@
 .places-filters__form {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
+    gap: 12px;
     align-items: end;
     padding: 24px 28px;
     border-radius: 20px;
@@ -357,7 +357,7 @@
 
 .places-filters__submit {
     align-self: stretch;
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 12px 0;
     border: none;
     background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
@@ -404,7 +404,7 @@
 .places-list__panel {
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
-    gap: 18px;
+    gap: 12px;
     max-height: 520px;
 }
 
@@ -421,7 +421,7 @@
 
 .places-list {
     display: grid;
-    gap: 18px;
+    gap: 12px;
     overflow-y: auto;
     padding-right: 4px;
 }
@@ -624,7 +624,7 @@
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    margin: 8px 0 16px; /* 상단/하단 여백으로 카드와 겹치지 않도록 */
+    margin: 8px 0 16px; /* ?곷떒/?섎떒 ?щ갚?쇰줈 移대뱶? 寃뱀튂吏 ?딅룄濡?*/
 }
 
 /* Discography album cover sizing */
@@ -662,8 +662,8 @@
 .album-card .album-info {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    flex: 1; /* 카드 높이를 채워 아래 요소 정렬을 안정화 */
+    gap: 4px;
+    flex: 1; /* 移대뱶 ?믪씠瑜?梨꾩썙 ?꾨옒 ?붿냼 ?뺣젹???덉젙??*/
 }
 
 .album-card .album-info h3 {
@@ -671,10 +671,10 @@
     font-size: 1rem;
     line-height: 1.3;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* 제목 2줄까지만 표시하고 나머지 생략 */
+    -webkit-line-clamp: 2; /* ?쒕ぉ 2以꾧퉴吏留??쒖떆?섍퀬 ?섎㉧吏 ?앸왂 */
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: calc(1.3em * 2); /* 한 줄 제목일 때도 공간 확보 */
+    min-height: calc(1.3em * 2); /* ??以??쒕ぉ???뚮룄 怨듦컙 ?뺣낫 */
 }
 
 .album-card .album-type,
@@ -684,9 +684,9 @@
 }
 
 .album-card .album-tags {
-    margin-top: auto; /* 태그 블록을 카드 하단으로 밀어 균일한 높이 연출 */
+    margin-top: auto; /* ?쒓렇 釉붾줉??移대뱶 ?섎떒?쇰줈 諛??洹좎씪???믪씠 ?곗텧 */
     display: flex;
-    gap: 6px;
+    gap: 4px;
     flex-wrap: wrap;
 }
 
@@ -711,7 +711,7 @@
 .profile-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
 .profile-cover {
     height: 240px;
-    border-radius: 16px;
+    border-radius: 12px;
     border: 1px solid var(--border-color);
     background-size: cover;
     background-position: center top;
@@ -771,7 +771,7 @@
 
 /* News detail */
 .news-detail .back-link { display:inline-block; margin: 10px 0; color: var(--text-secondary); text-decoration: none; }
-.news-detail .news-detail-header { display:grid; gap: 6px; margin: 10px 0 14px; }
+.news-detail .news-detail-header { display:grid; gap: 4px; margin: 10px 0 14px; }
 .news-detail .news-detail-thumb { border-radius: 12px; overflow: hidden; border:1px solid var(--border-color); margin-bottom: 16px; }
 .news-detail .news-detail-thumb img { width:100%; height:auto; display:block; }
 .news-detail .news-detail-content p { line-height: 1.8; margin: 10px 0; }
@@ -924,7 +924,7 @@
 /* Song Card */
 .song-card {
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 20px;
     text-decoration: none;
     color: inherit;
@@ -1104,7 +1104,7 @@
     }
 }
 
-/* 전체 보기 버튼 */
+/* ?꾩껜 蹂닿린 踰꾪듉 */
 .reset-btn {
     padding: 12px 20px;
     background: var(--primary-color);
@@ -1127,7 +1127,7 @@
 ======================================== */
 
 /* Hero Section */
-/* Hero Section - 심플 버전 (아티스트 이미지만) */
+/* Hero Section - ?ы뵆 踰꾩쟾 (?꾪떚?ㅽ듃 ?대?吏留? */
 .hero-section {
     padding: 100px 0;
     background: linear-gradient(135deg,
@@ -1250,7 +1250,7 @@
 }
 
 .link-card h3 {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 15px;
@@ -1777,7 +1777,7 @@
 .search-status,
 .page-coming-soon {
     padding: 24px;
-    border-radius: 16px;
+    border-radius: 12px;
     border: 1px dashed var(--border-color);
     background: var(--bg-card);
     color: var(--text-secondary);
@@ -1874,7 +1874,7 @@
 .section-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     color: var(--text-secondary);
     font-size: 0.95rem;
     transition: color 0.2s ease;
@@ -2115,7 +2115,7 @@
 .profile-hero__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 12px;
     padding-top: 6px;
 }
 
@@ -2126,7 +2126,7 @@
 }
 
 .profile-hero__meta strong {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     color: var(--primary-color);
 }
 
@@ -2213,7 +2213,7 @@
 
 .profile-story__text {
     display: grid;
-    gap: 18px;
+    gap: 12px;
     font-size: 1.02rem;
     color: var(--text-secondary);
 }
@@ -2337,7 +2337,7 @@
     }
 
     .events-board__item {
-        gap: 6px;
+        gap: 4px;
     }
 
     .video-grid {
@@ -2707,7 +2707,7 @@
 .compose-back {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     color: var(--text-tertiary);
     font-size: 0.92rem;
     margin-bottom: 16px;
@@ -2800,7 +2800,7 @@
 
 .compose-form {
     display: grid;
-    gap: 18px;
+    gap: 12px;
 }
 
 .compose-field {
@@ -2952,13 +2952,13 @@
     padding: 32px clamp(20px, 5vw, 40px);
     box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
     display: grid;
-    gap: 18px;
+    gap: 12px;
     width: 100%;
 }
 
 .post-header {
     display: grid;
-    gap: 18px;
+    gap: 12px;
 }
 
 .post-header__meta {
@@ -3039,7 +3039,7 @@
 .like-label {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .like-icon {
@@ -3087,7 +3087,7 @@
 .post-body img,
 .post-body iframe {
     max-width: 100%;
-    border-radius: 16px;
+    border-radius: 12px;
 }
 
 .community-comments {
@@ -3102,7 +3102,7 @@
 
 .community-comments h2 {
     margin: 0;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
 }
 
 .comment-form {
@@ -3171,7 +3171,7 @@
 .comment-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 18px 20px;
     display: grid;
     gap: 12px;
@@ -3328,7 +3328,7 @@
 .post-stat {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .post-body {
@@ -3353,7 +3353,7 @@
 .reaction-grid {
     display: flex;
     justify-content: center;
-    gap: 18px;
+    gap: 12px;
     align-items: flex-end;
     width: 100%;
     flex-wrap: wrap;
@@ -3362,15 +3362,15 @@
 .reaction-tile {
     display: grid;
     justify-items: center;
-    gap: 6px;
-    padding: 14px 18px;
-    border-radius: 16px;
+    gap: 4px;
+    padding: 8px 10px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
     transition: all 0.2s ease;
-    flex: 1 1 180px;
-    max-width: 220px;
+    flex: 1 1 120px;
+    max-width: 140px;
 }
 
 button.reaction-tile {
@@ -3400,7 +3400,7 @@ button.reaction-tile {
 }
 
 .tile-icon {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
 }
 
 .tile-title {
@@ -3673,7 +3673,7 @@ button.reaction-tile {
 .field-inline {
     display: flex;
     gap: 8px;
-    align-items: flex-end; /* 버튼/인풋 높이 일치 */
+    align-items: flex-end; /* 踰꾪듉/?명뭼 ?믪씠 ?쇱튂 */
 }
 .field-inline input {
     flex: 1;
@@ -3695,7 +3695,7 @@ button.reaction-tile {
     gap: 16px;
 }
 .radio-group { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.95rem; }
-.radio-group label { display: inline-flex; align-items: center; gap: 6px; }
+.radio-group label { display: inline-flex; align-items: center; gap: 4px; }
 .checkbox-group label { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
 /* For signup: use non-label container so text click won't toggle */
 .checkbox-group .checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
@@ -3783,3 +3783,22 @@ button.reaction-tile {
     gap: 16px;
   }
 }
+
+/* dislike tile */
+.reaction-tile--dislike {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+.reaction-tile--dislike.active {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+/* small share link */
+.post-share-link {
+    font-size: 0.9rem;
+    opacity: .85;
+    text-decoration: underline;
+}
+.comments-headline { display: flex; align-items: center; justify-content: space-between; }
+.comments-headline .post-share-link { margin-left: 12px; }
