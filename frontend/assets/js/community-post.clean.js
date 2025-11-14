@@ -156,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCommentCounts(commentCount);
     if (el.content) el.content.innerHTML = currentPost.content || '<p>No content.</p>';
     updateLikeButton();
-
     const au = currentAuth();
     const isOwner = !!(au && currentPost && String(currentPost.userId || '') === String(au.id || ''));
     const canDelete = isOwner || isAdminUser();

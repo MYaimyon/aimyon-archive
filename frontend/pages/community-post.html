@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>&#xCEE4;&#xBBF8;&#xB2C8;&#xD2F0; &#xAE00; &#xC0C1;&#xC138; - aimyon archive</title>
+    <title>커뮤니티 글 상세 - aimyon archive</title>
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/pages.css">
 </head>
@@ -18,20 +18,19 @@
                 <article class="post-main">
                     <header class="post-header">
                         <div class="post-headline">
-                            <h1 id="cpTitle" class="post-title">&#xB85C;&#xB529; &#xC911;...</h1>
+                            <h1 id="cpTitle" class="post-title">로딩 중...</h1>
                         </div>
                         <div class="post-meta-row">
                             <div class="post-author-meta">
-                                <span class="post-meta-label">&#xC791;&#xC131;&#xC790;</span>
+                                <span class="post-meta-label">작성자</span>
                                 <span id="cpAuthor" class="post-author">-</span>
                                 <span class="meta-separator">&middot;</span>
                                 <span id="cpDate" class="post-date"></span>
                             </div>
                             <div class="post-stats-group">
-                                <span class="post-stat"><span class="label">&#xC870;&#xD68C;</span><span id="cpViewCount">0</span></span>
-                                <span class="post-stat"><span class="label">&#xCD94;&#xCC9C;</span><span id="cpLikeCountMeta">0</span></span>
-                                <span class="post-stat"><span class="label">&#xB313;&#xAE00;</span><span id="cpCommentCountMeta">0</span></span>
-                                <button id="postDeleteButton" class="btn btn-secondary btn-compact" type="button" style="display:none;">삭제</button>
+                                <span class="post-stat"><span class="label">조회</span><span id="cpViewCount">0</span></span>
+                                <span class="post-stat"><span class="label">추천</span><span id="cpLikeCountMeta">0</span></span>
+                                <span class="post-stat"><span class="label">댓글</span><span id="cpCommentCountMeta">0</span></span>
                             </div>
                         </div>
                     </header>
@@ -41,27 +40,27 @@
                     <section class="post-reactions">
                         <div class="reaction-grid">
                             <button id="likeButton" class="reaction-tile reaction-tile--like" type="button">
-                                <span class="tile-icon" aria-hidden="true">&#x2605;</span>
-                                <span class="tile-title">&#xCD94;&#xCC9C;</span>
+                                <span class="tile-icon" aria-hidden="true">★</span>
+                                <span class="tile-title">추천</span>
                                 <span id="likeCount" class="tile-value">0</span>
                             </button>
                             <button id="shareButton" class="reaction-tile reaction-tile--share" type="button">
-                                <span class="tile-icon" aria-hidden="true">&#x2197;</span>
-                                <span class="tile-title">&#xACF5;&#xC720;</span>
-                                <span class="tile-helper">URL &#xBCF5;&#xC0AC;</span>
+                                <span class="tile-icon" aria-hidden="true">↗</span>
+                                <span class="tile-title">공유</span>
+                                <span class="tile-helper">URL 복사</span>
                             </button>
                         </div>
                     </section>
 
                     <section class="post-comments">
                         <header class="comments-header">
-                            <h2 class="comments-title">&#xB313;&#xAE00;</h2>
+                            <h2 class="comments-title">댓글</h2>
                             <div class="comments-controls">
-                                <span class="comments-total" id="commentTotalLabel">&#xC804;&#xCCB4; &#xB313;&#xAE00; <strong>0</strong>&#xAC1C;</span>
+                                <span class="comments-total" id="commentTotalLabel">전체 댓글 <strong>0</strong>개</span>
                                 <div class="comments-sort">
-                                    <button class="sort-button sort-button--active" type="button" data-sort="recent">&#xCD5C;&#xC2E0;&#xC21C;</button>
-                                    <button class="sort-button" type="button" data-sort="oldest">&#xB4F1;&#xB85D;&#xC21C;</button>
-                                    <button class="sort-button" type="button" data-sort="reply">&#xB2F5;&#xAE00;&#xC21C;</button>
+                                    <button class="sort-button sort-button--active" type="button" data-sort="recent">최신순</button>
+                                    <button class="sort-button" type="button" data-sort="oldest">등록순</button>
+                                    <button class="sort-button" type="button" data-sort="reply">답글순</button>
                                 </div>
                             </div>
                         </header>
@@ -70,23 +69,29 @@
 
                         <form id="commentForm" class="comment-form">
                             <div class="comment-form-header">
-                                <span class="comment-writer-label">&#xC791;&#xC131;&#xC790;</span>
+                                <span class="comment-writer-label">작성자</span>
                                 <span class="comment-writer-name" id="commentWriterLabel">-</span>
                             </div>
-                            <textarea id="commentInput" placeholder="&#xD0C0;&#xC778;&#xC744; &#xC885;&#xC911;&#xD558;&#xB294; &#xB313;&#xAE00;&#xC774; &#xC544;&#xB984;&#xB2E4;&#xC6B4; &#xC544;&#xCE74;&#xC774;&#xBE0C;&#xB97C; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;." required></textarea>
+                            <textarea id="commentInput" placeholder="타인을 존중하는 댓글이 아름다운 아카이브를 만듭니다." required></textarea>
                             <div class="comment-form-footer">
                                 <span id="commentStatus" class="comment-status"></span>
                                 <div class="comment-form-actions">
-                                    <button type="button" class="comment-extra-btn">&#xC774;&#xBAA8;&#xC9C0;</button>
-                                    <button type="submit" class="comment-submit">&#xB4F1;&#xB85D;</button>
+                                    <button type="button" class="comment-extra-btn">이모지</button>
+                                    <button type="submit" class="comment-submit">등록</button>
                                 </div>
                             </div>
                         </form>
                     </section>
+
+                    <div class="post-footer-actions" style="margin-top: 16px; display: flex; gap: 8px; justify-content: flex-end;">
+                        <a id="backToListBtn" class="btn btn-secondary btn-compact" href="community.html">목록</a>
+                        <button id="postDeleteButton" class="btn btn-secondary btn-compact" type="button" style="display:none;">삭제</button>
+                    </div>
                 </article>
             </div>
         </div>
     </section>
+    
 </main>
 
 <div id="footer-placeholder"></div>
