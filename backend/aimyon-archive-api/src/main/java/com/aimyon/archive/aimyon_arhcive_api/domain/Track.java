@@ -34,6 +34,9 @@ public class Track {
     @Column(name = "duration")
     private String duration;
 
+    @Column(name = "lyrics", columnDefinition = "TEXT")
+    private String lyrics;
+
     @Column(name = "lyrics_summary", columnDefinition = "TEXT")
     private String lyricsSummary;
 

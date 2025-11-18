@@ -168,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const infoDurationEl = document.getElementById("info-duration");
   const infoTypeEl = document.getElementById("info-type");
   const infoReleaseEl = document.getElementById("info-release");
+  const infoSummaryEl = document.getElementById("info-summary");
   const relatedGridEl = document.getElementById("related-grid");
   const relatedSectionEl = document.getElementById("related-section");
 
@@ -243,7 +244,18 @@ document.addEventListener("DOMContentLoaded", () => {
     infoDurationEl.textContent = track.duration || "-";
     infoTrackNoEl.textContent = track.trackNo != null ? String(track.trackNo) : "-";
 
-    lyricsSummaryEl.textContent = track.lyricsSummary || "Lyrics summary will be added soon.";
+    if (infoSummaryEl) {
+      infoSummaryEl.textContent = track.lyricsSummary || "";
+    }
+
+    if (lyricsSummaryEl) {
+      const lyrics = track.lyrics || "";
+      if (lyrics) {
+        lyricsSummaryEl.innerHTML = escapeHtml(lyrics).replace(/\n/g, "<br>");
+      } else {
+        lyricsSummaryEl.textContent = "가사는 준비 중입니다.";
+      }
+    }
 
     if (mediaFrameEl) {
       mediaFrameEl.innerHTML = "";

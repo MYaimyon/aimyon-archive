@@ -10,6 +10,7 @@ public record TrackDetailResponse(
         String titleKo,
         Integer trackNo,
         String duration,
+        String lyrics,
         String lyricsSummary,
         String mvUrl,
         AlbumInfo album,

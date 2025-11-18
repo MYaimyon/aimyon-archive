@@ -73,6 +73,7 @@ public class TrackService {
                 track.getTitleKo(),
                 track.getTrackNo(),
                 track.getDuration(),
+                track.getLyrics(),
                 track.getLyricsSummary(),
                 track.getMvUrl(),
                 new TrackDetailResponse.AlbumInfo(
@@ -89,18 +90,6 @@ public class TrackService {
 
     private List<TrackDetailResponse.Story> buildStories(Track track, LocalDate albumReleaseDate) {
         List<TrackDetailResponse.Story> result = new ArrayList<>();
-
-        if (StringUtils.hasText(track.getLyricsSummary())) {
-            result.add(new TrackDetailResponse.Story(
-                    null,
-                    "LYRICS",
-                    track.getLyricsSummary(),
-                    "Lyrics summary",
-                    null,
-                    null,
-                    albumReleaseDate
-            ));
-        }
 
         List<TrackStory> storyEntities = trackStoryRepository.findByTrackOrderByCreatedAtAsc(track);
         storyEntities.stream()
